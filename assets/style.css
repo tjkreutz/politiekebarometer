@@ -67,3 +67,12 @@ h2 {
     margin: 0 0 30px 0;
 }
 
+.politician-item {
+    overflow: auto;
+}
+
+.politician-picture {
+    margin: 5px;
+    border: thin solid #727272;
+    float: left;
+}

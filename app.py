@@ -33,9 +33,12 @@ app.layout = html.Div([
             widgets.politician_mention_graph('politician-mention-graph', df),
         ], className='eight columns'),
         html.Div([
+            html.Div(html.H2('Data'), className='header'),
+            widgets.data_checkbox('data-selector'),
             html.Div(html.H2('Periode'), className='header'),
             widgets.date_slider('date-slider', df),
             html.Div(html.H2('Meest genoemd'), className='header'),
+            widgets.politician_list('politician-list', df)
         ], className='four columns'),
     ], className='row'),
 ], className='container')
@@ -54,13 +57,27 @@ def update_slider(timestamp_range):
 
 @app.callback(
     dash.dependencies.Output('politician-mention-graph', 'figure'),
-    [dash.dependencies.Input('date-slider', 'value')])
-def update_graph(timestamp_range):
+    [dash.dependencies.Input('date-slider', 'value'),
+     dash.dependencies.Input('data-selector', 'values')])
+def update_graph(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
     df = util.load_most_mentioned(og_df, 5)
     df = util.load_date_range(df, (first_date, last_date))
+    df = util.load_data_sources(df, data_sources)
     return widgets.update_politician_mention_graph_figure(df)
+
+@app.callback(
+    dash.dependencies.Output('politician-list', 'children'),
+    [dash.dependencies.Input('date-slider', 'value'),
+     dash.dependencies.Input('data-selector', 'values')])
+def update_politician_list(timestamp_range, data_sources):
+    first_date = util.to_datetime(timestamp_range[0])
+    last_date = util.to_datetime(timestamp_range[1])
+    df = util.load_most_mentioned(og_df, 5)
+    df = util.load_date_range(df, (first_date, last_date))
+    df = util.load_data_sources(df, data_sources)
+    return widgets.update_politician_list_children(df)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
