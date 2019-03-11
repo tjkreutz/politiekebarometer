@@ -1,9 +1,19 @@
 import time
 import numpy
+import MySQLdb
 import datetime
 import pandas as pd
 import random
 import colorsys
+from . import config
+
+def get_db():
+    db = MySQLdb.connect(
+        host=config.HOST,
+        user=config.USER,
+        password=config.PASSWORD,
+        db=config.DB)
+    return db
 
 def hex_color_to_rgb(hex_color):
     return tuple(int(hex_color[1:][i:i + 2], 16) for i in (0, 2, 4))
@@ -28,8 +38,8 @@ def randomize_colors(values):
     return colors
 
 def load_data():
-    #todo load using sql
-    df = pd.read_csv('data/politician_mention.csv')
+    db = get_db()
+    df = pd.read_sql('SELECT * FROM `politician_mention`', db)
     df['date'] = pd.to_datetime(df['timestamp']).dt.date
     color_dict = randomize_colors(df['politician_id'].unique())
     df['color'] = df.apply(lambda row: color_dict[row['politician_id']], axis=1)
