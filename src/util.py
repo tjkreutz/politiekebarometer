@@ -12,7 +12,8 @@ def get_db():
         host=config.HOST,
         user=config.USER,
         password=config.PASSWORD,
-        db=config.DB)
+        db=config.DB,
+        port=config.PORT)
     return db
 
 def hex_color_to_rgb(hex_color):
@@ -20,13 +21,6 @@ def hex_color_to_rgb(hex_color):
 
 def rgb_to_hex_color(r, g ,b):
     return '#%02x%02x%02x' % (r, g, b)
-
-def lighten_hex_color(hex_color):
-    r, g, b =hex_color_to_rgb(hex_color)
-    color = numpy.array([r, g, b])
-    white = numpy.array([255, 255, 255])
-    r, g, b = color + (white - color) * 0.75
-    return rgb_to_hex_color(int(r), int(g), int(b))
 
 def randomize_colors(values):
     colors = {}
