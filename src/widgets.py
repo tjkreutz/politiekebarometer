@@ -53,12 +53,11 @@ def update_politician_list_children(df):
     sorted_politicians = df.groupby(['pol_id', 'color', 'full_name']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
         html.Div([
-            html.Img(src='assets/politician.png', className='politician-picture'),
+            html.Img(src='assets/politician.png', className='politician-picture', style={'border': f'solid {politician["color"]}'}),
             html.Span(str(index+1) + '. ' + politician['full_name'], className='politician-name'),
             html.P(str(politician['mentions']) + ' keer genoemd.', style={'font-size': '60%'}),
             html.A('Uitgebreide informatie >>', href='#', style={'font-size': '60%'}),
         ],
-            style={'background-color': politician['color']},
             className='politician-item',
         ) for index, politician in sorted_politicians.iterrows()]
 

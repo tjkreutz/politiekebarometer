@@ -1,12 +1,22 @@
+body {
+    margin-top: 0;
+    background-color: #e6e6e6;
+}
+
 h1 {
     font-weight: 500;
     font-size: 3rem;
-    margin: 20px 0;
+    padding: 20px 0;
 }
 
 h2 {
     font-size: 2rem;
     margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 0 30px;
 }
 
 .intro-text {
@@ -69,10 +79,10 @@ h2 {
 
 .politician-item {
     overflow: auto;
+    border-bottom: thin solid #e6e6e6;
 }
 
 .politician-picture {
     margin: 5px;
-    border: thin solid #727272;
     float: left;
 }
