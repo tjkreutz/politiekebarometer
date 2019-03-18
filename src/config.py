@@ -2,4 +2,4 @@ HOST = ""
 USER = ""
 PASSWORD = ""
 DB = ""
-PORT = ""
+PORT = 0
