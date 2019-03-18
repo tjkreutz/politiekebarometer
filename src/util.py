@@ -6,6 +6,7 @@ import pandas as pd
 import random
 import colorsys
 from . import config
+from . import sql
 
 def get_db():
     db = MySQLdb.connect(
@@ -33,18 +34,25 @@ def randomize_colors(values):
 
 def load_data():
     db = get_db()
-    df = pd.read_sql('SELECT * FROM `politician_mention`', db)
-    df['date'] = pd.to_datetime(df['timestamp']).dt.date
-    color_dict = randomize_colors(df['politician_id'].unique())
-    df['color'] = df.apply(lambda row: color_dict[row['politician_id']], axis=1)
+    query = sql.ALL_PERSON_QUERY
+    df = pd.read_sql(query, db)
+    df['date'] = df['ts'].dt.date
+    color_dict = randomize_colors(df['pol_id'].unique())
+    df['color'] = df.apply(lambda row: color_dict[row['pol_id']], axis=1)
     return df
 
 def load_most_mentioned(df, n):
-    most_mentioned = df.politician_id.value_counts().head(n).index.values
-    return df.loc[df['politician_id'].isin(most_mentioned)]
+    most_mentioned = df.pol_id.value_counts().head(n).index.values
+    return df.loc[df['pol_id'].isin(most_mentioned)]
 
 def load_data_sources(df, data_sources):
-    return df.loc[df['genre'].isin(data_sources)]
+    if 'news' in data_sources and 'twitter' in data_sources:
+        return df
+    if 'news' in data_sources:
+        return df.loc[df['news_id'].notnull()]
+    if 'twitter' in data_sources:
+        return df.loc[df['tweet_id'].notnull()]
+    return df.iloc[0:0]
 
 def load_days(df, days):
     last_date = df['date'].max()

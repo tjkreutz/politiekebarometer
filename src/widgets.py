@@ -50,15 +50,15 @@ def politician_mention_graph(id, df):
 
 #define custom interactivity
 def update_politician_list_children(df):
-    sorted_politicians = df.groupby(['politician_id', 'color']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    sorted_politicians = df.groupby(['pol_id', 'color', 'full_name']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
         html.Div([
             html.Img(src='assets/politician.png', className='politician-picture'),
-            html.Span(str(index+1) + '. ' + politician['politician_id'], className='politician-name'),
+            html.Span(str(index+1) + '. ' + politician['full_name'], className='politician-name'),
             html.P(str(politician['mentions']) + ' keer genoemd.', style={'font-size': '60%'}),
             html.A('Uitgebreide informatie >>', href='#', style={'font-size': '60%'}),
         ],
-            style={'background-color': util.lighten_hex_color(politician['color'])},
+            style={'background-color': politician['color']},
             className='politician-item',
         ) for index, politician in sorted_politicians.iterrows()]
 
@@ -76,16 +76,16 @@ def update_politician_mention_graph_figure(df):
     first_date, last_date = df['date'].min(), df['date'].max()
 
     # group by date and politician, count the rows
-    df = df.groupby(['date', 'politician_id', 'color']).size().reset_index(name='mentions')
+    df = df.groupby(['date', 'pol_id', 'color', 'full_name']).size().reset_index(name='mentions')
 
     y_max = df['mentions'].max() + 20
 
-    for politician in df['politician_id'].unique():
-        politician_df = df[df['politician_id'] == politician]
+    for politician in df['pol_id'].unique():
+        politician_df = df[df['pol_id'] == politician]
         data.append(go.Scatter(
             x=politician_df['date'],
             y=politician_df['mentions'],
-            name=politician,
+            name=politician_df['full_name'].iloc[0],
             #todo: Save color in relational db
             line={'color': politician_df['color'].iloc[0]},
             showlegend=False,
