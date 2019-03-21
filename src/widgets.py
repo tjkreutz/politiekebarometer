@@ -1,4 +1,5 @@
 import datetime
+import dash_table
 from . import util
 import plotly.graph_objs as go
 import dash_core_components as dcc
@@ -19,7 +20,8 @@ def data_checkbox(id):
             {'label': 'Nieuws', 'value': 'news'},
             {'label': 'Twitter', 'value': 'twitter'},
         ],
-        values=['news', 'twitter']
+        values=['news', 'twitter'],
+        className='data-checkbox',
     )
 
 def politician_list(id, df):
@@ -52,12 +54,16 @@ def politician_mention_graph(id, df):
 def update_politician_list_children(df):
     sorted_politicians = df.groupby(['pol_id', 'color', 'full_name']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
-        html.Div([
-            html.Img(src='assets/politician.png', className='politician-picture', style={'border': f'solid {politician["color"]}'}),
-            html.Span(str(index+1) + '. ' + politician['full_name'], className='politician-name'),
-            html.P(str(politician['mentions']) + ' keer genoemd.', style={'font-size': '60%'}),
-            html.A('Uitgebreide informatie >>', href='#', style={'font-size': '60%'}),
+        html.A([
+            html.Img(src='assets/politician.png', className='politician-picture', style={'border': f'3px solid {politician["color"]}'}),
+            html.P('>>', className='more-information'),
+            html.Table([
+                html.Tr([html.Th(str(index+1) + '.'), html.Th(politician['full_name'])]),
+                html.Tr([html.Td(), html.Td(str(politician['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
+            ], className='politician-table'),
         ],
+            href='#',
+            id='politician-item' + str(index+1),
             className='politician-item',
         ) for index, politician in sorted_politicians.iterrows()]
 
@@ -75,11 +81,13 @@ def update_politician_mention_graph_figure(df):
     first_date, last_date = df['date'].min(), df['date'].max()
 
     # group by date and politician, count the rows
+    sorted_politicians = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     df = df.groupby(['date', 'pol_id', 'color', 'full_name']).size().reset_index(name='mentions')
+
 
     y_max = df['mentions'].max() + 20
 
-    for politician in df['pol_id'].unique():
+    for politician in sorted_politicians['pol_id']:
         politician_df = df[df['pol_id'] == politician]
         data.append(go.Scatter(
             x=politician_df['date'],
@@ -89,15 +97,6 @@ def update_politician_mention_graph_figure(df):
             line={'color': politician_df['color'].iloc[0]},
             showlegend=False,
         ))
-
-    # custom annotated lines to demonstrate events
-    schauvliege_datetime = datetime.datetime(year=2019, month=2, day=5, hour=18, minute=26)
-    schauvliege_line = event_line('Joke Schauvliege neemt ontslag', schauvliege_datetime)
-
-    francken_datetime = datetime.datetime(year=2019, month=2, day=13, hour=11)
-    francken_line = event_line('Theo Francken getuigt over humanitaire visa', francken_datetime)
-
-    data.extend([schauvliege_line, francken_line])
 
     return {
     'data': data,

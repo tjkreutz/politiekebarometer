@@ -1,6 +1,5 @@
 body {
-    margin-top: 0;
-    background-color: #e6e6e6;
+    margin: 0;
 }
 
 h1 {
@@ -17,6 +16,7 @@ h2 {
 .container {
     background-color: white;
     padding: 0 30px;
+    border: thin solid #e6e6e6;
 }
 
 .intro-text {
@@ -26,17 +26,17 @@ h2 {
 .header {
     color: white;
     padding: 5px;
-    margin-bottom: 10px;
     background-color: #9c0b3b;
 }
 
 .menu-item {
     display: inline-block;
     padding: 10px 40px;
+    border-bottom: thick solid white;
 }
 
 .menu-item:hover {
-    background-color: #e6e6e6;
+    border-bottom: thick solid #abe2fb;
 }
 
 .menu-item:not(:last-child) {
@@ -73,16 +73,44 @@ h2 {
   }
 }
 
+.data-checkbox {
+    margin: 10px 0;
+}
+
 .range-slider {
-    margin: 0 0 30px 0;
+    margin: 10px 0 30px 0;
 }
 
 .politician-item {
+    color: inherit;
+    display: block;
+    text-decoration: none;
     overflow: auto;
     border-bottom: thin solid #e6e6e6;
 }
 
+.politician-item:hover {
+    background-color: #fafafa;
+}
+
 .politician-picture {
+    border-radius: 50%;
     margin: 5px;
     float: left;
+    clear: right;
+}
+
+.more-information {
+    margin: 17px 5px;
+    float: right;
+}
+
+.politician-table {
+    margin-top: 8px;
+}
+
+.politician-table th, td {
+    font-weight: normal;
+    border: none;
+    padding: 0 3px;
 }

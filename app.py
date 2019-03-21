@@ -41,6 +41,7 @@ app.layout = html.Div([
             widgets.politician_list('politician-list', df)
         ], className='four columns'),
     ], className='row'),
+    html.Script(src='assets/functions.js')
 ], className='container')
 
 
