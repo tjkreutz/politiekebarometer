@@ -1,22 +1,32 @@
 body {
     margin: 0;
+    background: white url("background.gif") repeat;
 }
 
 h1 {
-    font-weight: 500;
-    font-size: 3rem;
-    padding: 20px 0;
+    font-weight: 400;
+    font-size: 2em;
+    padding: 0;
+    letter-spacing: 0.02em;
 }
 
 h2 {
-    font-size: 2rem;
-    margin: 0;
+    font-weight: 400;
+    font-size: 1em;
+    margin: 2px 4px;
+    letter-spacing: 0.01em;
+}
+
+.barometer img{
+    margin-top: 20px;
+    height: 80px;
 }
 
 .container {
     background-color: white;
     padding: 0 30px;
-    border: thin solid #e6e6e6;
+    border-left: thin solid #e6e6e6;
+    border-right: thin solid #e6e6e6;
 }
 
 .intro-text {
@@ -86,7 +96,6 @@ h2 {
     display: block;
     text-decoration: none;
     overflow: auto;
-    border-bottom: thin solid #e6e6e6;
 }
 
 .politician-item:hover {
@@ -113,4 +122,18 @@ h2 {
     font-weight: normal;
     border: none;
     padding: 0 3px;
+}
+
+.footer {
+    margin-top: 10px;
+    font-size: 75%;
+    border-top: thin solid #e6e6e6;
+}
+
+.research-list {
+    margin: 20px 0;
+}
+
+.research-list span {
+    margin: 10px;
 }

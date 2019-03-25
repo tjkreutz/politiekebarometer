@@ -90,6 +90,7 @@ def update_politician_mention_graph_figure(df):
     for politician in sorted_politicians['pol_id']:
         politician_df = df[df['pol_id'] == politician]
         data.append(go.Scatter(
+            mode='lines',
             x=politician_df['date'],
             y=politician_df['mentions'],
             name=politician_df['full_name'].iloc[0],
@@ -102,7 +103,8 @@ def update_politician_mention_graph_figure(df):
     'data': data,
     'layout': go.Layout(
         xaxis={'range': (first_date, last_date), 'fixedrange': True},
-        yaxis={'range': (0, y_max), 'title': 'Aantal keer genoemd', 'fixedrange': True},
-        margin={'l':50,'r':50,'b':20,'t':20,'pad':4},
+        yaxis={'range': (0, y_max), 'fixedrange': True},
+        margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
         hovermode='closest',
+        autosize=True,
     )}
