@@ -1,7 +1,7 @@
 import os
 
-HOST = os.environ.get('HOST')
-USER = os.environ.get('USER')
-PASSWORD = os.environ.get('PASS')
-DB = os.environ.get('DB')
-PORT = int(os.environ.get('PORT'))
+HOST = os.environ.get('DB_HOST')
+USER = os.environ.get('DB_USER')
+PASSWORD = os.environ.get('DB_PASSWORD')
+DB = os.environ.get('DB_DB')
+PORT = int(os.environ.get('DB_PORT'))
