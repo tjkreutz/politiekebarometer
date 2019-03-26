@@ -26,5 +26,6 @@ FROM    mentions
         LEFT JOIN doc_news 
             ON fragments.doc_id=doc_news.doc_id 
         LEFT JOIN doc_tweets 
-            ON fragments.doc_id=doc_tweets.doc_id;
+            ON fragments.doc_id=doc_tweets.doc_id
+WHERE   doc_all.ts BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
