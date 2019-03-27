@@ -31,14 +31,25 @@ def randomize_colors(values):
         colors[value] = hex_color
     return colors
 
-def load_data():
+def load_politicians():
     db = get_db()
-    query = sql.ALL_PERSON_QUERY
+    query = sql.ALL_POLITICIAN_QUERY
     df = pd.read_sql(query, db)
     color_dict = randomize_colors(df['pol_id'].unique())
 
     df['date'] = df['ts'].dt.date
-    df['picture'] = df.picture.fillna('assets/politician.png')
+    df.picture.replace([None], 'assets/blank.png', inplace=True)
+    df['color'] = df.apply(lambda row: row['color'] if not pd.isnull(row['color']) else color_dict[row['pol_id']], axis=1)
+    return df
+
+def load_parties():
+    db = get_db()
+    query = sql.ALL_PARTIES_QUERY
+    df = pd.read_sql(query, db)
+    color_dict = randomize_colors(df['pol_id'].unique())
+
+    df['date'] = df['ts'].dt.date
+    df.picture.replace([None], 'assets/blank.png', inplace=True)
     df['color'] = df.apply(lambda row: row['color'] if not pd.isnull(row['color']) else color_dict[row['pol_id']], axis=1)
     return df
 

@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app
-from pages import hoe_werkt_het, overview_politicians
+from pages import overview_parties, overview_politicians, hoe_werkt_het
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -11,11 +11,11 @@ app.layout = html.Div([
         html.Center([
             html.Div(html.Img(src='assets/barometer.png'), className='barometer'),
             html.H1('De Politieke Barometer'),
-            html.Div(html.A("Hoe werkt het?", href='hoe-werkt-het'), className='menu-item'),
-            html.Div(html.A('Partijen', href='#'), className='menu-item'),
+            html.Div(html.A('Partijen', href='partijen'), className='menu-item'),
             html.Div(html.A('Politici', href='politici'), className='menu-item'),
             html.Div(html.A("Thema's", href='#'), className='menu-item'),
             html.Div(html.A("Dossiers", href='#'), className='menu-item'),
+            html.Div(html.A("Hoe werkt het?", href='hoe-werkt-het'), className='menu-item'),
         ]),
     ], className='header'),
     html.Div(id='page-content'),
@@ -33,12 +33,14 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/':
+    if pathname == '/' :
+        return overview_parties.layout
+    elif pathname == '/partijen':
+        return overview_parties.layout
+    elif pathname == '/politici':
         return overview_politicians.layout
     elif pathname == '/hoe-werkt-het':
          return hoe_werkt_het.layout
-    elif pathname == '/politici':
-        return overview_politicians.layout
     else:
         return '404'
 

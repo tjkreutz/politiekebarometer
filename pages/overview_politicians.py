@@ -7,7 +7,7 @@ import dash_html_components as html
 from app import app
 
 # load data
-og_df = util.load_data()
+og_df = util.load_politicians()
 df = util.load_most_mentioned(og_df, n=5)
 
 # define layout
@@ -22,7 +22,7 @@ layout = html.Div([
         html.Div([
             html.Div(html.H2('Politici'), className='title-field'),
             widgets.politician_mention_graph('politician-mention-graph', df),
-            html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden politici online genoemd?")], style={'font-size': '75%'})),
+            html.Center(html.P([html.B("Figuur 2: "), html.Span("Hoe vaak worden politici online genoemd?")], style={'font-size': '75%'})),
         ], className='eight columns'),
         html.Div([
             html.Div(html.H2('Data'), className='title-field'),
@@ -39,7 +39,7 @@ layout = html.Div([
     dash.dependencies.Output('politician-mention-graph', 'figure'),
     [dash.dependencies.Input('date-slider', 'value'),
      dash.dependencies.Input('data-selector', 'values')])
-def update_graph(timestamp_range, data_sources):
+def update_politician_graph(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
     df = util.load_most_mentioned(og_df, 5)

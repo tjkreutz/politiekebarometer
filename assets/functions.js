@@ -1,5 +1,5 @@
 var checkExist = setInterval(function() {
-  parties_list = document.getElementById('parties-list');
+  party_list = document.getElementById('party-list');
   politician_list = document.getElementById('politician-list');
 
   if (politician_list) {
@@ -16,16 +16,16 @@ var checkExist = setInterval(function() {
     }
   clearInterval(checkExist);
   }
-  if (parties_list) {
-    parties_list.onmouseout = function() {
-        highlightAllTrace('parties-mention-graph');
+  if (party_list) {
+    party_list.onmouseout = function() {
+        highlightAllTrace('party-mention-graph');
     };
-    var parties_items = parties_list.getElementsByTagName("a");
-    for (i = 0; i < parties_items.length; i++) {
-      parties_items[i].number = i;
-      parties_items[i].onmouseover = function() {
-        lowlightAllTrace('parties-mention-graph');
-        highlightTrace('parties-mention-graph', this.number)
+    var party_items = party_list.getElementsByTagName("a");
+    for (i = 0; i < party_items.length; i++) {
+      party_items[i].number = i;
+      party_items[i].onmouseover = function() {
+        lowlightAllTrace('party-mention-graph');
+        highlightTrace('party-mention-graph', this.number)
       };
     }
   clearInterval(checkExist);

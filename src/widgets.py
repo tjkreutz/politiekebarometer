@@ -30,6 +30,12 @@ def politician_list(id, df):
         children=update_politician_list_children(df),
     )
 
+def party_list(id, df):
+    return html.Div(
+        id=id,
+        children=update_party_list_children(df),
+    )
+
 def date_slider(id, df):
     min_date = df['date'].min()
     max_date = df['date'].max()
@@ -50,7 +56,13 @@ def politician_mention_graph(id, df):
         figure=update_politician_mention_graph_figure(df)
     )
 
-#define custom interactivity
+def party_mention_graph(id, df):
+    return dcc.Graph(
+        id=id,
+        config=graph_config,
+        figure=update_party_mention_graph_figure(df)
+    )
+
 def update_politician_list_children(df):
     sorted_politicians = df.groupby(['pol_id', 'color', 'full_name', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
@@ -66,6 +78,22 @@ def update_politician_list_children(df):
             id='politician-item' + str(index+1),
             className='politician-item',
         ) for index, politician in sorted_politicians.iterrows()]
+
+def update_party_list_children(df):
+    sorted_parties = df.groupby(['pol_id', 'color', 'short_name', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    return [
+        html.A([
+            html.Img(src=party['picture'], className='politician-picture', style={'border': f'3px solid {party["color"]}'}),
+            html.P('>>', className='more-information'),
+            html.Table([
+                html.Tr([html.Th(str(index+1) + '.'), html.Th(party['short_name'])]),
+                html.Tr([html.Td(), html.Td(str(party['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
+            ], className='politician-table'),
+        ],
+            href='#',
+            id='politician-item' + str(index+1),
+            className='politician-item',
+        ) for index, party in sorted_parties.iterrows()]
 
 def update_slider_marks(df):
     first_date = df['date'].min()
@@ -89,15 +117,46 @@ def update_politician_mention_graph_figure(df):
 
     for politician in sorted_politicians['pol_id']:
         politician_df = df[df['pol_id'] == politician]
-        politician_color = politician_df['color'].iloc[0]
-        politician_color = politician_color if politician_color else util.randomize_color()
         data.append(go.Scatter(
             mode='lines',
             x=politician_df['date'],
             y=politician_df['mentions'],
             name=politician_df['full_name'].iloc[0],
             #todo: Save color in relational db
-            line={'color': politician_color},
+            line={'color': politician_df['color'].iloc[0]},
+            showlegend=False,
+        ))
+
+    return {
+    'data': data,
+    'layout': go.Layout(
+        xaxis={'range': (first_date, last_date), 'fixedrange': True},
+        yaxis={'range': (0, y_max), 'fixedrange': True},
+        margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
+        hovermode='closest',
+        autosize=True,
+    )}
+
+def update_party_mention_graph_figure(df):
+    data = []
+
+    first_date, last_date = df['date'].min(), df['date'].max()
+
+    # group by date and politician, count the rows
+    sorted_parties = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    df = df.groupby(['date', 'pol_id', 'color', 'short_name']).size().reset_index(name='mentions')
+
+    y_max = df['mentions'].max() + 20
+
+    for party in sorted_parties['pol_id']:
+        party_df = df[df['pol_id'] == party]
+        data.append(go.Scatter(
+            mode='lines',
+            x=party_df['date'],
+            y=party_df['mentions'],
+            name=party_df['short_name'].iloc[0],
+            #todo: Save color in relational db
+            line={'color': party_df['color'].iloc[0]},
             showlegend=False,
         ))
 
