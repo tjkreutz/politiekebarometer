@@ -17,9 +17,18 @@ h2 {
     letter-spacing: 0.01em;
 }
 
+p {
+    margin: 20px 0;
+}
+
+.header {
+    margin-bottom: 20px;
+    border-bottom: thin solid #e6e6e6;
+}
+
 .barometer img{
     margin-top: 20px;
-    height: 80px;
+    height: 60px;
 }
 
 .container {
@@ -27,13 +36,10 @@ h2 {
     padding: 0 30px;
     border-left: thin solid #e6e6e6;
     border-right: thin solid #e6e6e6;
+    border-bottom: thin solid #e6e6e6;
 }
 
-.intro-text {
-    margin: 20px auto;
-}
-
-.header {
+.title-field {
     color: white;
     padding: 5px;
     background-color: #9c0b3b;
