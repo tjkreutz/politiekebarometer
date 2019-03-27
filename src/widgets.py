@@ -52,10 +52,10 @@ def politician_mention_graph(id, df):
 
 #define custom interactivity
 def update_politician_list_children(df):
-    sorted_politicians = df.groupby(['pol_id', 'color', 'full_name']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    sorted_politicians = df.groupby(['pol_id', 'color', 'full_name', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
         html.A([
-            html.Img(src='assets/politician.png', className='politician-picture', style={'border': f'3px solid {politician["color"]}'}),
+            html.Img(src=politician['picture'], className='politician-picture', style={'border': f'3px solid {politician["color"]}'}),
             html.P('>>', className='more-information'),
             html.Table([
                 html.Tr([html.Th(str(index+1) + '.'), html.Th(politician['full_name'])]),
@@ -89,13 +89,15 @@ def update_politician_mention_graph_figure(df):
 
     for politician in sorted_politicians['pol_id']:
         politician_df = df[df['pol_id'] == politician]
+        politician_color = politician_df['color'].iloc[0]
+        politician_color = politician_color if politician_color else util.randomize_color()
         data.append(go.Scatter(
             mode='lines',
             x=politician_df['date'],
             y=politician_df['mentions'],
             name=politician_df['full_name'].iloc[0],
             #todo: Save color in relational db
-            line={'color': politician_df['color'].iloc[0]},
+            line={'color': politician_color},
             showlegend=False,
         ))
 

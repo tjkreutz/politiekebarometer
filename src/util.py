@@ -1,5 +1,4 @@
 import time
-import numpy
 import MySQLdb
 import datetime
 import pandas as pd
@@ -36,9 +35,11 @@ def load_data():
     db = get_db()
     query = sql.ALL_PERSON_QUERY
     df = pd.read_sql(query, db)
-    df['date'] = df['ts'].dt.date
     color_dict = randomize_colors(df['pol_id'].unique())
-    df['color'] = df.apply(lambda row: color_dict[row['pol_id']], axis=1)
+
+    df['date'] = df['ts'].dt.date
+    df['picture'] = df.picture.fillna('assets/politician.png')
+    df['color'] = df.apply(lambda row: row['color'] if not pd.isnull(row['color']) else color_dict[row['pol_id']], axis=1)
     return df
 
 def load_most_mentioned(df, n):

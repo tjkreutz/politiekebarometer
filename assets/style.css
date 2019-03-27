@@ -113,6 +113,7 @@ p {
     margin: 5px;
     float: left;
     clear: right;
+    width: 40px;
 }
 
 .more-information {

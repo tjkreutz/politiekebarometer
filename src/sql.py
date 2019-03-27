@@ -5,18 +5,22 @@ SELECT  mentions.id AS mentions_id,
         doc_all.id AS doc_id,
         doc_news.news_id, 
         doc_tweets.tweet_id, 
+        pol_all.color,
+        pol_all.picture,
+        pol_all.info,
         pol_persons.first_name, 
         pol_persons.last_name, 
         pol_persons.full_name, 
         pol_persons.party_id, 
-        pol_persons.info, 
         doc_all.ts, 
         doc_all.theme_code, 
         doc_all.event_name, 
         doc_all.url, 
         doc_news.source, 
         doc_tweets.username 
-FROM    mentions 
+FROM    mentions
+        JOIN pol_all
+            ON mentions.pol_id=pol_all.id
         JOIN pol_persons 
             ON mentions.pol_id=pol_persons.pol_id 
         JOIN fragments 
