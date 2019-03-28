@@ -16,6 +16,22 @@ def get_db():
         port=config.PORT)
     return db
 
+def name_to_slug(name):
+    predefined = {'CD&V': 'cdenv', 'Ecolo-Groen': 'ecolo-groen', 'N-VA': 'n-va', 'PTB-GO!': 'ptb-go', 'PTB-PVDA-go!': 'ptb-pvda-go', 'sp.a': 'sp-a', 'Vuye&Wouters': 'vuyeenwouters'}
+    if name in predefined:
+        return predefined[name]
+    name = name.replace('-', '_')
+    name = name.replace(' ', '-')
+    return name
+
+def slug_to_name(slug):
+    predefined = {'cdenv': 'CD&V', 'ecolo-groen': 'Ecolo-Groen', 'n-va': 'N-VA', 'ptb-go': 'PTB-GO!', 'ptb-pvda-go': 'PTB-PVDA-go!', 'sp-a': 'sp.a', 'vuyeenwouters': 'Vuye&Wouters'}
+    if slug in predefined:
+        return predefined[slug]
+    slug = slug.replace('-', ' ')
+    slug = slug.replace('_', '-')
+    return slug
+
 def hex_color_to_rgb(hex_color):
     return tuple(int(hex_color[1:][i:i + 2], 16) for i in (0, 2, 4))
 
@@ -31,9 +47,21 @@ def randomize_colors(values):
         colors[value] = hex_color
     return colors
 
-def load_politicians():
+def load_party(slug):
     db = get_db()
-    query = sql.ALL_POLITICIAN_QUERY
+    query = sql.PROFILE_PARTY
+    df = pd.read_sql(query, db, params=[slug_to_name(slug)])
+    return df
+
+def load_politician(slug):
+    db = get_db()
+    query = sql.PROFILE_POLITICIAN
+    df = pd.read_sql(query, db, params=[slug_to_name(slug)])
+    return df
+
+def load_overview_politicians():
+    db = get_db()
+    query = sql.OVERVIEW_POLITICIANS
     df = pd.read_sql(query, db)
     color_dict = randomize_colors(df['pol_id'].unique())
 
@@ -42,9 +70,9 @@ def load_politicians():
     df['color'] = df.apply(lambda row: row['color'] if not pd.isnull(row['color']) else color_dict[row['pol_id']], axis=1)
     return df
 
-def load_parties():
+def load_overview_parties():
     db = get_db()
-    query = sql.ALL_PARTIES_QUERY
+    query = sql.OVERVIEW_PARTIES
     df = pd.read_sql(query, db)
     color_dict = randomize_colors(df['pol_id'].unique())
 

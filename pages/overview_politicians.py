@@ -7,7 +7,7 @@ import dash_html_components as html
 from app import app
 
 # load data
-og_df = util.load_politicians()
+og_df = util.load_overview_politicians()
 df = util.load_most_mentioned(og_df, n=5)
 
 # define layout
