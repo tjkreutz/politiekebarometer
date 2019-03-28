@@ -21,8 +21,8 @@ layout = html.Div([
     html.Div([
         html.Div([
             html.Div(html.H2('Politici'), className='title-field'),
-            widgets.politician_mention_graph('politician-mention-graph', df),
             html.Center(html.P([html.B("Figuur 2: "), html.Span("Hoe vaak worden politici online genoemd?")], style={'font-size': '75%'})),
+            widgets.politician_mention_graph('politician-mention-graph', df),
         ], className='eight columns'),
         html.Div([
             html.Div(html.H2('Data'), className='title-field'),

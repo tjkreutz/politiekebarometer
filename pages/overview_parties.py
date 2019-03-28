@@ -21,8 +21,8 @@ layout = html.Div([
     html.Div([
         html.Div([
             html.Div(html.H2('Partijen'), className='title-field'),
+            html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden partijen online genoemd?")],style={'font-size': '75%'})),
             widgets.party_mention_graph('party-mention-graph', df),
-            html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden partijen online genoemd?")], style={'font-size': '75%'})),
         ], className='eight columns'),
         html.Div([
             html.Div(html.H2('Data'), className='title-field'),
