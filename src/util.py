@@ -1,19 +1,46 @@
+import os
 import time
 import MySQLdb
 import datetime
 import pandas as pd
 import random
 import colorsys
-from . import config
 from . import sql
+from dotenv import load_dotenv
+from urllib.parse import urlparse
+from sshtunnel import SSHTunnelForwarder
 
 def get_db():
+    load_dotenv()
+
+    ssh_url = os.getenv('SSH_URL')
+    ssh_parse = urlparse(ssh_url)
+    ssh_private_key = os.getenv('SSH_PRIVATE_KEY')
+    ssh_private_key_password = os.getenv('SSH_PRIVATE_KEY_PASSWORD')
+
+    database_url = os.getenv('DATABASE_URL')
+    database_parse = urlparse(database_url)
+
+    tunnel = SSHTunnelForwarder(
+            (ssh_parse.hostname, ssh_parse.port),
+            ssh_username=ssh_parse.username,
+            ssh_password=ssh_parse.password,
+            ssh_pkey=ssh_private_key,
+            ssh_private_key_password=ssh_private_key_password,
+            remote_bind_address=(database_parse.hostname, database_parse.port))
+    tunnel.start()
     db = MySQLdb.connect(
-        host=config.HOST,
-        user=config.USER,
-        password=config.PASSWORD,
-        db=config.DB,
-        port=config.PORT)
+        host='127.0.0.1',
+        user=database_parse.username,
+        password=database_parse.password,
+        db=database_parse.path[1:],
+        port=tunnel.local_bind_port,
+        ssl={
+        'ca': 'assets/ca.pem',
+        'cert': 'assets/client-cert.pem',
+        'key': 'assets/client-key.pem',
+        }
+    )
     return db
 
 def name_to_slug(name):
