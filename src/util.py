@@ -47,6 +47,7 @@ def name_to_slug(name):
     predefined = {'CD&V': 'cdenv', 'Ecolo-Groen': 'ecolo-groen', 'N-VA': 'n-va', 'PTB-GO!': 'ptb-go', 'PTB-PVDA-go!': 'ptb-pvda-go', 'sp.a': 'sp-a', 'Vuye&Wouters': 'vuyeenwouters'}
     if name in predefined:
         return predefined[name]
+    name = name.lower()
     name = name.replace('-', '_')
     name = name.replace(' ', '-')
     return name
