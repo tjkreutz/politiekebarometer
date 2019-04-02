@@ -56,7 +56,7 @@ PROFILE_PARTY = """
 SELECT  mentions.id AS mentions_id, 
         pol_parties.pol_id AS pol_id, 
         fragments.id AS fragment_id,
-        themes.name as theme_name,
+        themes.name AS theme_name,
         doc_all.id AS doc_id,
         doc_all.ts,
         doc_news.news_id, 
@@ -75,7 +75,7 @@ FROM    mentions
             ON mentions.fragment_id=fragments.id 
         JOIN doc_all 
             ON fragments.doc_id=doc_all.id 
-        JOIN themes
+        LEFT JOIN themes
             ON doc_all.theme_code = themes.code
         LEFT JOIN doc_news 
             ON fragments.doc_id=doc_news.doc_id 
@@ -88,7 +88,7 @@ PROFILE_POLITICIAN = """
 SELECT  mentions.id AS mentions_id, 
         pol_persons.pol_id AS pol_id, 
         fragments.id AS fragment_id, 
-        themes.name as theme_name,
+        themes.name AS theme_name,
         doc_all.id AS doc_id,
         doc_news.news_id, 
         doc_tweets.tweet_id, 
@@ -108,7 +108,7 @@ FROM    mentions
             ON mentions.fragment_id=fragments.id 
         JOIN doc_all 
             ON fragments.doc_id=doc_all.id 
-        JOIN themes
+        LEFT JOIN themes
             ON doc_all.theme_code = themes.code
         LEFT JOIN doc_news 
             ON fragments.doc_id=doc_news.doc_id 
