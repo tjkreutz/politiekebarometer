@@ -63,9 +63,9 @@ SELECT  mentions.id AS mentions_id,
         doc_tweets.tweet_id, 
         pol_all.color,
         pol_all.picture,
-        pol_all.info,
         pol_parties.short_name, 
-        pol_parties.full_name
+        pol_parties.full_name,
+        pol_parties.no_of_members
 FROM    mentions
         JOIN pol_all
             ON mentions.pol_id=pol_all.id
@@ -87,6 +87,7 @@ WHERE   doc_all.ts BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW() AND pol_parties.s
 PROFILE_POLITICIAN = """
 SELECT  mentions.id AS mentions_id, 
         pol_persons.pol_id AS pol_id, 
+        pol_parties.short_name AS party_name,
         fragments.id AS fragment_id, 
         themes.name AS theme_name,
         doc_all.id AS doc_id,
@@ -94,9 +95,6 @@ SELECT  mentions.id AS mentions_id,
         doc_tweets.tweet_id, 
         pol_all.color,
         pol_all.picture,
-        pol_all.info,
-        pol_persons.first_name,
-        pol_persons.last_name,
         pol_persons.full_name,
         doc_all.ts
 FROM    mentions
@@ -104,6 +102,8 @@ FROM    mentions
             ON mentions.pol_id=pol_all.id
         JOIN pol_persons 
             ON mentions.pol_id=pol_persons.pol_id 
+        JOIN pol_parties
+            ON pol_persons.party_id=pol_parties.id
         JOIN fragments 
             ON mentions.fragment_id=fragments.id 
         JOIN doc_all 

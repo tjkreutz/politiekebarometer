@@ -12,7 +12,7 @@ def get_layout(slug):
     party_picture = df['picture'].iloc[0]
     party_color = df['color'].iloc[0]
     party_full_name = df['full_name'].iloc[0]
-    party_info = df['info'].iloc[0]
+    party_no_of_members = df['no_of_members'].iloc[0]
 
     news_df = df.loc[df['news_id'].notnull()]
     news_count = len(news_df.index)
@@ -23,29 +23,27 @@ def get_layout(slug):
 
     # define layout
     layout = html.Div([
-        html.P(party_info),
         html.Div([
-            html.Div([
-                html.Div(html.H2('Info'), className='title-field'),
-                html.Table([
-                    html.Tr([
-                        html.Td(html.Img(src=party_picture, className='politician-picture',
-                                         style={'border': f'3px solid {party_color}', 'vertical-align': 'top'})),
-                        html.Td([
-                            html.Tr([html.Td('Naam:'), html.Td(party_name)]),
-                            html.Tr([html.Td('Volledige naam:'), html.Td(party_full_name)]),
-                        ])
-                    ]),
-                ])
-            ], className='six columns'),
-            html.Div([
-                html.Div(html.H2('Data samengevat (afgelopen 30 dagen)'), className='title-field'),
-                html.Table([
-                    html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),
-                    html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
-                    html.Tr([html.Td('Belangrijkste thema:', style={'vertical-align': 'top'}), html.Td(top_theme)]),
-                ])
-            ], className='six columns'),
-        ], className='row'),
-    ])
+            html.Div(html.H2('Info'), className='title-field'),
+            html.Table([
+                html.Tr([
+                    html.Td(html.Img(src=party_picture, className='politician-picture',
+                                     style={'border': f'3px solid {party_color}', 'vertical-align': 'top'})),
+                    html.Td([
+                        html.Tr([html.Td('Naam:'), html.Td(party_name)]),
+                        html.Tr([html.Td('Volledige naam:'), html.Td(party_full_name)]),
+                        html.Tr([html.Td('Aantal leden:'), html.Td(party_no_of_members)]),
+                    ])
+                ]),
+            ])
+        ], className='six columns'),
+        html.Div([
+            html.Div(html.H2('Data samengevat (afgelopen 30 dagen)'), className='title-field'),
+            html.Table([
+                html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),
+                html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
+                html.Tr([html.Td('Belangrijkste thema:', style={'vertical-align': 'top'}), html.Td(top_theme)]),
+            ])
+        ], className='six columns'),
+    ], className='row')
     return layout

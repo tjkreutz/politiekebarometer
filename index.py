@@ -3,14 +3,16 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app, server
-from pages import overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
+from pages import home, overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
         html.Center([
-            html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
-            html.H1('De Politieke Barometer'),
+            html.A([
+                html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
+                html.H1('De Politieke Barometer'),
+            ], href='/'),
             html.Div(html.A('Partijen', href='/partijen'), className='menu-item'),
             html.Div(html.A('Politici', href='/politici'), className='menu-item'),
             html.Div(html.A("Thema's", href='#'), className='menu-item'),
@@ -21,11 +23,12 @@ app.layout = html.Div([
     html.Div(id='page-content'),
     html.Div([
         html.Center([
-            html.P("""De politieke barometer is ontwikkeld in partnerschap met verschillende onderzoeksgroepen aan de Universiteit Antwerpen.""", style={'margin-bottom': '20px'}),
-            html.Span(html.A(html.Img(src='https://www.uantwerpen.be/images/uantwerpen/container1186/images/UA_HOR_NED_RGB.png', style={'height': '32px'}), href='https://www.uantwerpen.be/')),
-            html.Span(html.A(html.Img(src='/assets/m2p.png', style={'height': '32px'}), href="https://www.uantwerpen.be/nl/onderzoeksgroep/m2p/")),
-            html.Span(html.A(html.Img(src='/assets/mpc.png', style={'height': '32px'}), href="https://www.uantwerpen.be/nl/onderzoeksgroep/mpc/")),
-            html.Span(html.A(html.Img(src='/assets/clips.png', style={'height': '32px'}), href="https://www.uantwerpen.be/nl/onderzoeksgroep/clips/")),
+            html.P([
+            """De politieke barometer is onderdeel van het """,
+            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/'),
+            """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
+            html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/'),
+            """."""], style={'margin-bottom': '20px'}),
         ], className='research-list')
     ], className='footer'),
 ], className='container')
@@ -34,7 +37,7 @@ app.layout = html.Div([
               [Input('url', 'pathname')])
 def display_page(pathname):
     if not pathname or pathname=='/':
-        return overview_parties.layout
+        return home.layout
     elif '/partijen' in pathname:
         parts = pathname.split('/')
         if len(parts) > 2:

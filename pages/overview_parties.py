@@ -13,12 +13,6 @@ df = util.load_most_mentioned(og_df, n=5)
 # define layout
 layout = html.Div([
     html.Div([
-        html.P("""
-        De politieke barometer verwerkt ongeveer 1.000 nieuwsartikelen en meer dan 200.000 tweets over politici 
-        en politieke partijen per dag. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst 
-        taalkundig analyseert."""),
-    ], className='intro-text'),
-    html.Div([
         html.Div([
             html.Div(html.H2('Partijen'), className='title-field'),
             html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden partijen online genoemd?")],style={'font-size': '75%'})),
