@@ -36,9 +36,9 @@ def get_layout():
 def update_party_graph(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_most_mentioned(overview_parties, 5)
-    df = util.select_date_range(df, (first_date, last_date))
+    df = util.select_date_range(overview_parties, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
+    df = util.select_most_mentioned(df, 5)
     return widgets.update_mention_graph_figure(df)
 
 @app.callback(
@@ -48,7 +48,7 @@ def update_party_graph(timestamp_range, data_sources):
 def update_party_list(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_most_mentioned(overview_parties, 5)
-    df = util.select_date_range(df, (first_date, last_date))
+    df = util.select_date_range(overview_parties, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
+    df = util.select_most_mentioned(df, 5)
     return widgets.update_list_children(df, 'partijen')
