@@ -1,32 +1,33 @@
 from src import util
 
 import dash_html_components as html
+from app import overview_politicians
 
 def get_layout(slug):
-    # load data
-    df = util.load_politician(slug)
-    if df.empty:
+    politician_profile = util.load_politician_profile(slug)
+    if politician_profile.empty:
         return '404. Deze pagina bestaat niet.'
 
-    politician_name = df['full_name'].iloc[0]
-    politician_picture = df['picture'].iloc[0]
-    politician_color = df['color'].iloc[0]
-    politician_party = df['party_name'].iloc[0]
+    politician_profile = politician_profile.iloc[0]
+    politician_name = politician_profile['full_name']
+    politician_picture = politician_profile['picture']
+    politician_color = politician_profile['color']
+    politician_party = politician_profile['party_name']
 
-    news_df = df.loc[df['news_id'].notnull()]
+    df = util.select_pol_by_name(overview_politicians, politician_name)
+    news_df = util.select_data_sources(df, ['news'])
     news_count = len(news_df.index)
-    tweet_df = df.loc[df['tweet_id'].notnull()]
+    tweet_df = util.select_data_sources(df, ['twitter'])
     tweet_count = len(tweet_df.index)
 
     top_theme = df['theme_name'].value_counts().idxmax()
 
-    # define layout
     layout = html.Div([
         html.Div([
             html.Div(html.H2('Info'), className='title-field'),
             html.Table([
                 html.Tr([
-                    html.Td(html.Img(src=politician_picture, className='politician-picture',
+                    html.Td(html.Img(src=politician_picture, className='pol-picture',
                                      style={'border': f'3px solid {politician_color}', 'vertical-align': 'top'})),
                     html.Td([
                         html.Tr([html.Td('Naam:'), html.Td(politician_name)]),

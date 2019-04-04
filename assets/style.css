@@ -102,18 +102,18 @@ p {
     margin: 10px 0 30px 0;
 }
 
-.politician-item {
+.pol-item {
     color: inherit;
     display: block;
     text-decoration: none;
     overflow: auto;
 }
 
-.politician-item:hover {
+.pol-item:hover {
     background-color: #fafafa;
 }
 
-.politician-picture {
+.pol-picture {
     border-radius: 50%;
     margin: 5px;
     float: left;
@@ -128,11 +128,11 @@ p {
     float: right;
 }
 
-.politician-table {
+.pol-table {
     margin-top: 8px;
 }
 
-.politician-table th, td {
+.pol-table th, td {
     font-weight: normal;
     border: none;
     padding: 0 3px;

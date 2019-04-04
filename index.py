@@ -37,19 +37,19 @@ app.layout = html.Div([
               [Input('url', 'pathname')])
 def display_page(pathname):
     if not pathname or pathname=='/':
-        return home.layout
+        return home.get_layout()
     elif '/partijen' in pathname:
         parts = pathname.split('/')
         if len(parts) > 2:
             return profile_party.get_layout(parts[-1])
-        return overview_parties.layout
+        return overview_parties.get_layout()
     elif '/politici' in pathname:
         parts = pathname.split('/')
         if len(parts) > 2:
             return profile_politician.get_layout(parts[-1])
-        return overview_politicians.layout
+        return overview_politicians.get_layout()
     elif pathname == '/hoe-werkt-het':
-         return hoe_werkt_het.layout
+         return hoe_werkt_het.get_layout()
     else:
         return '404. Deze pagina bestaat niet.'
 

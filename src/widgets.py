@@ -39,26 +39,26 @@ def party_mention_graph(id, df):
     return dcc.Graph(
         id=id,
         config=graph_config,
-        figure=update_party_mention_graph_figure(df)
+        figure=update_mention_graph_figure(df)
     )
 
 def politician_mention_graph(id, df):
     return dcc.Graph(
         id=id,
         config=graph_config,
-        figure=update_politician_mention_graph_figure(df)
+        figure=update_mention_graph_figure(df)
     )
 
 def party_list(id, df):
     return html.Div(
         id=id,
-        children=update_party_list_children(df),
+        children=update_list_children(df, 'partijen'),
     )
 
 def politician_list(id, df):
     return html.Div(
         id=id,
-        children=update_politician_list_children(df),
+        children=update_list_children(df, 'politici'),
     )
 
 def update_slider_marks(df):
@@ -69,26 +69,25 @@ def update_slider_marks(df):
         util.to_timestamp(last_date): util.to_pretty_date(last_date)
     }
 
-def update_party_mention_graph_figure(df):
+def update_mention_graph_figure(df):
     data = []
 
     first_date, last_date = df['date'].min(), df['date'].max()
 
-    # group by date and politician, count the rows
-    sorted_parties = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
-    df = df.groupby(['date', 'pol_id', 'color', 'short_name']).size().reset_index(name='mentions')
+    # group by date and id, count the rows
+    sorted_pol = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    df = df.groupby(['date', 'pol_id', 'name', 'color']).size().reset_index(name='mentions')
 
     y_max = df['mentions'].max() + 20
 
-    for party in sorted_parties['pol_id']:
-        party_df = df[df['pol_id'] == party]
+    for pol in sorted_pol['pol_id']:
+        pol_df = df[df['pol_id'] == pol]
         data.append(go.Scatter(
             mode='lines',
-            x=party_df['date'],
-            y=party_df['mentions'],
-            name=party_df['short_name'].iloc[0],
-            #todo: Save color in relational db
-            line={'color': party_df['color'].iloc[0]},
+            x=pol_df['date'],
+            y=pol_df['mentions'],
+            name=pol_df['name'].iloc[0],
+            line={'color': pol_df['color'].iloc[0]},
             showlegend=False,
         ))
 
@@ -102,68 +101,18 @@ def update_party_mention_graph_figure(df):
         autosize=True,
     )}
 
-def update_politician_mention_graph_figure(df):
-    data = []
-
-    first_date, last_date = df['date'].min(), df['date'].max()
-
-    # group by date and politician, count the rows
-    sorted_politicians = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
-    df = df.groupby(['date', 'pol_id', 'color', 'full_name']).size().reset_index(name='mentions')
-
-
-    y_max = df['mentions'].max() + 20
-
-    for politician in sorted_politicians['pol_id']:
-        politician_df = df[df['pol_id'] == politician]
-        data.append(go.Scatter(
-            mode='lines',
-            x=politician_df['date'],
-            y=politician_df['mentions'],
-            name=politician_df['full_name'].iloc[0],
-            #todo: Save color in relational db
-            line={'color': politician_df['color'].iloc[0]},
-            showlegend=False,
-        ))
-
-    return {
-    'data': data,
-    'layout': go.Layout(
-        xaxis={'range': (first_date, last_date), 'fixedrange': True},
-        yaxis={'range': (0, y_max), 'fixedrange': True},
-        margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
-        hovermode='closest',
-        autosize=True,
-    )}
-
-def update_party_list_children(df):
-    sorted_parties = df.groupby(['pol_id', 'color', 'short_name', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+def update_list_children(df, subdomain):
+    sorted_pol = df.groupby(['pol_id', 'name', 'color', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
         html.A([
-            html.Img(src=party['picture'], className='politician-picture', style={'border': f'3px solid {party["color"]}'}),
+            html.Img(src=pol['picture'], className='pol-picture', style={'border': f'3px solid {pol["color"]}'}),
             html.P('>>', className='more-information'),
             html.Table([
-                html.Tr([html.Th(str(index+1) + '.'), html.Th(party['short_name'])]),
-                html.Tr([html.Td(), html.Td(str(party['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
-            ], className='politician-table'),
+                html.Tr([html.Th(str(index+1) + '.'), html.Th(pol['name'])]),
+                html.Tr([html.Td(), html.Td(str(pol['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
+            ], className='pol-table'),
         ],
-            href='/partijen/{}'.format(util.name_to_slug(party['short_name'])),
-            id='politician-item' + str(index+1),
-            className='politician-item',
-        ) for index, party in sorted_parties.iterrows()]
-
-def update_politician_list_children(df):
-    sorted_politicians = df.groupby(['pol_id', 'color', 'full_name', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
-    return [
-        html.A([
-            html.Img(src=politician['picture'], className='politician-picture', style={'border': f'3px solid {politician["color"]}'}),
-            html.P('>>', className='more-information'),
-            html.Table([
-                html.Tr([html.Th(str(index+1) + '.'), html.Th(politician['full_name'])]),
-                html.Tr([html.Td(), html.Td(str(politician['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
-            ], className='politician-table'),
-        ],
-            href='/politici/{}'.format(util.name_to_slug(politician['full_name'])),
-            id='politician-item' + str(index+1),
-            className='politician-item',
-        ) for index, politician in sorted_politicians.iterrows()]
+            href='/{}/{}'.format(subdomain, util.name_to_slug(pol['name'])),
+            id='pol-item' + str(index+1),
+            className='pol-item',
+        ) for index, pol in sorted_pol.iterrows()]

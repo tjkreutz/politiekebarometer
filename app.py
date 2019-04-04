@@ -1,8 +1,11 @@
 import dash
+from src import util
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "De Politieke Barometer"
+app = dash.Dash(__name__)
 server = app.server
+
+app.title = "De Politieke Barometer"
 app.config.suppress_callback_exceptions = True
+
+overview_parties = util.load_overview_parties()
+overview_politicians = util.load_overview_politicians()
