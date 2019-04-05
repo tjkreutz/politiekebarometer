@@ -13,8 +13,8 @@ def get_layout():
         html.Div([
             html.Div([
                 html.Div(html.H2('Politici'), className='title-field'),
-                html.Center(html.P([html.B("Figuur 2: "), html.Span("Hoe vaak worden politici online genoemd?")], style={'font-size': '75%'})),
-                widgets.politician_mention_graph('politician-mention-graph', df),
+                html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden politici online genoemd?")], style={'font-size': '75%'})),
+                widgets.mention_graph('politician-mention-graph', df),
             ], className='eight columns'),
             html.Div([
                 html.Div(html.H2('Data'), className='title-field'),
@@ -22,8 +22,13 @@ def get_layout():
                 html.Div(html.H2('Periode'), className='title-field'),
                 widgets.date_slider('date-slider', df),
                 html.Div(html.H2('Meest genoemd'), className='title-field'),
-                widgets.politician_list('politician-list', df)
+                widgets.pol_list('politician-list', df, 'politici')
             ], className='four columns'),
+        ], className='row'),
+        html.Div([
+            html.Div(html.H2('Opinie op Twitter'), className='title-field'),
+            html.Center(html.P([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over politici op Twitter? (Laatste 30 dagen)")], style={'font-size': '75%'})),
+            widgets.multi_sentiment_graph(df),
         ], className='row'),
     ])
 
