@@ -24,7 +24,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
 
 OVERVIEW_PARTY_POLITICIANS = """
@@ -55,7 +55,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
 
 OVERVIEW_POLITICIANS = """
@@ -84,7 +84,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
 
 PROFILE_PARTY = """
