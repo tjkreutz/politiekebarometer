@@ -71,12 +71,13 @@ def update_slider_marks(df):
 def update_mention_graph_figure(df):
     data = []
 
+    sorted_pol = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     df = df.groupby(['date', 'pol_id', 'name', 'color']).size().reset_index(name='mentions')
 
     first_date, last_date = df['date'].min(), df['date'].max()
     y_max = df['mentions'].max()*1.1
 
-    for pol in df['pol_id'].unique():
+    for pol in sorted_pol['pol_id']:
         pol_df = df[df['pol_id'] == pol]
         data.append(go.Scatter(
             mode='lines',
