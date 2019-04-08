@@ -5,7 +5,7 @@ SELECT  mentions.id AS mentions_id,
         pol_all.color,
         pol_all.picture,
         fragments.sentiment,
-        doc_all.ts,
+        doc_all.date,
         doc_news.news_id,
         doc_tweets.tweet_id,
         themes.name AS theme_name
@@ -24,7 +24,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.ts BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
 """
 
 OVERVIEW_PARTY_POLITICIANS = """
@@ -34,7 +34,7 @@ SELECT  mentions.id AS mentions_id,
         pol_all.color,
         pol_all.picture,
         fragments.sentiment,
-        doc_all.ts,
+        doc_all.date,
         doc_news.news_id,
         doc_tweets.tweet_id,
         themes.name AS theme_name
@@ -55,7 +55,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.ts BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
 """
 
 OVERVIEW_POLITICIANS = """
@@ -65,7 +65,7 @@ SELECT  mentions.id AS mentions_id,
         pol_all.color,
         pol_all.picture,
         fragments.sentiment,
-        doc_all.ts,
+        doc_all.date,
         doc_news.news_id,
         doc_tweets.tweet_id,
         themes.name AS theme_name
@@ -84,7 +84,7 @@ FROM    mentions
             ON fragments.doc_id=doc_tweets.doc_id
         LEFT JOIN themes
             ON doc_all.theme_code=themes.code
-WHERE   doc_all.ts BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
+WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW();
 """
 
 PROFILE_PARTY = """

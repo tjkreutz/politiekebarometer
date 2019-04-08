@@ -78,7 +78,8 @@ def load_overview_parties():
     party_pol_df = pd.read_sql(party_pol_query, db)
 
     df = pd.concat([party_df, party_pol_df])
-    df['date'] = df['ts'].dt.date
+    df['date'] = pd.to_datetime(df['date'].dt.date)
+    df['theme_name'] = df['theme_name'].astype('category')
     df['picture'].fillna('assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
@@ -87,7 +88,8 @@ def load_overview_politicians():
     db = get_db()
     query = sql.OVERVIEW_POLITICIANS
     df = pd.read_sql(query, db)
-    df['date'] = df['ts'].dt.date
+    df['date'] = pd.to_datetime(df['date'].dt.date)
+    df['theme_name'] = df['theme_name'].astype('category')
     df['picture'].fillna('assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
