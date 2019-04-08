@@ -44,8 +44,7 @@ def pol_list(id, df, url):
     )
 
 def multi_sentiment_graph(df):
-    #todo: limit to twitter
-#    df = util.select_data_sources(df, ['twitter'])
+    df = util.select_data_sources(df, ['twitter'])
     df = util.select_most_mentioned(df, 3)
     return html.Div([
         html.Div([
