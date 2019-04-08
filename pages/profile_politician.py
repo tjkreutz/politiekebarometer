@@ -1,4 +1,5 @@
 from src import util
+from src import widgets
 
 import dash_html_components as html
 from app import overview_politicians
@@ -34,15 +35,22 @@ def get_layout(slug):
                         html.Tr([html.Td('Partij:'), html.Td(politician_party)])
                     ])
                 ]),
-            ])
-        ], className='six columns'),
-        html.Div([
+            ], style={'margin': '10px 0'}),
             html.Div(html.H2('Data samengevat (afgelopen 30 dagen)'), className='title-field'),
             html.Table([
                 html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),
                 html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
                 html.Tr([html.Td('Belangrijkste thema:', style={'vertical-align': 'top'}), html.Td(top_theme)]),
-            ])
+            ], style={'margin': '10px 0'}),
+            html.Div(html.H2('Kernwoorden'), className='title-field'),
+            widgets.word_cloud(df, 10),
+        ], className='six columns'),
+        html.Div([
+            html.Div(html.H2('Aantal voorkomens'), className='title-field'),
+            html.Center(html.P([html.B("Figuur 1: "), html.Span(
+                "Aantal voorkomens {} in online nieuws en op Twitter".format(politician_name))],
+                               style={'font-size': '75%'})),
+            html.Div(widgets.double_mention_graph(news_df, tweet_df))
         ], className='six columns'),
     ], className='row')
     return layout

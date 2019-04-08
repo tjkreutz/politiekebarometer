@@ -1,7 +1,11 @@
 from . import util
+
+import random
 import plotly.graph_objs as go
 import dash_core_components as dcc
 import dash_html_components as html
+
+from plotly.colors import DEFAULT_PLOTLY_COLORS
 
 graph_config = {'displaylogo': False, 'modeBarButtons': [['toImage']]}
 
@@ -60,6 +64,40 @@ def sentiment_graph(df, i):
         figure=update_sentiment_graph_figure(df, i)
     )
 
+def double_mention_graph(news_df, tweet_df):
+    return dcc.Graph(
+        config=graph_config,
+        figure=update_double_mention_graph_figure(news_df, tweet_df)
+    )
+
+def word_cloud(df, no=10):
+    #todo generate words and weights from fragments
+    words = ['woord']*no
+    weights = [random.randint(15, 20) for i in range(no)]
+
+    colors = [DEFAULT_PLOTLY_COLORS[random.randrange(1, 10)] for i in range(no)]
+
+    data = go.Scatter(
+        x=[i for i in range(no)],
+        y=random.sample([i for i in range(no)], k=no),
+        mode='text',
+        text=words,
+        hoverinfo='text',
+        marker={'opacity': 0.3},
+        textfont={'size': weights, 'color': colors},
+    )
+
+    layout = go.Layout(
+        xaxis={'range': (-1, no+1), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        yaxis={'range': (-1, no+1), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        margin={'l': 0, 'r': 0, 'b': 0, 't': 0},
+        autosize=True,
+        height=100,
+    )
+
+    wc = dcc.Graph(config=graph_config, figure={'data': [data], 'layout': layout})
+    return wc
+
 def update_slider_marks(df):
     first_date = df['date'].min()
     last_date = df['date'].max()
@@ -73,9 +111,6 @@ def update_mention_graph_figure(df):
 
     sorted_pol = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     df = df.groupby(['date', 'pol_id', 'name', 'color']).size().reset_index(name='mentions')
-
-    first_date, last_date = df['date'].min(), df['date'].max()
-    y_max = df['mentions'].max()*1.1
 
     for pol in sorted_pol['pol_id']:
         pol_df = df[df['pol_id'] == pol]
@@ -91,8 +126,8 @@ def update_mention_graph_figure(df):
     return {
     'data': data,
     'layout': go.Layout(
-        xaxis={'range': (first_date, last_date), 'fixedrange': True},
-        yaxis={'range': (0, y_max), 'fixedrange': True},
+        xaxis={'fixedrange': True},
+        yaxis={'range': (0, df['mentions'].max()*1.1), 'fixedrange': True},
         margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
         hovermode='closest',
         autosize=True,
@@ -141,3 +176,39 @@ def update_sentiment_graph_figure(df, i):
         height=160,
         autosize=True,
     )}
+
+def update_double_mention_graph_figure(news_df, tweet_df):
+    news_df = news_df.groupby('date').size().reset_index(name='mentions')
+    tweet_df = tweet_df.groupby('date').size().reset_index(name='mentions')
+
+    news_trace = go.Scatter(
+        mode='lines',
+        x=news_df['date'],
+        y=news_df['mentions'],
+        name='Nieuws',
+        showlegend=False,
+        line={'color': '#b41f1f'}
+    )
+
+    tweet_trace = go.Scatter(
+        mode='lines',
+        x=tweet_df['date'],
+        y=tweet_df['mentions'],
+        name='Twitter',
+        showlegend=False,
+        yaxis='y2',
+        line={'color': '#1f77b4'},
+    )
+
+    return {
+    'data': [news_trace, tweet_trace],
+    'layout': go.Layout(
+        xaxis={'fixedrange': True, 'automargin': True, 'showgrid': False},
+        yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#b41f1f'}, 'fixedrange': True, 'showgrid': False, 'automargin': True},
+        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#1f77b4'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y'},
+        margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
+        hovermode='closest',
+        autosize=True,
+        height=320
+    )}
+
