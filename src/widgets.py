@@ -7,7 +7,7 @@ import dash_html_components as html
 
 from plotly.colors import DEFAULT_PLOTLY_COLORS
 
-graph_config = {'displaylogo': False, 'modeBarButtons': [['toImage']]}
+graph_config = {'displaylogo': False, 'modeBarButtons': [['toImage']], 'locale': 'nl'}
 
 
 def data_checkbox(id):

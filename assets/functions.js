@@ -32,6 +32,17 @@ var checkExist = setInterval(function() {
   }
 }, 100); // check every 100ms
 
+var checkModeBar = setInterval(function() {
+  modebarButtons = document.getElementsByClassName("modebar-btn");
+
+  if (modebarButtons.length > 0) {
+    for (i = 0; i < modebarButtons.length; i++) {
+      modebarButtons[i].attributes["data-title"].value="Download deze afbeelding";
+    }
+    clearInterval(checkModeBar);
+  }
+}, 100);
+
 function highlightTrace(graph_id, trace_id) {
   Plotly.restyle(graph_id, {opacity: 1}, trace_id);
 }
