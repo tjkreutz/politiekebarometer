@@ -204,8 +204,8 @@ def update_double_mention_graph_figure(news_df, tweet_df):
     'data': [news_trace, tweet_trace],
     'layout': go.Layout(
         xaxis={'fixedrange': True, 'automargin': True, 'showgrid': False},
-        yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#b41f1f'}, 'fixedrange': True, 'showgrid': False, 'automargin': True},
-        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#1f77b4'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y'},
+        yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#b41f1f'}, 'fixedrange': True, 'showgrid': False, 'automargin': True, 'rangemode': 'tozero'},
+        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#1f77b4'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y', 'rangemode': 'tozero'},
         margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
         hovermode='closest',
         autosize=True,
