@@ -13,7 +13,7 @@ def get_layout():
         html.Div([
             html.Div([
                 html.Div(html.H2('Partijen'), className='title-field'),
-                html.Center(html.P([html.B("Figuur 1: "), html.Span("Hoe vaak worden partijen en hun politici online genoemd?")],style={'font-size': '75%'})),
+                html.Center([html.B("Figuur 1: "), html.Span("Hoe vaak worden partijen en hun politici online genoemd?")], className='description'),
                 widgets.mention_graph('party-mention-graph', df),
             ], className='eight columns'),
             html.Div([
@@ -27,7 +27,7 @@ def get_layout():
         ], className='row'),
         html.Div([
             html.Div(html.H2('Opinie op Twitter'), className='title-field'),
-            html.Center(html.P([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over partijen op Twitter? (Laatste 30 dagen)")], style={'font-size': '75%'})),
+            html.Center([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over partijen op Twitter? (Laatste 30 dagen)")], className='description'),
             widgets.multi_sentiment_graph(df),
         ], className='row')
     ])

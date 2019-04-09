@@ -52,7 +52,7 @@ def multi_sentiment_graph(df):
     df = util.select_most_mentioned(df, 3)
     return html.Div([
         html.Div([
-            html.Center(html.P(pol, style={'font-size': '75%'})),
+            html.Center(pol, className='description'),
             sentiment_graph(util.select_pol_by_name(df, pol), i)
         ]
         , className='four columns') for i, pol in enumerate(df['name'].unique())

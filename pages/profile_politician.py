@@ -50,30 +50,25 @@ def get_layout(slug):
             ], className='six columns'),
             html.Div([
                 html.Div(html.H2('Aantal voorkomens'), className='title-field'),
-                html.Center(html.P([html.B("Figuur 1: "), html.Span(
-                    "Aantal voorkomens {} in online nieuws en op Twitter".format(politician_name))],
-                                   style={'font-size': '75%'})),
+                html.Center([html.B("Figuur 1: "), html.Span("Aantal voorkomens {} in online nieuws en op Twitter".format(politician_name))], className='description'),
                 html.Div(widgets.double_mention_graph(news_df, tweet_df))
             ], className='six columns'),
         ], className='row'),
         html.Div([
             html.Div([
                 html.Div(html.H2("Top thema's"), className='title-field'),
-                html.Center(html.P([html.B("Figuur 4: "), html.Span(
-                    "Distributie top 5 thema's")], style={'font-size': '75%'})),
+                html.Center([html.B("Figuur 4: "), html.Span("Distributie top 5 thema's")], className='description'),
                 widgets.theme_bar_chart(df),
             ], className='five columns'),
             html.Div([
                 html.Div(html.H2("Opinie op Twitter (laatste 30 dagen)"), className='title-field'),
                 html.Div([
                     html.Div([
-                        html.Center(html.P([html.B("Figuur 2: "), html.Span(
-                            "Distributie opinie")], style={'font-size': '75%'})),
+                        html.Center([html.B("Figuur 2: "), html.Span("Distributie opinie")], className='description'),
                         widgets.sentiment_donut(df),
                     ], className='five columns'),
                     html.Div([
-                        html.Center(html.P([html.B("Figuur 3: "), html.Span(
-                            "Evolutie opinie")], style={'font-size': '75%'})),
+                        html.Center([html.B("Figuur 3: "), html.Span("Evolutie opinie")], className='description'),
                         widgets.sentiment_graph(df)
                     ], className='seven columns')
                 ], className='row')
