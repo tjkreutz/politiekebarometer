@@ -19,9 +19,9 @@ def get_layout():
             html.Div([
                 html.Div(html.H2('Data'), className='title-field'),
                 widgets.data_checkbox('data-selector'),
-                html.Div(html.H2('Periode'), className='title-field'),
+                html.Div(html.H2('Periode'), className='title-field2'),
                 widgets.date_slider('date-slider', df),
-                html.Div(html.H2('Meest genoemd'), className='title-field'),
+                html.Div(html.H2('Meest genoemd'), className='title-field2'),
                 widgets.pol_list('politician-list', df, 'politici')
             ], className='four columns'),
         ], className='row'),

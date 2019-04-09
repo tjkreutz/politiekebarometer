@@ -2,7 +2,7 @@ import dash_html_components as html
 
 def get_layout():
     layout = html.Div([
-        html.H2(html.B("Hoe werkt het?")),
+        html.Div(html.H2('Hoe werkt het?'), className='title-field'),
         html.P([
             """De politieke barometer verwerkt ongeveer 50 nieuwsartikelen""",
             html.Sup(html.A('1', href='#bottom')),
