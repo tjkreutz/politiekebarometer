@@ -58,7 +58,7 @@ def multi_sentiment_graph(df):
         , className='four columns') for i, pol in enumerate(df['name'].unique())
     ])
 
-def sentiment_graph(df, i):
+def sentiment_graph(df, i=0):
     return dcc.Graph(
         config=graph_config,
         figure=update_sentiment_graph_figure(df, i)
@@ -69,6 +69,66 @@ def double_mention_graph(news_df, tweet_df):
         config=graph_config,
         figure=update_double_mention_graph_figure(news_df, tweet_df)
     )
+
+def sentiment_donut(df):
+    colors = ['#7eff7e', '#ff7e7e', '#fff3c8']
+
+    positive = len(df.loc[df['sentiment'] > 0])
+    negative = len(df.loc[df['sentiment'] < 0])
+    neutral = len(df) - positive - negative
+
+    data = go.Pie(
+        labels=['Positief', 'Negatief', 'Neutraal'],
+        values=[positive, negative, neutral],
+        hoverinfo='label+percent',
+        textinfo='value',
+        marker={'colors': colors},
+        hole=0.6,
+    )
+
+    layout = go.Layout(
+        autosize=True,
+        margin={'l': 0, 'r': 0, 'b': 0, 't': 0},
+        height=160,
+        legend={'orientation': 'h'},
+    )
+
+    return dcc.Graph(
+        config=graph_config,
+        figure={'data': [data], 'layout': layout})
+
+def theme_bar_chart(df):
+    df = df.groupby('theme_name').size().reset_index(name='counts').sort_values(by='counts').reset_index()
+
+    total_counts = df['counts'].sum()
+
+    df['counts'] = df['counts']/total_counts
+    df['theme_short_name'] = df['theme_name'].str.slice_replace(6, repl='.. ')
+    df = df.iloc[-5:]
+
+    x_max = df['counts'].max() + 0.01
+
+    data = go.Bar(
+        x=df['counts'],
+        y=df['theme_short_name'],
+        hovertext=df['theme_name'],
+        orientation='h',
+        marker={'color': '#abe2fb'},
+        width=0.7,
+        hoverinfo='text+x',
+    )
+
+    layout = go.Layout(
+        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True},
+        yaxis={'fixedrange': True},
+        autosize=True,
+        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
+        height=160,
+    )
+
+    return dcc.Graph(
+        config=graph_config,
+        figure={'data': [data], 'layout': layout})
 
 def word_cloud(df, no=10):
     #todo generate words and weights from fragments
@@ -109,7 +169,7 @@ def update_slider_marks(df):
 def update_mention_graph_figure(df):
     data = []
 
-    sorted_pol = df.groupby(['pol_id']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    sorted_pol = df.groupby('pol_id').size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     df = df.groupby(['date', 'pol_id', 'name', 'color']).size().reset_index(name='mentions')
 
     for pol in sorted_pol['pol_id']:
@@ -149,7 +209,7 @@ def update_list_children(df, url):
             className='pol-item',
         ) for index, pol in sorted_pol.iterrows()]
 
-def update_sentiment_graph_figure(df, i):
+def update_sentiment_graph_figure(df, i=0):
     name = df['name'].iloc[0]
     color = df['color'].iloc[0]
     #todo: average sentiment in other ways?
