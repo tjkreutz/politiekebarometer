@@ -4,6 +4,7 @@ from dash.dependencies import Input, Output
 
 from app import app, server
 from pages import home, overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
+from src import widgets
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -20,6 +21,11 @@ app.layout = html.Div([
             html.Div(html.A("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
         ]),
     ], className='header'),
+    html.Div([
+        html.Div(widgets.breadcrumbs('breadcrumbs'), className='six columns'),
+        html.Div(className='two columns'),
+        html.Div(className='four columns')
+    ], className='row'),
     html.Div(id='page-content'),
     html.Div([
         html.Center([
@@ -52,6 +58,11 @@ def display_page(pathname):
          return hoe_werkt_het.get_layout()
     else:
         return '404. Deze pagina bestaat niet.'
+
+@app.callback(Output('breadcrumbs', 'children'),
+              [Input('url', 'pathname')])
+def update_breadcrumb(pathname):
+    return widgets.update_breadcrumbs(pathname)
 
 if __name__ == '__main__':
     app.run_server()

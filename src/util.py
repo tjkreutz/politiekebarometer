@@ -56,6 +56,7 @@ def slug_to_name(slug):
         return predefined[slug]
     slug = slug.replace('-', ' ')
     slug = slug.replace('_', '-')
+    slug = slug.title()
     return slug
 
 def load_party_profile(slug):

@@ -27,7 +27,6 @@ p {
 }
 
 .header {
-    margin-bottom: 20px;
     border-bottom: thin solid #e6e6e6;
 }
 
@@ -42,6 +41,15 @@ p {
     border-left: thin solid #e6e6e6;
     border-right: thin solid #e6e6e6;
     border-bottom: thin solid #e6e6e6;
+}
+
+.breadcrumbs {
+    margin: 10px;
+    font-size: 12px;
+}
+
+.breadcrumbs a {
+    color: black;
 }
 
 .title-field {

@@ -10,6 +10,17 @@ from plotly.colors import DEFAULT_PLOTLY_COLORS
 graph_config = {'displaylogo': False, 'modeBarButtons': [['toImage']], 'locale': 'nl'}
 
 
+def breadcrumbs(id):
+    return html.Div(id=id, children=update_breadcrumbs(), className='breadcrumbs')
+
+def search_bar(id, df, domain, query_name):
+    options = df.groupby(query_name).size().reset_index(name='counts').sort_values(by='counts').reset_index()
+    return dcc.Dropdown(
+        id=id,
+        options=options,
+        placeholder="Zoek op {}".format(domain),
+    )
+
 def data_checkbox(id):
     return dcc.Checklist(
         id=id,
@@ -157,6 +168,18 @@ def word_cloud(df, no=10):
 
     wc = dcc.Graph(config=graph_config, figure={'data': [data], 'layout': layout})
     return wc
+
+def update_breadcrumbs(pathname='/'):
+    breadcrumbs = [html.A('Home', href='/')]
+    if not pathname or pathname=='/':
+        return []
+    parts = ['']
+    for part in pathname.split('/'):
+        if part:
+            parts.append(part)
+            name = util.slug_to_name(part)
+            breadcrumbs.append(html.Span([' ⯈ ', html.A(name, href='/'.join(parts))]))
+    return breadcrumbs
 
 def update_slider_marks(df):
     first_date = df['date'].min()
