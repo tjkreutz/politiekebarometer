@@ -22,7 +22,9 @@ app.layout = html.Div([
         ]),
     ], className='header'),
     html.Div([
-        html.Div(widgets.breadcrumbs('breadcrumbs'), className='six columns', style={'float': 'left'}),
+        html.Div(widgets.breadcrumbs('breadcrumbs'), className='six columns'),
+        html.Div(className='two columns'),
+        html.Div(className='four columns')
     ], className='row'),
     html.Div(id='page-content'),
     html.Div([
