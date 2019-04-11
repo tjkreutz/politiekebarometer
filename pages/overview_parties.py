@@ -10,6 +10,12 @@ def get_layout():
     df = util.select_most_mentioned(overview_parties, n=5)
 
     layout = html.Div([
+        html.Div(
+            html.Div([
+                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
+                html.Div(className='four columns'),
+            ], className='row'),
+            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Partijen'), className='title-field'),

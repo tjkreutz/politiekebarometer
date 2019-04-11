@@ -26,6 +26,12 @@ def get_layout(slug):
     top_theme = df['theme_name'].value_counts().idxmax()
 
     layout = html.Div([
+        html.Div(
+            html.Div([
+                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
+                html.Div(className='four columns'),
+            ], className='row'),
+            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Info'), className='title-field'),

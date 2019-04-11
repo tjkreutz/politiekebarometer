@@ -21,12 +21,6 @@ app.layout = html.Div([
             html.Div(html.A("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
         ]),
     ], className='header'),
-    html.Div(
-        html.Div([
-            html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-            html.Div(className='four columns'),
-        ], className='row'),
-        className='search-container'),
     html.Div(id='page-content'),
     html.Div([
         html.Center([
