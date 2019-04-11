@@ -26,10 +26,6 @@ p {
     margin: 20px 0;
 }
 
-.header {
-    border-bottom: thin solid #e6e6e6;
-}
-
 .barometer img{
     margin-top: 20px;
     height: 60px;
@@ -40,6 +36,12 @@ p {
     padding: 0 30px;
     border-left: thin solid #e6e6e6;
     border-right: thin solid #e6e6e6;
+    border-bottom: thin solid #e6e6e6;
+}
+
+.search-container {
+    margin: 0 -30px 10px -30px;
+    background-color: #fafafa;
     border-bottom: thin solid #e6e6e6;
 }
 
