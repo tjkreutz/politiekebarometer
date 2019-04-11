@@ -41,13 +41,8 @@ app.layout = html.Div([
 ], className='container')
 
 @app.callback(Output('page-content', 'children'),
-              [Input('url', 'pathname'),
-               Input('search-bar', 'value')])
-def display_page(pathname, value):
-    if value:
-        if '/politici' in pathname:
-            return profile_politician.get_layout(util.name_to_slug(value))
-        return profile_party.get_layout(util.name_to_slug(value))
+              [Input('url', 'pathname')])
+def display_page(pathname):
     if not pathname or pathname=='/':
         return home.get_layout()
     elif '/partijen' in pathname:
@@ -82,6 +77,19 @@ def update_search_bar(pathname):
     if 'dossiers' in pathname:
         return []
     return []
+
+@app.callback(Output('url', 'pathname'),
+              [Input('search-bar', 'value')])
+def search(value):
+    if not value:
+        return '/'
+    if value in party_data['name'].unique():
+        return '/partijen/{}'.format(util.name_to_slug(value))
+    if value in politician_data['name'].unique():
+        return '/politici/{}'.format(util.name_to_slug(value))
+    if value in party_data['theme_name'].unique():
+        return '/themas/{}'.format(util.name_to_slug(value))
+    return '/'
 
 if __name__ == '__main__':
     app.run_server()
