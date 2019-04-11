@@ -8,6 +8,10 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 from sshtunnel import SSHTunnelForwarder
 
+#todo: catch politician exceptions
+name_exceptions = {'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
+slug_exceptions = {y:x for x,y in name_exceptions.items()}
+
 def get_db():
     load_dotenv()
 
@@ -42,18 +46,16 @@ def get_db():
     return db
 
 def name_to_slug(name):
-    predefined = {'CD&V': 'cdenv', 'Ecolo-Groen': 'ecolo-groen', 'N-VA': 'n-va', 'PTB-GO!': 'ptb-go', 'PTB-PVDA-go!': 'ptb-pvda-go', 'sp.a': 'sp-a', 'Vuye&Wouters': 'vuyeenwouters'}
-    if name in predefined:
-        return predefined[name]
+    if name in name_exceptions:
+        return name_exceptions[name]
     name = name.lower()
     name = name.replace('-', '_')
     name = name.replace(' ', '-')
     return name
 
 def slug_to_name(slug):
-    predefined = {'cdenv': 'CD&V', 'ecolo-groen': 'Ecolo-Groen', 'n-va': 'N-VA', 'ptb-go': 'PTB-GO!', 'ptb-pvda-go': 'PTB-PVDA-go!', 'sp-a': 'sp.a', 'vuyeenwouters': 'Vuye&Wouters'}
-    if slug in predefined:
-        return predefined[slug]
+    if slug in slug_exceptions:
+        return slug_exceptions[slug]
     slug = slug.replace('-', ' ')
     slug = slug.replace('_', '-')
     slug = slug.title()
