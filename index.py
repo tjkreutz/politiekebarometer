@@ -4,7 +4,7 @@ from dash.dependencies import Input, Output
 
 from app import app, server, party_data, politician_data
 from pages import home, overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
-from src import widgets
+from src import util, widgets
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -24,7 +24,7 @@ app.layout = html.Div([
     html.Div(
         html.Div([
             html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-            html.Div(html.Div(id='search-bar-holder'), className='four columns'),
+            html.Div(html.Div(dcc.Dropdown(id='search-bar', className='search-bar', placeholder='Zoek'), id='search-bar-holder'), className='four columns'),
         ], className='row'),
         className='search-container'),
     html.Div(id='page-content'),
@@ -41,8 +41,13 @@ app.layout = html.Div([
 ], className='container')
 
 @app.callback(Output('page-content', 'children'),
-              [Input('url', 'pathname')])
-def display_page(pathname):
+              [Input('url', 'pathname'),
+               Input('search-bar', 'value')])
+def display_page(pathname, value):
+    if value:
+        if '/politici' in pathname:
+            return profile_politician.get_layout(util.name_to_slug(value))
+        return profile_party.get_layout(util.name_to_slug(value))
     if not pathname or pathname=='/':
         return home.get_layout()
     elif '/partijen' in pathname:

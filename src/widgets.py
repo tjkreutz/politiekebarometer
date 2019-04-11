@@ -18,6 +18,7 @@ def search_bar(df, domain):
     options = df.groupby(queries[domain]).size().reset_index(name='counts').sort_values(by='counts', ascending=False).reset_index()
     options = [{'label': opt, 'value': opt} for opt in options[queries[domain]]]
     return dcc.Dropdown(
+        id='search-bar',
         options=options,
         placeholder="Zoek op {}".format(domain),
         className='search-bar',
