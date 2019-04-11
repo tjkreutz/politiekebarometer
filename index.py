@@ -2,7 +2,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from app import app, server
+from app import app, server, party_data, politician_data
 from pages import home, overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
 from src import widgets
 
@@ -21,6 +21,12 @@ app.layout = html.Div([
             html.Div(html.A("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
         ]),
     ], className='header'),
+    html.Div(
+        html.Div([
+            html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
+            html.Div(html.Div(id='search-bar-holder'), className='four columns'),
+        ], className='row'),
+        className='search-container'),
     html.Div(id='page-content'),
     html.Div([
         html.Center([
@@ -58,6 +64,19 @@ def display_page(pathname):
               [Input('url', 'pathname')])
 def update_breadcrumb(pathname):
     return widgets.update_breadcrumbs(pathname)
+
+@app.callback(Output('search-bar-holder', 'children'),
+              [Input('url', 'pathname')])
+def update_search_bar(pathname):
+    if not pathname or pathname=='/' or 'partijen' in pathname:
+        return [widgets.search_bar(party_data, 'partijen')]
+    if 'politici' in pathname:
+        return [widgets.search_bar(politician_data, 'politici')]
+    if 'themas' in pathname:
+        return []
+    if 'dossiers' in pathname:
+        return []
+    return []
 
 if __name__ == '__main__':
     app.run_server()

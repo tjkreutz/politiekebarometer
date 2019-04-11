@@ -4,18 +4,12 @@ from src import util
 from src import widgets
 
 import dash_html_components as html
-from app import app, overview_parties
+from app import app, party_data
 
 def get_layout():
-    df = util.select_most_mentioned(overview_parties, n=5)
+    df = util.select_most_mentioned(party_data, n=5)
 
     layout = html.Div([
-        html.Div(
-            html.Div([
-                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-                html.Div(className='four columns'),
-            ], className='row'),
-            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Partijen'), className='title-field'),
@@ -47,7 +41,7 @@ def get_layout():
 def update_party_graph(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_date_range(overview_parties, (first_date, last_date))
+    df = util.select_date_range(party_data, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
     df = util.select_most_mentioned(df, 5)
     return widgets.update_mention_graph_figure(df)
@@ -59,7 +53,7 @@ def update_party_graph(timestamp_range, data_sources):
 def update_party_list(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_date_range(overview_parties, (first_date, last_date))
+    df = util.select_date_range(party_data, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
     df = util.select_most_mentioned(df, 5)
     return widgets.update_list_children(df, 'partijen')

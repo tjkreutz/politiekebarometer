@@ -13,12 +13,14 @@ graph_config = {'displaylogo': False, 'modeBarButtons': [['toImage']], 'locale':
 def breadcrumbs(id):
     return html.Div(id=id, children=update_breadcrumbs(), className='breadcrumbs')
 
-def search_bar(id, df, domain, query_name):
-    options = df.groupby(query_name).size().reset_index(name='counts').sort_values(by='counts').reset_index()
+def search_bar(df, domain):
+    queries = {'partijen': 'name', 'politici': 'name', 'themas': 'theme_name', 'dossiers': 'dossier_name'}
+    options = df.groupby(queries[domain]).size().reset_index(name='counts').sort_values(by='counts', ascending=False).reset_index()
+    options = [{'label': opt, 'value': opt} for opt in options[queries[domain]]]
     return dcc.Dropdown(
-        id=id,
         options=options,
         placeholder="Zoek op {}".format(domain),
+        className='search-bar',
     )
 
 def data_checkbox(id):
@@ -170,9 +172,9 @@ def word_cloud(df, no=10):
     return wc
 
 def update_breadcrumbs(pathname='/'):
-    breadcrumbs = [html.A('Home', href='/')]
+    breadcrumbs = [html.A('Politieke barometer', href='/')]
     if not pathname or pathname=='/':
-        return []
+        return breadcrumbs
     parts = ['']
     for part in pathname.split('/'):
         if part:

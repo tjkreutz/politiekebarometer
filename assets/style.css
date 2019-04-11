@@ -39,29 +39,27 @@ p {
     border-bottom: thin solid #e6e6e6;
 }
 
-.intro-text {
-    padding: 10px 30px 0 30px;
-    margin: 0 -30px 0 -30px;
-    background-color: #fafafa;
-}
-
-.intro-text p{
-    margin: 0;
-}
-
 .search-container {
+    padding: 0 30px;
     margin: 0 -30px 10px -30px;
     background-color: #fafafa;
     border-bottom: thin solid #e6e6e6;
 }
 
 .breadcrumbs {
-    margin: 10px;
     font-size: 12px;
+    line-height: 46px;
 }
 
 .breadcrumbs a {
     color: black;
+}
+
+.search-bar {
+    padding: 5px 0;
+    font-size: 12px;
+    line-height: 12px;
+    vertical-align: middle;
 }
 
 .title-field {

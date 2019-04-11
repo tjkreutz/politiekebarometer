@@ -4,18 +4,12 @@ from src import util
 from src import widgets
 
 import dash_html_components as html
-from app import app, overview_politicians
+from app import app, politician_data
 
 def get_layout():
-    df = util.select_most_mentioned(overview_politicians, n=5)
+    df = util.select_most_mentioned(politician_data, n=5)
 
     layout = html.Div([
-        html.Div(
-            html.Div([
-                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-                html.Div(className='four columns'),
-            ], className='row'),
-            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Politici'), className='title-field'),
@@ -47,7 +41,7 @@ def get_layout():
 def update_politician_graph(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_date_range(overview_politicians, (first_date, last_date))
+    df = util.select_date_range(politician_data, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
     df = util.select_most_mentioned(df, 5)
     return widgets.update_mention_graph_figure(df)
@@ -59,7 +53,7 @@ def update_politician_graph(timestamp_range, data_sources):
 def update_politician_list(timestamp_range, data_sources):
     first_date = util.to_datetime(timestamp_range[0])
     last_date = util.to_datetime(timestamp_range[1])
-    df = util.select_date_range(overview_politicians, (first_date, last_date))
+    df = util.select_date_range(politician_data, (first_date, last_date))
     df = util.select_data_sources(df, data_sources)
     df = util.select_most_mentioned(df, 5)
     return widgets.update_list_children(df, 'politici')

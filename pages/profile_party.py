@@ -3,7 +3,7 @@ from src import widgets
 
 from random import randrange
 import dash_html_components as html
-from app import overview_parties
+from app import party_data
 
 def get_layout(slug):
     party_profile = util.load_party_profile(slug)
@@ -17,7 +17,7 @@ def get_layout(slug):
     party_full_name = party_profile['full_name']
     party_no_of_members = party_profile['no_of_members']
 
-    df = util.select_pol_by_name(overview_parties, party_name)
+    df = util.select_pol_by_name(party_data, party_name)
     news_df = util.select_data_sources(df, ['news'])
     news_count = len(news_df.index)
     tweet_df = util.select_data_sources(df, ['twitter'])
@@ -26,12 +26,6 @@ def get_layout(slug):
     top_theme = df['theme_name'].value_counts().idxmax()
 
     layout = html.Div([
-        html.Div(
-            html.Div([
-                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-                html.Div(className='four columns'),
-            ], className='row'),
-            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Info'), className='title-field'),

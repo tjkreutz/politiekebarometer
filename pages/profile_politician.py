@@ -2,7 +2,7 @@ from src import util
 from src import widgets
 
 import dash_html_components as html
-from app import overview_politicians
+from app import politician_data
 
 def get_layout(slug):
     politician_profile = util.load_politician_profile(slug)
@@ -15,7 +15,7 @@ def get_layout(slug):
     politician_color = politician_profile['color']
     politician_party = politician_profile['party_name']
 
-    df = util.select_pol_by_name(overview_politicians, politician_name)
+    df = util.select_pol_by_name(politician_data, politician_name)
     news_df = util.select_data_sources(df, ['news'])
     news_count = len(news_df.index)
     tweet_df = util.select_data_sources(df, ['twitter'])
@@ -24,12 +24,6 @@ def get_layout(slug):
     top_theme = df['theme_name'].value_counts().idxmax()
 
     layout = html.Div([
-        html.Div(
-            html.Div([
-                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-                html.Div(className='four columns'),
-            ], className='row'),
-            className='search-container'),
         html.Div([
             html.Div([
                 html.Div(html.H2('Info'), className='title-field'),
