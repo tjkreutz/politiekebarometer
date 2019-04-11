@@ -10,15 +10,15 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
         html.Center([
-            html.A([
+            dcc.Link([
                 html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
                 html.H1('De Politieke Barometer'),
             ], href='/'),
-            html.Div(html.A('Partijen', href='/partijen'), className='menu-item'),
-            html.Div(html.A('Politici', href='/politici'), className='menu-item'),
-            html.Div(html.A("Thema's", href='#'), className='menu-item'),
-            html.Div(html.A("Dossiers", href='#'), className='menu-item'),
-            html.Div(html.A("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
+            html.Div(dcc.Link('Partijen', href='/partijen'), className='menu-item'),
+            html.Div(dcc.Link('Politici', href='/politici'), className='menu-item'),
+            html.Div(dcc.Link("Thema's", href='#'), className='menu-item'),
+            html.Div(dcc.Link("Dossiers", href='#'), className='menu-item'),
+            html.Div(dcc.Link("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
         ]),
     ], className='header'),
     html.Div(
@@ -32,9 +32,9 @@ app.layout = html.Div([
         html.Center([
             html.P([
             """De politieke barometer is onderdeel van het """,
-            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/'),
+            dcc.Link('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/'),
             """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
-            html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/'),
+            dcc.Link('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/'),
             """."""], style={'margin-bottom': '20px'}),
         ], className='research-list')
     ], className='footer'),

@@ -173,7 +173,7 @@ def word_cloud(df, no=10):
     return wc
 
 def update_breadcrumbs(pathname='/'):
-    breadcrumbs = [html.A('Politieke barometer', href='/')]
+    breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
     if not pathname or pathname=='/':
         return breadcrumbs
     parts = ['']
@@ -181,7 +181,7 @@ def update_breadcrumbs(pathname='/'):
         if part:
             parts.append(part)
             name = util.slug_to_name(part)
-            breadcrumbs.append(html.Span([' ⯈ ', html.A(name, href='/'.join(parts))]))
+            breadcrumbs.append(html.Span([' ⯈ ', dcc.Link(name, href='/'.join(parts))]))
     return breadcrumbs
 
 def update_slider_marks(df):
@@ -222,7 +222,7 @@ def update_mention_graph_figure(df):
 def update_list_children(df, url):
     sorted_pol = df.groupby(['pol_id', 'name', 'color', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
-        html.A([
+        dcc.Link([
             html.Img(src=pol['picture'], className='pol-picture', style={'border': f'3px solid {pol["color"]}'}),
             html.P('>>', className='more-information'),
             html.Table([

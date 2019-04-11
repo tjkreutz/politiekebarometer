@@ -29,7 +29,7 @@ def get_layout():
         html.Hr(id='bottom'),
         html.P([
             """Heeft u vragen of opmerking over de Politieke Barometer? Bezoek onze projectwebsite (""",
-            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/'),
+            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/', target='_blank'),
             """) of stuur ons een email (""",
             html.A('nwsdata@uantwerpen.be', id='email', href='mailto:nwsdata@uantwerpen.be'),
             """).""",
