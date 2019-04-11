@@ -7,12 +7,12 @@ import dash_html_components as html
 from app import politician_data
 
 def get_layout(slug):
-    politician_profile = util.load_politician_profile(slug)
+    politician_profile = util.select_pol_by_name(politician_data, util.slug_to_name(slug))
     if politician_profile.empty:
         return '404. Deze pagina bestaat niet.'
 
     politician_profile = politician_profile.iloc[0]
-    politician_name = politician_profile['full_name']
+    politician_name = politician_profile['name']
     politician_picture = politician_profile['picture']
     politician_color = politician_profile['color']
     politician_party = politician_profile['party_name']

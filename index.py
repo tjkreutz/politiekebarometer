@@ -82,14 +82,14 @@ def update_search_bar(pathname):
               [Input('search-bar', 'value')])
 def search(value):
     if not value:
-        return '/'
+        return None
     if value in party_data['name'].unique():
         return '/partijen/{}'.format(util.name_to_slug(value))
     if value in politician_data['name'].unique():
         return '/politici/{}'.format(util.name_to_slug(value))
     if value in party_data['theme_name'].unique():
         return '/themas/{}'.format(util.name_to_slug(value))
-    return '/'
+    return None
 
 if __name__ == '__main__':
     app.run_server()

@@ -7,16 +7,14 @@ import dash_html_components as html
 from app import party_data
 
 def get_layout(slug):
-    party_profile = util.load_party_profile(slug)
+    party_profile = util.select_pol_by_name(party_data, util.slug_to_name(slug))
     if party_profile.empty:
         return '404. Deze pagina bestaat niet.'
 
     party_profile = party_profile.iloc[0]
-    party_name = party_profile['short_name']
+    party_name = party_profile['name']
     party_picture = party_profile['picture']
     party_color = party_profile['color']
-    party_full_name = party_profile['full_name']
-    party_no_of_members = party_profile['no_of_members']
 
     df = util.select_pol_by_name(party_data, party_name)
     news_df = util.select_data_sources(df, ['news'])
@@ -36,8 +34,6 @@ def get_layout(slug):
                                          style={'border': f'3px solid {party_color}', 'vertical-align': 'top'})),
                         html.Td([
                             html.Tr([html.Td('Naam:'), html.Td(party_name)]),
-                            html.Tr([html.Td('Volledige naam:'), html.Td(party_full_name)]),
-                            html.Tr([html.Td('Aantal leden:'), html.Td(party_no_of_members)]),
                         ])
                     ]),
                 ], style={'margin': '10px 0'}),

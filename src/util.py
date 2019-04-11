@@ -59,39 +59,27 @@ def slug_to_name(slug):
     slug = slug.title()
     return slug
 
-def load_party_profile(slug):
+def load_party_data():
     db = get_db()
-    query = sql.PROFILE_PARTY
-    df = pd.read_sql(query, db, params=[slug_to_name(slug)])
-    return df
-
-def load_politician_profile(slug):
-    db = get_db()
-    query = sql.PROFILE_POLITICIAN
-    df = pd.read_sql(query, db, params=[slug_to_name(slug)])
-    return df
-
-def load_overview_parties():
-    db = get_db()
-    party_query = sql.OVERVIEW_PARTIES
+    party_query = sql.PARTY_DATA
     party_df = pd.read_sql(party_query, db)
-    party_pol_query = sql.OVERVIEW_PARTY_POLITICIANS
+    party_pol_query = sql.PARTY_POLITICIAN_DATA
     party_pol_df = pd.read_sql(party_pol_query, db)
 
     df = pd.concat([party_df, party_pol_df])
     df['date'] = pd.to_datetime(df['date'].dt.date)
     df['theme_name'] = df['theme_name'].astype('category')
-    df['picture'].fillna('assets/blank.png', inplace=True)
+    df['picture'].fillna('/assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
 
-def load_overview_politicians():
+def load_politician_data():
     db = get_db()
-    query = sql.OVERVIEW_POLITICIANS
+    query = sql.POLITICIAN_DATA
     df = pd.read_sql(query, db)
     df['date'] = pd.to_datetime(df['date'].dt.date)
     df['theme_name'] = df['theme_name'].astype('category')
-    df['picture'].fillna('assets/blank.png', inplace=True)
+    df['picture'].fillna('/assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
 
