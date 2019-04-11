@@ -273,7 +273,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         y=news_df['mentions'],
         name='Nieuws',
         showlegend=False,
-        line={'color': '#b41f1f'}
+        line={'color': '#ff7e7e'}
     )
 
     tweet_trace = go.Scatter(
@@ -283,7 +283,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         name='Twitter',
         showlegend=False,
         yaxis='y2',
-        line={'color': '#1f77b4'},
+        line={'color': '#abe2fb'},
     )
 
     return {
