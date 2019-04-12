@@ -89,3 +89,9 @@ FROM    mentions
             ON doc_all.theme_code=themes.code
 WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
+
+KEYWORDS = """
+SELECT  keyword
+FROM    keywords
+WHERE   pol_id=%s;
+"""

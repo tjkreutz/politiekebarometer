@@ -43,7 +43,7 @@ def get_layout(slug):
                     html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
                     html.Tr([html.Td('Belangrijkste thema:', style={'vertical-align': 'top'}), html.Td(dcc.Link(top_theme, href='/themas/{}'.format(util.name_to_slug(top_theme))))]),
                 ], style={'margin': '10px 0'}),
-                html.Div(html.H2('Kernwoorden'), className='title-field2'),
+                html.Div(html.H2('Hashtags'), className='title-field2'),
                 widgets.word_cloud(df, 10),
             ], className='six columns'),
             html.Div([

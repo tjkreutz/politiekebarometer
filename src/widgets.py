@@ -145,15 +145,15 @@ def theme_bar_chart(df):
         figure={'data': [data], 'layout': layout})
 
 def word_cloud(df, no=10):
-    #todo generate words and weights from fragments
-    words = ['woord']*no
-    weights = [random.randint(15, 20) for i in range(no)]
+    pol_id = df['pol_id'].iloc[0]
 
-    colors = [DEFAULT_PLOTLY_COLORS[random.randrange(1, 10)] for i in range(no)]
+    words = util.load_keywords(pol_id)
+    weights = [random.randint(12, 16) for i in range(len(words))]
+    colors = [DEFAULT_PLOTLY_COLORS[random.randrange(1, len(words))] for i in range(len(words))]
 
     data = go.Scatter(
-        x=[i for i in range(no)],
-        y=random.sample([i for i in range(no)], k=no),
+        x=[i for i in range(len(words))],
+        y=random.sample([i for i in range(len(words))], k=len(words)),
         mode='text',
         text=words,
         hoverinfo='text',
@@ -162,8 +162,8 @@ def word_cloud(df, no=10):
     )
 
     layout = go.Layout(
-        xaxis={'range': (-1, no+1), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
-        yaxis={'range': (-1, no+1), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        xaxis={'range': (-2, no+2), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        yaxis={'range': (-2, no+2), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
         margin={'l': 0, 'r': 0, 'b': 0, 't': 0},
         autosize=True,
         height=100,

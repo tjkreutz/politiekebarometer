@@ -94,6 +94,15 @@ def load_politician_data():
     df['color'].fillna('#abe2fb', inplace=True)
     return df
 
+def sample_keyword_locations(n):
+    prev_loc = ran
+
+def load_keywords(pol_id):
+    db = get_db()
+    query = sql.KEYWORDS
+    df = pd.read_sql(query, db, params=[pol_id])
+    return df['keyword'].tolist()
+
 def select_pol_by_name(df, name):
     return df.loc[df['name']==name]
 
