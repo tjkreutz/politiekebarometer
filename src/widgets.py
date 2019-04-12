@@ -265,7 +265,9 @@ def update_sentiment_graph_figure(df, i=0):
 
 def update_double_mention_graph_figure(news_df, tweet_df):
     news_df = news_df.groupby('date').size().reset_index(name='mentions')
+    news_df = util.fill_missing_days(news_df)
     tweet_df = tweet_df.groupby('date').size().reset_index(name='mentions')
+    tweet_df = util.fill_missing_days(tweet_df)
 
     news_trace = go.Scatter(
         mode='lines',

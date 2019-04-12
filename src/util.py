@@ -61,6 +61,15 @@ def slug_to_name(slug):
     slug = slug.title()
     return slug
 
+def fill_missing_days(df, no_of_days=14):
+    start = (pd.to_datetime('today') - pd.Timedelta(days=no_of_days)).date()
+    for date in pd.date_range(start, periods=no_of_days+1):
+        if (df['date'] == date).any():
+            continue
+        df = df.append({'date': date, 'mentions': 0}, ignore_index=True)
+    df = df.sort_values(by='date').reset_index()
+    return df
+
 def load_party_data():
     db = get_db()
     party_query = sql.PARTY_DATA
