@@ -1,5 +1,6 @@
 import os
 import time
+import random
 import MySQLdb
 import datetime
 from . import sql
@@ -94,14 +95,26 @@ def load_politician_data():
     df['color'].fillna('#abe2fb', inplace=True)
     return df
 
-def sample_keyword_locations(n):
-    prev_loc = ran
+def min_max_normalize(series):
+    return (series - series.min()) / (series.max() - series.min())
 
-def load_keywords(pol_id):
+def sample_keyword_locations(n):
+    locations, added = [], []
+    available_locations = list(range(n//2))
+    for i in range(n):
+        if not available_locations:
+            available_locations = added[:-1]
+            added = []
+        location = available_locations.pop(random.randrange(len(available_locations)))
+        locations.append(location)
+        added.append(location)
+    return locations
+
+def load_hashtags(pol_id):
     db = get_db()
-    query = sql.KEYWORDS
+    query = sql.HASHTAGS
     df = pd.read_sql(query, db, params=[pol_id])
-    return df['keyword'].tolist()
+    return df
 
 def select_pol_by_name(df, name):
     return df.loc[df['name']==name]

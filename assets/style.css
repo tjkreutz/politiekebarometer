@@ -163,6 +163,14 @@ p {
     padding: 0 3px;
 }
 
+.word-cloud-placeholder {
+    text-align: center;
+    font-size: 0.9em;
+    width: 100%;
+    line-height: 100px;
+    margin: 0 auto;
+}
+
 .footer {
     margin-top: 10px;
     font-size: 0.9em;

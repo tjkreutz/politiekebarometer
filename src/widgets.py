@@ -147,23 +147,31 @@ def theme_bar_chart(df):
 def word_cloud(df, no=10):
     pol_id = df['pol_id'].iloc[0]
 
-    words = util.load_keywords(pol_id)
-    weights = [random.randint(12, 16) for i in range(len(words))]
-    colors = [DEFAULT_PLOTLY_COLORS[random.randrange(1, len(words))] for i in range(len(words))]
+    hashtags = util.load_hashtags(pol_id).head(no)
+    number = len(hashtags.index)
+    if number < 5:
+        return html.P('Niet genoeg data beschikbaar.', className='word-cloud-placeholder')
+
+    hashtags['weight'] = util.min_max_normalize(hashtags['count'])
+    hashtags['color'] = DEFAULT_PLOTLY_COLORS[:number]
+
+    hashtags = hashtags.sample(frac=1).reset_index(drop=True)
+
+    hashtags['y'] = util.sample_keyword_locations(number)
 
     data = go.Scatter(
-        x=[i for i in range(len(words))],
-        y=random.sample([i for i in range(len(words))], k=len(words)),
+        x=[i for i in range(number)],
+        y=hashtags['y'],
         mode='text',
-        text=words,
+        text=hashtags['hashtag'],
         hoverinfo='text',
         marker={'opacity': 0.3},
-        textfont={'size': weights, 'color': colors},
+        textfont={'size': (hashtags['weight']*6+11).astype(int), 'color': hashtags['color']},
     )
 
     layout = go.Layout(
-        xaxis={'range': (-2, no+2), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
-        yaxis={'range': (-2, no+2), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        xaxis={'range': (-2, number+2), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
+        yaxis={'range': (hashtags['y'].min()-1, hashtags['y'].max()+1), 'showgrid': False, 'showticklabels': False, 'zeroline': False, 'fixedrange': True},
         margin={'l': 0, 'r': 0, 'b': 0, 't': 0},
         autosize=True,
         height=100,

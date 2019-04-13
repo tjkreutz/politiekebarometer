@@ -90,8 +90,8 @@ FROM    mentions
 WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
 
-KEYWORDS = """
-SELECT  keyword
-FROM    keywords
+HASHTAGS = """
+SELECT  *
+FROM    hashtags
 WHERE   pol_id=%s;
 """
