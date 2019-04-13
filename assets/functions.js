@@ -1,4 +1,4 @@
-var checkExist = setInterval(function() {
+setInterval(function() {
   party_list = document.getElementById('party-list');
   politician_list = document.getElementById('politician-list');
 
@@ -14,7 +14,6 @@ var checkExist = setInterval(function() {
         highlightTrace('politician-mention-graph', this.number)
       };
     }
-  clearInterval(checkExist);
   }
   if (party_list) {
     party_list.onmouseout = function() {
@@ -28,18 +27,16 @@ var checkExist = setInterval(function() {
         highlightTrace('party-mention-graph', this.number)
       };
     }
-  clearInterval(checkExist);
   }
 }, 100); // check every 100ms
 
-var checkModeBar = setInterval(function() {
+setInterval(function() {
   modebarButtons = document.getElementsByClassName("modebar-btn");
 
   if (modebarButtons.length > 0) {
     for (i = 0; i < modebarButtons.length; i++) {
       modebarButtons[i].attributes["data-title"].value="Download deze afbeelding";
     }
-    clearInterval(checkModeBar);
   }
 }, 100);
 
