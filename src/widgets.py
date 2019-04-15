@@ -404,7 +404,6 @@ def update_theme_list_children(df):
 
 def update_sentiment_graph_figure(df, i=0):
     name = df['name'].iloc[0]
-    color = df['color'].iloc[0] if 'color' in df else '#abe2fb'
     #todo: average sentiment in other ways?
     df.loc[df['sentiment'] > 0, 'sentiment'] = 1
     df.loc[df['sentiment'] < 0, 'sentiment'] = -1
@@ -422,7 +421,7 @@ def update_sentiment_graph_figure(df, i=0):
         x=df['date'],
         y=df['sentiment'],
         name=name,
-        line={'color': color},
+        line={'color': '#abe2fb'},
         showlegend=False,
     )
 

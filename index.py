@@ -78,7 +78,7 @@ def update_search_bar(pathname):
     if 'politici' in pathname:
         return [widgets.search_bar(politician_data, 'politici')]
     if 'themas' in pathname:
-        return []
+        return [widgets.search_bar(party_data, 'themas')]
     if 'dossiers' in pathname:
         return []
     return []

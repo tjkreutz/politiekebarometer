@@ -15,7 +15,7 @@ def get_layout(slug):
     theme_info = theme_profile['info']
 
     df = util.select_by_theme(party_data, theme_name)
-    tweet_df = util.select_data_sources(df, ['twitter']).drop(labels='color')
+    tweet_df = util.select_data_sources(df, ['twitter'])
     news_party_df = util.select_data_sources(party_data, ['news'])
 
     layout = html.Div([
@@ -33,7 +33,7 @@ def get_layout(slug):
         html.Div([
             html.Div([
                 html.H2('Partijen in het nieuws met {}'.format(theme_name), className='title-field'),
-                html.Center([html.B("Figuur 1: "), html.Span("Partijen waarbij nieuws vaak gaat over {}.".format(theme_name))], className='description'),
+                html.Center([html.B("Figuur 1: "), html.Span("Partijen waarbij nieuws relatief vaak gaat over {}.".format(theme_name))], className='description'),
                 widgets.party_bar_chart(news_party_df, theme_name),
             ], className = 'five columns'),
             html.Div([
