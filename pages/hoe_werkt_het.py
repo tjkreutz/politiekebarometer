@@ -25,7 +25,7 @@ def get_layout():
         html.P(
             """De politieke barometer kan nuttig zijn voor politici, partijen, journalisten, politieke wetenschappers en iedereen met interesse voor politiek."""),
         html.P(
-            """Het is evenwel belangrijk om de beperkingen van de methode te kennen. Het hele proces gebeurt automatisch en is niet perfect. Zo zit de accuraatheid van automatische taalkundige analyse van thema’s en sentiment bijvoorbeeld rond 90% accuraatheid. Dat betekent dat de trends correct gedetecteerd zullen zijn, maar individuele tweets en persberichten kunnen regelmatig fout geanalyseerd worden. Er is ook aangetoond in onderzoek dat sentiment in specifieke media als Twitter op zich niet voldoende informatie biedt om bijvoorbeeld de uitslag van verkiezingen te voorspellen."""),
+            """Het is evenwel belangrijk om de beperkingen van de methode te kennen. Het hele proces gebeurt automatisch en is niet perfect. Zo zit de accuraatheid van automatische taalkundige analyse van thema’s en sentiment bijvoorbeeld rond 90%. Dat betekent dat de trends correct gedetecteerd zullen zijn, maar individuele tweets en persberichten kunnen regelmatig fout geanalyseerd worden. Er is ook aangetoond in onderzoek dat sentiment in specifieke media als Twitter op zich niet voldoende informatie biedt om bijvoorbeeld de uitslag van verkiezingen te voorspellen."""),
         html.Hr(id='bottom'),
         html.P([
             """Heeft u vragen of opmerking over de Politieke Barometer? Bezoek onze projectwebsite (""",

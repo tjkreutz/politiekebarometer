@@ -32,9 +32,9 @@ app.layout = html.Div([
         html.Center([
             html.P([
             """De politieke barometer is onderdeel van het """,
-            dcc.Link('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/'),
+            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/', target="_blank"),
             """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
-            dcc.Link('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/'),
+            html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/', target="_blank"),
             """."""], style={'margin-bottom': '20px'}),
         ], className='research-list')
     ], className='footer'),

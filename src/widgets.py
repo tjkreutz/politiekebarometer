@@ -106,8 +106,8 @@ def sentiment_donut(df):
     data = go.Pie(
         labels=['Positief', 'Negatief', 'Neutraal'],
         values=[positive, negative, neutral],
-        hoverinfo='label+percent',
-        textinfo='value',
+        hoverinfo='label+value',
+        textinfo='percent',
         marker={'colors': colors},
         hole=0.6,
     )
@@ -252,7 +252,7 @@ def update_breadcrumbs(pathname='/'):
         if part:
             parts.append(part)
             name = util.slug_to_name(part)
-            breadcrumbs.append(html.Span([' ⯈ ', dcc.Link(name, href='/'.join(parts))]))
+            breadcrumbs.append(html.Span(['  >  ', dcc.Link(name, href='/'.join(parts))]))
     return breadcrumbs
 
 def update_slider_marks(df):
@@ -371,6 +371,13 @@ def update_sentiment_graph_figure(df, i=0):
     df.loc[df['sentiment'] < 0, 'sentiment'] = -1
     df = df.groupby('date')['sentiment'].mean().reset_index()
 
+    min_sent = df['sentiment'].min()
+    max_sent = df['sentiment'].max()
+    if min_sent > -0.5 and max_sent < 0.5:
+        min_y, max_y = -0.55, 0.55
+    else:
+        min_y, max_y = -1.1, 1.1
+
     trace = go.Scatter(
         mode='lines',
         x=df['date'],
@@ -384,7 +391,7 @@ def update_sentiment_graph_figure(df, i=0):
     'data': [trace],
     'layout': go.Layout(
         xaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': False},
-        yaxis={'range': (-1.1, 1.1), 'fixedrange': True, 'showticklabels': i==0, 'tickformat': '%', 'hoverformat': '%'},
+        yaxis={'range': (min_y, max_y), 'fixedrange': True, 'showticklabels': i==0, 'tickformat': '%', 'hoverformat': '%'},
         margin={'l': 30 if i==0 else 10, 'r': 10, 'b': 20, 't': 0},
         hovermode='closest',
         height=160,
