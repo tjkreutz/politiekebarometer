@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 from sshtunnel import SSHTunnelForwarder
 
 #todo: catch politician exceptions
-name_exceptions = {'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
+name_exceptions = {"Thema's": 'themas', 'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
 slug_exceptions = {y:x for x,y in name_exceptions.items()}
 
 def get_db():
@@ -114,6 +114,12 @@ def load_hashtags(pol_id):
     db = get_db()
     query = sql.HASHTAGS
     df = pd.read_sql(query, db, params=[pol_id])
+    return df
+
+def load_theme_profile(name):
+    db = get_db()
+    query = sql.THEME_PROFILE
+    df = pd.read_sql(query, db, params=[name])
     return df
 
 def select_pol_by_name(df, name):

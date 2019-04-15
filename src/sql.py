@@ -90,6 +90,12 @@ FROM    mentions
 WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 """
 
+THEME_PROFILE = """
+SELECT  *
+FROM    themes
+WHERE   name=%s;
+"""
+
 HASHTAGS = """
 SELECT  *
 FROM    hashtags

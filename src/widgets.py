@@ -140,7 +140,7 @@ def theme_bar_chart(df):
         hovertext=df['theme_name'],
         orientation='h',
         marker={'color': '#abe2fb'},
-        width=0.7,
+        width=0.5,
         hoverinfo='text+x',
     )
 
@@ -227,7 +227,46 @@ def party_bar_chart(df, theme):
         hovertext=df['name'],
         orientation='h',
         marker={'color': df['color']},
-        width=0.7,
+        width=0.5,
+        hoverinfo='text+x',
+    )
+
+    layout = go.Layout(
+        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
+        yaxis={'fixedrange': True},
+        autosize=True,
+        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
+        height=160,
+    )
+
+    return dcc.Graph(
+        config=graph_config,
+        figure={'data': [data], 'layout': layout})
+
+def politician_bar_chart(df, theme):
+    tot_count_df = df.groupby('name').size().reset_index(name='tot_count')
+
+    df = util.select_by_theme(df, theme)
+    df = df.groupby(['name', 'color']).size().reset_index(name='count')
+    df = df[df['count'] > 4]
+
+    df = df.merge(tot_count_df, left_on='name', right_on='name')
+    df['rel_count'] = df['count'] / df['tot_count']
+
+    df = df.sort_values(by='rel_count').reset_index()
+
+    df['party_short_name'] = df['name'].str.slice_replace(9, repl='.. ')
+    df = df.iloc[-5:]
+
+    x_max = df['rel_count'].max() + 0.01
+
+    data = go.Bar(
+        x=df['rel_count'],
+        y=df['party_short_name'],
+        hovertext=df['name'],
+        orientation='h',
+        marker={'color': df['color']},
+        width=0.5,
         hoverinfo='text+x',
     )
 
@@ -365,7 +404,7 @@ def update_theme_list_children(df):
 
 def update_sentiment_graph_figure(df, i=0):
     name = df['name'].iloc[0]
-    color = df['color'].iloc[0]
+    color = df['color'].iloc[0] if 'color' in df else '#abe2fb'
     #todo: average sentiment in other ways?
     df.loc[df['sentiment'] > 0, 'sentiment'] = 1
     df.loc[df['sentiment'] < 0, 'sentiment'] = -1
