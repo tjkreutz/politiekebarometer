@@ -192,6 +192,51 @@ def word_cloud(df, no=10):
     wc = dcc.Graph(config=graph_config, figure={'data': [data], 'layout': layout})
     return wc
 
+def multi_party_bar_chart(df):
+    df = util.select_data_sources(df, ['news'])
+    df = util.select_most_mentioned_theme(df, 3)
+
+    return html.Div([
+        html.Div([
+            html.Center(theme, className='description'),
+            party_bar_chart(util.select_by_theme(df, theme))
+        ]
+            , className='four columns') for i, theme in enumerate(df['theme_name'].unique())
+    ])
+
+def party_bar_chart(df):
+    df = df.groupby(['name', 'color']).size().reset_index(name='counts').sort_values(by='counts').reset_index()
+
+    total_counts = df['counts'].sum()
+
+    df['counts'] = df['counts']/total_counts
+    df['party_short_name'] = df['name'].str.slice_replace(10, repl='.. ')
+    df = df.iloc[-5:]
+
+    x_max = df['counts'].max() + 0.01
+
+    data = go.Bar(
+        x=df['counts'],
+        y=df['party_short_name'],
+        hovertext=df['name'],
+        orientation='h',
+        marker={'color': df['color']},
+        width=0.7,
+        hoverinfo='text+x',
+    )
+
+    layout = go.Layout(
+        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
+        yaxis={'fixedrange': True},
+        autosize=True,
+        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
+        height=160,
+    )
+
+    return dcc.Graph(
+        config=graph_config,
+        figure={'data': [data], 'layout': layout})
+
 def update_breadcrumbs(pathname='/'):
     breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
     if not pathname or pathname=='/':

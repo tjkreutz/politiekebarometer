@@ -119,6 +119,9 @@ def load_hashtags(pol_id):
 def select_pol_by_name(df, name):
     return df.loc[df['name']==name]
 
+def select_by_theme(df, theme):
+    return df.loc[df['theme_name']==theme]
+
 def select_most_mentioned(df, n):
     most_mentioned = df.pol_id.value_counts().head(n).index.values
     return df.loc[df['pol_id'].isin(most_mentioned)]
