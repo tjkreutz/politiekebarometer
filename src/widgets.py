@@ -139,7 +139,7 @@ def theme_bar_chart(df):
         y=df['theme_short_name'],
         hovertext=df['theme_name'],
         orientation='h',
-        marker={'color': '#abe2fb'},
+        marker={'color': '#85d0f2'},
         width=0.5,
         hoverinfo='text+x',
     )
@@ -421,7 +421,7 @@ def update_sentiment_graph_figure(df, i=0):
         x=df['date'],
         y=df['sentiment'],
         name=name,
-        line={'color': '#abe2fb'},
+        line={'color': '#85d0f2'},
         showlegend=False,
     )
 
@@ -458,7 +458,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         name='Twitter',
         showlegend=False,
         yaxis='y2',
-        line={'color': '#abe2fb'},
+        line={'color': '#85d0f2'},
     )
 
     return {
@@ -466,7 +466,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
     'layout': go.Layout(
         xaxis={'fixedrange': True, 'automargin': True, 'showgrid': False},
         yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#ff7e7e'}, 'fixedrange': True, 'showgrid': False, 'automargin': True, 'rangemode': 'tozero'},
-        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#abe2fb'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y', 'rangemode': 'tozero'},
+        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#85d0f2'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y', 'rangemode': 'tozero'},
         margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
         hovermode='closest',
         autosize=True,
