@@ -13,7 +13,7 @@ def get_layout():
         html.Div([
             html.Div([
                 html.Div(html.H2("Thema's"), className='title-field'),
-                html.Center([html.B("Figuur 1: "), html.Span("Welke politieke thema's spelen het meest?")], className='description'),
+                html.Center([html.B("Figuur 1: "), html.Span("Over welke politieke thema's wordt het vaakst geschreven?")], className='description'),
                 widgets.theme_mention_graph('theme-mention-graph', df),
             ], className='eight columns'),
             html.Div([
@@ -26,8 +26,8 @@ def get_layout():
             ], className='four columns'),
         ], className='row'),
         html.Div([
-            html.Div(html.H2([html.Span("Aandeel partijen in het nieuws "), html.Span("(laatste 14 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
-            html.Center([html.B("Figuur 2: "), html.Span("Welke partijen komen het vaakst samen voor met de belangrijke thema's?")], className='description'),
+            html.Div(html.H2([html.Span("Partijen en thema's in het nieuws "), html.Span("(laatste 14 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
+            html.Center([html.B("Figuur 2: "), html.Span("Welk deel van de nieuwsberichten over partijen gaat over deze thema's?")], className='description'),
             widgets.multi_party_bar_chart(df),
         ], className='row')
     ])

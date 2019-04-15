@@ -199,24 +199,30 @@ def multi_party_bar_chart(df):
     return html.Div([
         html.Div([
             html.Center(theme, className='description'),
-            party_bar_chart(util.select_by_theme(df, theme))
+            party_bar_chart(df, theme)
         ]
             , className='four columns') for i, theme in enumerate(df['theme_name'].unique())
     ])
 
-def party_bar_chart(df):
-    df = df.groupby(['name', 'color']).size().reset_index(name='counts').sort_values(by='counts').reset_index()
+def party_bar_chart(df, theme):
+    tot_count_df = df.groupby('name').size().reset_index(name='tot_count')
 
-    total_counts = df['counts'].sum()
+    df = util.select_by_theme(df, theme)
+    df = df.groupby(['name', 'color']).size().reset_index(name='count')
+    df = df[df['count'] > 4]
 
-    df['counts'] = df['counts']/total_counts
-    df['party_short_name'] = df['name'].str.slice_replace(10, repl='.. ')
+    df = df.merge(tot_count_df, left_on='name', right_on='name')
+    df['rel_count'] = df['count'] / df['tot_count']
+
+    df = df.sort_values(by='rel_count').reset_index()
+
+    df['party_short_name'] = df['name'].str.slice_replace(9, repl='.. ')
     df = df.iloc[-5:]
 
-    x_max = df['counts'].max() + 0.01
+    x_max = df['rel_count'].max() + 0.01
 
     data = go.Bar(
-        x=df['counts'],
+        x=df['rel_count'],
         y=df['party_short_name'],
         hovertext=df['name'],
         orientation='h',
