@@ -145,7 +145,7 @@ def theme_bar_chart(df):
     )
 
     layout = go.Layout(
-        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True},
+        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
         yaxis={'fixedrange': True},
         autosize=True,
         margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
