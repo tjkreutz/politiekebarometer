@@ -13,7 +13,7 @@ def breadcrumbs(id):
     return html.Div(id=id, children=update_breadcrumbs(), className='breadcrumbs')
 
 def search_bar(df, domain):
-    queries = {'partijen': 'name', 'politici': 'name', 'themas': 'theme_name', 'dossiers': 'dossier_name'}
+    queries = {'partijen': 'name', 'politici': 'name', "thema's": 'theme_name', 'dossiers': 'dossier_name'}
     options = df.groupby(queries[domain]).size().reset_index(name='counts').sort_values(by='counts', ascending=False).reset_index()
     options = [{'label': opt, 'value': opt} for opt in options[queries[domain]]]
     return dcc.Dropdown(
