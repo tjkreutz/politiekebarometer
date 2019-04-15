@@ -1,6 +1,5 @@
 from . import util
 
-import random
 import plotly.graph_objs as go
 import dash_core_components as dcc
 import dash_html_components as html
@@ -55,10 +54,23 @@ def mention_graph(id, df):
         figure=update_mention_graph_figure(df)
     )
 
+def theme_mention_graph(id, df):
+    return dcc.Graph(
+        id=id,
+        config=graph_config,
+        figure=update_theme_mention_graph_figure(df)
+    )
+
 def pol_list(id, df, url):
     return html.Div(
         id=id,
         children=update_list_children(df, url),
+    )
+
+def theme_list(id, df):
+    return html.Div(
+        id=id,
+        children=update_theme_list_children(df),
     )
 
 def multi_sentiment_graph(df):
@@ -227,6 +239,32 @@ def update_mention_graph_figure(df):
         autosize=True,
     )}
 
+def update_theme_mention_graph_figure(df):
+    data = []
+
+    sorted_themes = df.groupby('theme_name').size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
+    df = df.groupby(['date', 'theme_name']).size().reset_index(name='mentions')
+
+    for theme in sorted_themes['theme_name']:
+        theme_df = df[df['theme_name'] == theme]
+        data.append(go.Scatter(
+            mode='lines',
+            x=theme_df['date'],
+            y=theme_df['mentions'],
+            name=theme,
+            showlegend=False,
+        ))
+
+    return {
+    'data': data,
+    'layout': go.Layout(
+        xaxis={'fixedrange': True},
+        yaxis={'range': (0, df['mentions'].max()*1.1), 'fixedrange': True},
+        margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
+        hovermode='closest',
+        autosize=True,
+    )}
+
 def update_list_children(df, url):
     sorted_pol = df.groupby(['pol_id', 'name', 'color', 'picture']).size().reset_index(name='mentions').sort_values(by='mentions', ascending=False).reset_index()
     return [
@@ -242,6 +280,37 @@ def update_list_children(df, url):
             id='pol-item' + str(index+1),
             className='pol-item',
         ) for index, pol in sorted_pol.iterrows()]
+
+def update_theme_list_children(df):
+    sorted_themes = df['theme_name'].value_counts().head(5).index.tolist()
+    descriptions = []
+
+    for i, theme in enumerate(sorted_themes):
+        theme_df = df[df['theme_name'] == theme]
+        positive = len(theme_df.loc[theme_df['sentiment'] > 0])
+        negative = len(theme_df.loc[theme_df['sentiment'] < 0])
+        neutral = len(theme_df.loc[theme_df['sentiment'] == 0])
+        if neutral < positive > negative:
+            description = "Overwegend positieve opinies"
+        elif positive < negative > neutral:
+            description = "Overwegend negatieve opinies"
+        else:
+            description = "Overwegend neutrale opinies"
+        descriptions.append(description)
+
+    return [
+        dcc.Link([
+            html.Div(className='pol-picture', style={'width': '7px', 'height': '7px', 'background-color': DEFAULT_PLOTLY_COLORS[i], 'margin-top': '14px'}),
+            html.P('>>', className='more-information'),
+            html.Table([
+                html.Tr([html.Th(str(i + 1) + '.'), html.Th(theme)]),
+                html.Tr([html.Td(), html.Td(descriptions[i], style={'font-size': '60%', 'margin-bottom': '0'})]),
+            ], className='pol-table'),
+        ],
+            href='/themas/{}'.format(util.name_to_slug(theme)),
+            id='pol-item' + str(i + 1),
+            className='pol-item',
+        ) for i, theme in enumerate(sorted_themes)]
 
 def update_sentiment_graph_figure(df, i=0):
     name = df['name'].iloc[0]

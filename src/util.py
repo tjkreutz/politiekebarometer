@@ -123,6 +123,10 @@ def select_most_mentioned(df, n):
     most_mentioned = df.pol_id.value_counts().head(n).index.values
     return df.loc[df['pol_id'].isin(most_mentioned)]
 
+def select_most_mentioned_theme(df, n):
+    most_mentioned = df['theme_name'].value_counts().head(n).index.tolist()
+    return df.loc[df['theme_name'].isin(most_mentioned)]
+
 def select_data_sources(df, data_sources):
     if 'news' in data_sources and 'twitter' in data_sources:
         return df

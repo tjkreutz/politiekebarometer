@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app, server, party_data, politician_data
-from pages import home, overview_parties, overview_politicians, hoe_werkt_het, profile_party, profile_politician
+from pages import home, overview_parties, overview_politicians, overview_themes, profile_party, profile_politician, hoe_werkt_het
 from src import util, widgets
 
 app.layout = html.Div([
@@ -16,7 +16,7 @@ app.layout = html.Div([
             ], href='/'),
             html.Div(dcc.Link('Partijen', href='/partijen'), className='menu-item'),
             html.Div(dcc.Link('Politici', href='/politici'), className='menu-item'),
-            html.Div(dcc.Link("Thema's", href='#'), className='menu-item'),
+            html.Div(dcc.Link("Thema's", href='/themas'), className='menu-item'),
             html.Div(dcc.Link("Dossiers", href='#'), className='menu-item'),
             html.Div(dcc.Link("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
         ]),
@@ -55,6 +55,8 @@ def display_page(pathname):
         if len(parts) > 2:
             return profile_politician.get_layout(parts[-1])
         return overview_politicians.get_layout()
+    elif '/themas' in pathname:
+        return overview_themes.get_layout()
     elif pathname == '/hoe-werkt-het':
          return hoe_werkt_het.get_layout()
     else:
@@ -92,4 +94,4 @@ def search(value):
     return None
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)
