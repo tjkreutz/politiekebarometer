@@ -12,15 +12,15 @@ h1 {
     color: #9c0b3b;
     font-weight: 500;
     font-size: 2.1em;
-    padding: 0;
-    letter-spacing: 0.01em;
-    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    margin-top: 4px;
+    margin-bottom: 12px;
 }
 
 h2 {
     font-size: 1.1em;
     font-weight: 400;
-    margin: 2px 4px;
+    margin: 4px;
     letter-spacing: normal;
 }
 
@@ -29,12 +29,15 @@ p {
 }
 
 .barometer img{
+    margin-top: 10px;
     height: 60px;
 }
 
 .header {
+    background-color: #ffffff;
     text-align: center;
-    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: thin solid #e6e6e6;
 }
 
 .logo {
@@ -44,8 +47,10 @@ p {
 
 .container {
     background-color: white;
-    padding: 0 30px;
-    border: thin solid #e6e6e6;
+    padding: 0 20px 30px 20px;
+    border-right: thin solid #e6e6e6;
+    border-bottom: thin solid #e6e6e6;
+    border-left: thin solid #e6e6e6;
 }
 
 .menu {
@@ -55,7 +60,7 @@ p {
 .search-container {
     font-size: 0.9em;
     padding: 0 30px;
-    margin: 0 -30px 10px -30px;
+    margin: 0 -20px 10px -20px;
     background-color: #f2f2f2;
 }
 

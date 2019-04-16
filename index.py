@@ -32,17 +32,17 @@ app.layout = html.Div([
             ], className='row'),
             className='search-container'),
         html.Div(id='page-content'),
-        html.Div([
-            html.Center([
-                html.P([
+    ], className='container'),
+    html.Div([
+        html.Center([
+            html.P([
                 """De politieke barometer is onderdeel van het """,
                 html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/', target="_blank"),
                 """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
                 html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/', target="_blank"),
                 """."""], style={'margin-bottom': '20px'}),
-            ], className='research-list')
-        ], className='footer'),
-    ], className='container')
+        ], className='research-list')
+    ], className='footer'),
 ])
 
 @app.callback(Output('page-content', 'children'),
