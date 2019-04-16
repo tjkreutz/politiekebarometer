@@ -9,13 +9,13 @@ from src import util, widgets
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
-        html.Center([
+        html.Div(
             dcc.Link([
                 html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
                 html.H1('De Politieke Barometer'),
-            ], href='/'),
-            html.H2('Wat wordt er in online media geschreven over de politieke partijen?'),
-        ]),
+            ], href='/')
+        , className='logo'),
+        html.H2('Wat wordt er in online media geschreven over de politieke partijen?'),
     ], className='header'),
     html.Div([
         html.Div([
