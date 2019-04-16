@@ -14,31 +14,36 @@ app.layout = html.Div([
                 html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
                 html.H1('De Politieke Barometer'),
             ], href='/'),
-            html.Div(dcc.Link('Partijen', href='/partijen'), className='menu-item'),
-            html.Div(dcc.Link('Politici', href='/politici'), className='menu-item'),
-            html.Div(dcc.Link("Thema's", href='/themas'), className='menu-item'),
-            html.Div(dcc.Link("Dossiers", href='#'), className='menu-item'),
-            html.Div(dcc.Link("Hoe werkt het?", href='/hoe-werkt-het'), className='menu-item'),
+            html.H2('Wat wordt er in online media geschreven over de politieke partijen?', style={'margin-bottom': '15px', 'letter-spacing': 'normal'}),
         ]),
     ], className='header'),
-    html.Div(
-        html.Div([
-            html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-            html.Div(html.Div(dcc.Dropdown(id='search-bar', className='search-bar', placeholder='Zoek'), id='search-bar-holder'), className='four columns'),
-        ], className='row'),
-        className='search-container'),
-    html.Div(id='page-content'),
     html.Div([
-        html.Center([
-            html.P([
-            """De politieke barometer is onderdeel van het """,
-            html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/', target="_blank"),
-            """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
-            html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/', target="_blank"),
-            """."""], style={'margin-bottom': '20px'}),
-        ], className='research-list')
-    ], className='footer'),
-], className='container')
+        html.Div([
+            dcc.Link(html.Div("Partijen", className='menu-item'), href='/partijen'),
+            dcc.Link(html.Div("Politici", className='menu-item'), href='/politici'),
+            dcc.Link(html.Div("Thema's", className='menu-item'), href='/themas'),
+            dcc.Link(html.Div("Dossiers", className='menu-item'), href='#'),
+            dcc.Link(html.Div("Hoe werkt het?", className='menu-item'), href='/hoe-werkt-het'),
+        ], className='menu'),
+        html.Div(
+            html.Div([
+                html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
+                html.Div(html.Div(dcc.Dropdown(id='search-bar', className='search-bar', placeholder='Zoek'), id='search-bar-holder'), className='four columns'),
+            ], className='row'),
+            className='search-container'),
+        html.Div(id='page-content'),
+        html.Div([
+            html.Center([
+                html.P([
+                """De politieke barometer is onderdeel van het """,
+                html.A('NWS data', href='https://www.uantwerpen.be/nl/projecten/nws-data/', target="_blank"),
+                """ project van de Universiteit Antwerpen en werd ontwikkeld door onderzoeksgroep """,
+                html.A('CLiPS', href='https://www.uantwerpen.be/en/research-groups/clips/', target="_blank"),
+                """."""], style={'margin-bottom': '20px'}),
+            ], className='research-list')
+        ], className='footer'),
+    ], className='container')
+])
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])

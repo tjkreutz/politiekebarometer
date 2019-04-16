@@ -283,15 +283,15 @@ def politician_bar_chart(df, theme):
         figure={'data': [data], 'layout': layout})
 
 def update_breadcrumbs(pathname='/'):
-    breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
     if not pathname or pathname=='/':
-        return breadcrumbs
+        return []
     parts = ['']
+    breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
     for part in pathname.split('/'):
         if part:
             parts.append(part)
             name = util.slug_to_name(part)
-            breadcrumbs.append(html.Span(['  >  ', dcc.Link(name, href='/'.join(parts))]))
+            breadcrumbs.append(html.Span([u"  ▸  ", dcc.Link(name, href='/'.join(parts))]))
     return breadcrumbs
 
 def update_slider_marks(df):

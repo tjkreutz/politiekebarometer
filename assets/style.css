@@ -1,7 +1,7 @@
 body {
     font-size: 1.4em;
     margin: 0;
-    background: white url("background.gif") repeat;
+    background-color: #fcfcfc;
 }
 
 a {
@@ -9,11 +9,11 @@ a {
 }
 
 h1 {
-    color: #323232;
-    font-weight: 400;
-    font-size: 2em;
+    color: #9c0b3b;
+    font-weight: 500;
+    font-size: 2.1em;
     padding: 0;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     margin-bottom: 1rem;
 }
 
@@ -29,8 +29,14 @@ p {
 }
 
 .barometer img{
-    margin-top: 20px;
+    margin-top: 10px;
     height: 60px;
+}
+
+.header {
+    background-color: white;
+    text-align: center;
+    border-bottom: thin solid #e6e6e6;
 }
 
 .container {
@@ -39,6 +45,10 @@ p {
     border-left: thin solid #e6e6e6;
     border-right: thin solid #e6e6e6;
     border-bottom: thin solid #e6e6e6;
+}
+
+.menu {
+    text-align: center;
 }
 
 .search-container {
@@ -75,6 +85,8 @@ p {
 }
 
 .menu-item {
+    color: black;
+    text-decoration: none;
     display: inline-block;
     padding: 10px 40px;
     border-bottom: thick solid white;
@@ -86,11 +98,6 @@ p {
 
 .menu-item:not(:last-child) {
   border-right: thin solid #e6e6e6;
-}
-
-.menu-item a {
-    color: black;
-    text-decoration: none;
 }
 
 @media (min-width: 0px) {
