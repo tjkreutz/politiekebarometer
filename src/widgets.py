@@ -380,12 +380,13 @@ def update_theme_list_children(df):
         positive = len(theme_df.loc[theme_df['sentiment'] > 0])
         negative = len(theme_df.loc[theme_df['sentiment'] < 0])
         neutral = len(theme_df.loc[theme_df['sentiment'] == 0])
-        if neutral < positive > negative:
+
+        if (positive > negative) and (positive > neutral):
             description = "Overwegend positieve opinies"
-        elif positive < negative > neutral:
+        elif (negative >= positive) and (negative > neutral):
             description = "Overwegend negatieve opinies"
         else:
-            description = "Overwegend neutrale opinies"
+            description = "Gebalanceerde opinies"
         descriptions.append(description)
 
     return [
