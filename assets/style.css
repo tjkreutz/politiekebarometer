@@ -21,7 +21,7 @@ h2 {
     font-size: 1.1em;
     font-weight: 400;
     margin: 2px 4px;
-    letter-spacing: 0.01em;
+    letter-spacing: normal;
 }
 
 p {
@@ -34,17 +34,14 @@ p {
 }
 
 .header {
-    background-color: white;
     text-align: center;
-    border-bottom: thin solid #e6e6e6;
+    margin-bottom: 20px;
 }
 
 .container {
     background-color: white;
     padding: 0 30px;
-    border-left: thin solid #e6e6e6;
-    border-right: thin solid #e6e6e6;
-    border-bottom: thin solid #e6e6e6;
+    border: thin solid #e6e6e6;
 }
 
 .menu {
@@ -94,10 +91,6 @@ p {
 
 .menu-item:hover {
     border-bottom: thick solid #abe2fb;
-}
-
-.menu-item:not(:last-child) {
-  border-right: thin solid #e6e6e6;
 }
 
 @media (min-width: 0px) {

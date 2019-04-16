@@ -14,7 +14,7 @@ app.layout = html.Div([
                 html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
                 html.H1('De Politieke Barometer'),
             ], href='/'),
-            html.H2('Wat wordt er in online media geschreven over de politieke partijen?', style={'margin-bottom': '15px', 'letter-spacing': 'normal'}),
+            html.H2('Wat wordt er in online media geschreven over de politieke partijen?'),
         ]),
     ], className='header'),
     html.Div([

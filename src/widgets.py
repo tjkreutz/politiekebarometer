@@ -283,10 +283,10 @@ def politician_bar_chart(df, theme):
         figure={'data': [data], 'layout': layout})
 
 def update_breadcrumbs(pathname='/'):
-    if not pathname or pathname=='/':
-        return []
-    parts = ['']
     breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
+    if not pathname or pathname=='/':
+        return breadcrumbs
+    parts = ['']
     for part in pathname.split('/'):
         if part:
             parts.append(part)
