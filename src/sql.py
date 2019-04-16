@@ -12,7 +12,7 @@ SELECT  mentions.id AS mentions_id,
 FROM    mentions
         JOIN pol_all
             ON mentions.pol_id=pol_all.id
-        LEFT JOIN pol_parties 
+        JOIN pol_parties 
             ON mentions.pol_id=pol_parties.pol_id
         JOIN fragments
             ON mentions.fragment_id=fragments.id
@@ -29,7 +29,7 @@ WHERE   doc_all.date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();
 
 PARTY_POLITICIAN_DATA = """
 SELECT  mentions.id AS mentions_id,
-        pol_all.id AS pol_id,
+        pol_parties.pol_id AS pol_id,
         pol_parties.short_name AS name,
         pol_all.color,
         pol_all.picture,
@@ -39,7 +39,7 @@ SELECT  mentions.id AS mentions_id,
         doc_tweets.tweet_id,
         themes.name AS theme_name
 FROM    mentions
-        LEFT JOIN pol_persons 
+        JOIN pol_persons 
             ON mentions.pol_id=pol_persons.pol_id
         JOIN pol_parties
             ON pol_persons.party_id=pol_parties.id

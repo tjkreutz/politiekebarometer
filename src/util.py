@@ -129,7 +129,7 @@ def select_by_theme(df, theme):
     return df.loc[df['theme_name']==theme]
 
 def select_most_mentioned(df, n):
-    most_mentioned = df.pol_id.value_counts().head(n).index.values
+    most_mentioned = df['pol_id'].value_counts().head(n).index.tolist()
     return df.loc[df['pol_id'].isin(most_mentioned)]
 
 def select_most_mentioned_theme(df, n):
