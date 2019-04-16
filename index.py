@@ -73,13 +73,13 @@ def update_breadcrumb(pathname):
 @app.callback(Output('search-bar-holder', 'children'),
               [Input('url', 'pathname')])
 def update_search_bar(pathname):
-    if not pathname or pathname=='/' or 'partijen' in pathname:
+    if not pathname or pathname=='/' or '/partijen' in pathname:
         return [widgets.search_bar(party_data, 'partijen')]
-    if 'politici' in pathname:
+    if '/politici' in pathname:
         return [widgets.search_bar(politician_data, 'politici')]
-    if 'themas' in pathname:
+    if '/themas' in pathname:
         return [widgets.search_bar(party_data, "thema's")]
-    if 'dossiers' in pathname:
+    if '/dossiers' in pathname:
         return []
     return []
 
