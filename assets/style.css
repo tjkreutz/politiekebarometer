@@ -4,17 +4,25 @@ body {
     background-color: #fcfcfc;
 }
 
-a {
-    text-decoration: none;
+.header {
+    background-color: #fff;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: thin solid #e6e6e6;
+}
+
+.logo {
+    margin: 10px auto 0 auto;
+    height: 50px;
 }
 
 h1 {
+    line-height: 1.4em;
     color: #9c0b3b;
     font-weight: 500;
     font-size: 2.1em;
     letter-spacing: 1px;
-    margin-top: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 h2 {
@@ -24,28 +32,16 @@ h2 {
     letter-spacing: normal;
 }
 
+a {
+    text-decoration: none;
+}
+
 p {
     margin: 20px 0;
 }
 
-.barometer img{
-    margin-top: 10px;
-    height: 50px;
-}
-
-.header {
-    background-color: #ffffff;
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: thin solid #e6e6e6;
-}
-
-.logo {
-    width: 400px;
-    margin: 0 auto;
-}
-
 .container {
+    border-radius: 3px;
     background-color: #ffffff;
     padding: 0 20px 30px 20px;
     border-right: thin solid #e6e6e6;
@@ -69,7 +65,7 @@ p {
 }
 
 .breadcrumbs a {
-    color: #000000;
+    color: inherit;
 }
 
 .search-bar {
@@ -79,7 +75,7 @@ p {
 }
 
 .title-field {
-    color: #ffffff;
+    color: #fff;
     padding: 5px;
     background-color: #9c0b3b;
 }
@@ -90,11 +86,10 @@ p {
 }
 
 .menu-item {
-    color: #000000;
-    text-decoration: none;
+    color: #323232;
     display: inline-block;
     padding: 10px 40px;
-    border-bottom: thick solid white;
+    border-bottom: thick solid #fff;
 }
 
 .menu-item:hover {
@@ -135,20 +130,24 @@ p {
 }
 
 .pol-item {
-    color: inherit;
+    color: #323232;
     display: block;
-    text-decoration: none;
     overflow: auto;
+    border-bottom: thick solid #fff;
+}
+
+.pol-item:first-child {
+    margin-top: 4px;
 }
 
 .pol-item:hover {
-    background-color: #f2f2f2;
+    border-bottom: thick solid #abe2fb;
 }
 
 .pol-picture {
     border-radius: 50%;
     padding: 2px;
-    margin: 5px;
+    margin: 4px;
     float: left;
     clear: right;
     width: 39px;
@@ -196,7 +195,7 @@ p {
 
 .description {
     font-size: 0.9em;
-    margin: 10px 0;
+    margin: 20px 0 10px 0;
 }
 
 ._dash-undo-redo {

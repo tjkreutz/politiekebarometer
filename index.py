@@ -9,12 +9,8 @@ from src import util, widgets
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
-        html.Div(
-            dcc.Link([
-                html.Div(html.Img(src='/assets/barometer.png'), className='barometer'),
-                html.H1('De Politieke Barometer'),
-            ], href='/')
-        , className='logo'),
+        dcc.Link(html.Img(src='/assets/barometer.png', className='logo'), href='/'),
+        html.H1('De Politieke Barometer'),
         html.H2('Wat wordt er in online media geschreven over de politieke partijen?'),
     ], className='header'),
     html.Div([
