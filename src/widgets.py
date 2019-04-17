@@ -139,7 +139,7 @@ def theme_bar_chart(df):
         y=df['theme_short_name'],
         hovertext=df['theme_name'],
         orientation='h',
-        marker={'color': df['color'].iloc[0]},
+        marker={'color': '#abe2fb'},
         width=0.6,
         hoverinfo='text+x',
     )
