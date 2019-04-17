@@ -315,7 +315,7 @@ def update_mention_graph_figure(df):
             x=pol_df['date'],
             y=pol_df['mentions'],
             name=pol_df['name'].iloc[0],
-            line={'color': pol_df['color'].iloc[0]},
+            line={'shape': 'spline', 'smoothing': 1, 'color': pol_df['color'].iloc[0]},
             showlegend=False,
         ))
 
@@ -342,6 +342,7 @@ def update_theme_mention_graph_figure(df):
             x=theme_df['date'],
             y=theme_df['mentions'],
             name=theme,
+            line={'shape': 'spline', 'smoothing': 1},
             showlegend=False,
         ))
 
@@ -449,7 +450,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         y=news_df['mentions'],
         name='Nieuws',
         showlegend=False,
-        line={'color': '#ff7e7e'}
+        line={'shape': 'spline', 'smoothing': 1, 'color': '#ff7e7e'}
     )
 
     tweet_trace = go.Scatter(
@@ -459,7 +460,7 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         name='Twitter',
         showlegend=False,
         yaxis='y2',
-        line={'color': '#85d0f2'},
+        line={'shape': 'spline', 'smoothing': 1, 'color': '#85d0f2'},
     )
 
     return {
