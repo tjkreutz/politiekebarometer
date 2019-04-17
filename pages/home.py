@@ -5,8 +5,8 @@ def get_layout():
     layout = html.Div([
         html.Div([
             html.P("""
-            De politieke barometer verwerkt elk uur ongeveer 50 nieuwsartikelen en meer dan 8.000 tweets over politici 
-            en politieke partijen. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst 
+            De politieke barometer verwerkt ongeveer 1.000 nieuwsartikelen en meer dan 200.000 tweets over politici 
+            en politieke partijen per dag. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst 
             taalkundig analyseert."""),
             html.P("""
             De barometer laat toe om doorheen de tijd het aantal vermeldingen te traceren van partijen, 

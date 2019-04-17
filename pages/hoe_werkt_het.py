@@ -4,9 +4,9 @@ def get_layout():
     layout = html.Div([
         html.Div(html.H2('Hoe werkt het?'), className='title-field'),
         html.P([
-            """De politieke barometer verwerkt ongeveer 50 nieuwsartikelen""",
+            """De politieke barometer verwerkt ongeveer 1.000 nieuwsartikelen""",
             html.Sup(html.A('1', href='#bottom')),
-            """ en meer dan 8.000 tweets elk uur. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst taalkundig analyseert.""",
+            """ en meer dan 200.000 tweets per dag. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst taalkundig analyseert.""",
             html.Sup(html.A('2', href='#bottom')),
         ]),
         html.P(
