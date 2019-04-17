@@ -32,23 +32,15 @@ def get_layout(slug):
         ]),
         html.Div([
             html.Div([
-                html.H2('Partijen in het nieuws met {}'.format(theme_name), className='title-field'),
-                html.Center([html.B("Figuur 1: "), html.Span("Partijen waarbij nieuws relatief vaak gaat over {}.".format(theme_name))], className='description'),
+                html.H2('Partijen in het nieuws', className='title-field'),
+                html.Center([html.B("Figuur 1: "), html.Span("Partijen waarbij nieuws relatief vaak gaat over dit thema")], className='description'),
                 widgets.party_bar_chart(news_party_df, theme_name),
-            ], className = 'five columns'),
+            ], className='six columns'),
             html.Div([
-                html.H2([html.Span('Opinie op Twitter rond thema {} '.format(theme_name)), html.Span('(laatste 30 dagen)', style={'font-size': '0.9em'})], className='title-field'),
-                html.Div([
-                    html.Div([
-                        html.Center([html.B("Figuur 2: "), html.Span("Distributie opinie")], className='description'),
-                        widgets.sentiment_donut(tweet_df),
-                    ], className='six columns'),
-                    html.Div([
-                        html.Center([html.B("Figuur 3: "), html.Span("Evolutie opinie")], className='description'),
-                        widgets.sentiment_graph(tweet_df)
-                    ], className='six columns')
-                ], className='row')
-            ], className='seven columns'),
+                html.H2('Opinie op Twitter over dit thema', className='title-field'),
+                html.Center([html.B("Figuur 2: "), html.Span("Evolutie opinie")], className='description'),
+                widgets.sentiment_area_graph(tweet_df)
+            ], className='six columns')
         ], className='row')
     ])
 

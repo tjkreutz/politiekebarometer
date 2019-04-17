@@ -73,21 +73,21 @@ def theme_list(id, df):
         children=update_theme_list_children(df),
     )
 
-def multi_sentiment_graph(df):
+def multi_sentiment_area_graph(df):
     df = util.select_data_sources(df, ['twitter'])
     df = util.select_most_mentioned(df, 3)
     return html.Div([
         html.Div([
             html.Center(pol, className='description'),
-            sentiment_graph(util.select_pol_by_name(df, pol), i)
+            sentiment_area_graph(util.select_pol_by_name(df, pol), i)
         ]
         , className='four columns') for i, pol in enumerate(df['name'].unique())
     ])
 
-def sentiment_graph(df, i=0):
+def sentiment_area_graph(df, i=0):
     return dcc.Graph(
         config=graph_config,
-        figure=update_sentiment_graph_figure(df, i)
+        figure=update_sentiment_area_graph_figure(df, i)
     )
 
 def double_mention_graph(news_df, tweet_df):
@@ -124,12 +124,12 @@ def sentiment_donut(df):
         figure={'data': [data], 'layout': layout})
 
 def theme_bar_chart(df):
-    df = df.groupby('theme_name').size().reset_index(name='counts').sort_values(by='counts').reset_index()
+    df = df.groupby(['theme_name', 'color']).size().reset_index(name='counts').sort_values(by='counts').reset_index()
 
     total_counts = df['counts'].sum()
 
     df['counts'] = df['counts']/total_counts
-    df['theme_short_name'] = df['theme_name'].str.slice_replace(6, repl='.. ')
+    df['theme_short_name'] = df['theme_name'].str.slice_replace(9, repl='.. ')
     df = df.iloc[-5:]
 
     x_max = df['counts'].max() + 0.01
@@ -139,8 +139,8 @@ def theme_bar_chart(df):
         y=df['theme_short_name'],
         hovertext=df['theme_name'],
         orientation='h',
-        marker={'color': '#85d0f2'},
-        width=0.5,
+        marker={'color': df['color'].iloc[0]},
+        width=0.6,
         hoverinfo='text+x',
     )
 
@@ -148,8 +148,8 @@ def theme_bar_chart(df):
         xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
         yaxis={'fixedrange': True},
         autosize=True,
-        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
-        height=160,
+        margin={'l': 80, 'r': 10, 'b': 30, 't': 0},
+        height=150,
     )
 
     return dcc.Graph(
@@ -227,7 +227,7 @@ def party_bar_chart(df, theme):
         hovertext=df['name'],
         orientation='h',
         marker={'color': df['color']},
-        width=0.5,
+        width=0.6,
         hoverinfo='text+x',
     )
 
@@ -235,8 +235,8 @@ def party_bar_chart(df, theme):
         xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
         yaxis={'fixedrange': True},
         autosize=True,
-        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
-        height=160,
+        margin={'l': 70, 'r': 10, 'b': 30, 't': 0},
+        height=150,
     )
 
     return dcc.Graph(
@@ -404,38 +404,62 @@ def update_theme_list_children(df):
             className='pol-item',
         ) for i, theme in enumerate(sorted_themes)]
 
-def update_sentiment_graph_figure(df, i=0):
-    name = df['name'].iloc[0]
-    #todo: average sentiment in other ways?
-    df.loc[df['sentiment'] > 0, 'sentiment'] = 1
-    df.loc[df['sentiment'] < 0, 'sentiment'] = -1
-    df = df.groupby('date')['sentiment'].mean().reset_index()
+def update_sentiment_area_graph_figure(df, i=0):
+    colors = ['#7eff7e', '#ff7e7e', '#fff3c8']
 
-    min_sent = df['sentiment'].min()
-    max_sent = df['sentiment'].max()
-    if min_sent > -0.5 and max_sent < 0.5:
-        min_y, max_y = -0.55, 0.55
-    else:
-        min_y, max_y = -1.1, 1.1
+    df_positive = df.loc[df['sentiment'] >= 0.1].groupby('date').size().reset_index(name='count')
+    df_negative = df.loc[df['sentiment'] <= -0.1].groupby('date').size().reset_index(name='count')
+    df_neutral = df.loc[(df['sentiment'] > -0.1) & (df['sentiment'] < 0.1)].groupby('date').size().reset_index(name='count')
 
-    trace = go.Scatter(
+    trace_positive = go.Scatter(
         mode='lines',
-        x=df['date'],
-        y=df['sentiment'],
-        name=name,
-        line={'color': '#85d0f2'},
-        showlegend=False,
+        x=df_positive['date'],
+        y=df_positive['count'],
+        name='Positief',
+        text='Positief',
+        stackgroup='one',
+        groupnorm='percent',
+        line={'shape': 'spline', 'smoothing': 1, 'color': colors[0]},
+        hoverinfo='text+x+y',
+        hoverlabel={'bgcolor': colors[0]},
+    )
+
+    trace_negative = go.Scatter(
+        mode='lines',
+        x=df_negative['date'],
+        y=df_negative['count'],
+        name='Negatief',
+        text='Negatief',
+        stackgroup='one',
+        groupnorm='percent',
+        line={'shape': 'spline', 'smoothing': 1, 'color': colors[1]},
+        hoverinfo='text+x+y',
+        hoverlabel={'bgcolor': colors[1]},
+    )
+
+    trace_neutral = go.Scatter(
+        mode='lines',
+        x=df_neutral['date'],
+        y=df_neutral['count'],
+        name='Neutraal',
+        text='Neutraal',
+        stackgroup='one',
+        groupnorm='percent',
+        line={'shape': 'spline', 'smoothing': 1, 'color': colors[2]},
+        hoverinfo='text+x+y',
+        hoverlabel={'bgcolor': colors[2]},
     )
 
     return {
-    'data': [trace],
+    'data': [trace_negative, trace_neutral, trace_positive],
     'layout': go.Layout(
-        xaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': False},
-        yaxis={'range': (min_y, max_y), 'fixedrange': True, 'showticklabels': i==0, 'tickformat': '%', 'hoverformat': '%'},
-        margin={'l': 30 if i==0 else 10, 'r': 10, 'b': 20, 't': 0},
-        hovermode='closest',
-        height=160,
+        xaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': True},
+        yaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': i==0, 'ticksuffix': '%', 'hoverformat': '.0f'},
+        margin={'l': 30 if i==0 else 20, 'r': 20, 'b': 30, 't': 0},
+        height=150,
         autosize=True,
+        hovermode='x',
+        showlegend=False,
     )}
 
 def update_double_mention_graph_figure(news_df, tweet_df):
@@ -470,7 +494,6 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#ff7e7e'}, 'fixedrange': True, 'showgrid': False, 'automargin': True, 'rangemode': 'tozero'},
         yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#85d0f2'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y', 'rangemode': 'tozero'},
         margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
-        hovermode='closest',
         autosize=True,
         height=320
     )}

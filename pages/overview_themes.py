@@ -26,7 +26,7 @@ def get_layout():
             ], className='four columns'),
         ], className='row'),
         html.Div([
-            html.Div(html.H2([html.Span("Partijen en thema's in het nieuws "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
+            html.Div(html.H2("Partijen en thema's in het nieuws"), className='title-field'),
             html.Center([html.B("Figuur 2: "), html.Span("Bij welke partijen gaat de berichtgeving in het nieuws relatief vaak over deze thema's?")], className='description'),
             widgets.multi_party_bar_chart(df),
         ], className='row')

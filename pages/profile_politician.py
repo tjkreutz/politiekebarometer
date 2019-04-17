@@ -23,7 +23,7 @@ def get_layout(slug):
     tweet_df = util.select_data_sources(df, ['twitter'])
     tweet_count = len(tweet_df.index)
 
-    top_theme = df['theme_name'].value_counts().idxmax()
+    top_theme = news_df['theme_name'].value_counts().idxmax()
 
     layout = html.Div([
         html.Div([
@@ -40,7 +40,7 @@ def get_layout(slug):
                         ])
                     ]),
                 ], style={'margin': '10px 0'}),
-                html.Div(html.H2([html.Span("Data samengevat "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field2'),
+                html.Div(html.H2("Data samengevat (laatste 30 dagen)"), className='title-field2'),
                 html.Table([
                     html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),
                     html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
@@ -58,23 +58,15 @@ def get_layout(slug):
         ], className='row'),
         html.Div([
             html.Div([
-                html.Div(html.H2("Top thema's"), className='title-field'),
-                html.Center([html.B("Figuur 2: "), html.Span("Distributie top 5 thema's")], className='description'),
-                widgets.theme_bar_chart(df),
-            ], className='five columns'),
+                html.Div(html.H2("Opinie op Twitter"), className='title-field'),
+                html.Center([html.B("Figuur 2: "), html.Span("Evolutie opinie over {}".format(politician_name))], className='description'),
+                widgets.sentiment_area_graph(tweet_df)
+            ], className='six columns'),
             html.Div([
-                html.Div(html.H2([html.Span("Opinie op Twitter "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
-                html.Div([
-                    html.Div([
-                        html.Center([html.B("Figuur 3: "), html.Span("Distributie opinie")], className='description'),
-                        widgets.sentiment_donut(tweet_df),
-                    ], className='five columns'),
-                    html.Div([
-                        html.Center([html.B("Figuur 4: "), html.Span("Evolutie opinie")], className='description'),
-                        widgets.sentiment_graph(tweet_df)
-                    ], className='seven columns')
-                ], className='row')
-            ], className='seven columns'),
+                html.Div(html.H2("Thema's in het nieuws"), className='title-field'),
+                html.Center([html.B("Figuur 3: "), html.Span("Distributie top 5 thema's")], className='description'),
+                widgets.theme_bar_chart(news_df),
+            ], className='six columns')
         ], className='row'),
     ])
 

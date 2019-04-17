@@ -26,9 +26,9 @@ def get_layout():
             ], className='four columns'),
         ], className='row'),
         html.Div([
-            html.Div(html.H2([html.Span("Opinie op Twitter "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
+            html.Div(html.H2("Opinie op Twitter "), className='title-field'),
             html.Center([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over partijen op Twitter?")], className='description'),
-            widgets.multi_sentiment_graph(df),
+            widgets.multi_sentiment_area_graph(df),
         ], className='row')
     ])
 
