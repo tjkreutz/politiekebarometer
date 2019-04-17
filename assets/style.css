@@ -201,3 +201,11 @@ p {
 ._dash-undo-redo {
   display: none;
 }
+
+.cursor-pointer {
+    cursor: auto!important;
+}
+
+.plotly-notifier {
+    display: none!important;
+}
