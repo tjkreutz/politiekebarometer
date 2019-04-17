@@ -46,7 +46,7 @@ p {
 }
 
 .container {
-    background-color: white;
+    background-color: #ffffff;
     padding: 0 20px 30px 20px;
     border-right: thin solid #e6e6e6;
     border-bottom: thin solid #e6e6e6;
@@ -69,7 +69,7 @@ p {
 }
 
 .breadcrumbs a {
-    color: black;
+    color: #000000;
 }
 
 .search-bar {
@@ -79,7 +79,7 @@ p {
 }
 
 .title-field {
-    color: white;
+    color: #ffffff;
     padding: 5px;
     background-color: #9c0b3b;
 }
@@ -90,7 +90,7 @@ p {
 }
 
 .menu-item {
-    color: black;
+    color: #000000;
     text-decoration: none;
     display: inline-block;
     padding: 10px 40px;
@@ -180,6 +180,7 @@ p {
 }
 
 .footer {
+    background-color: #ffffff;
     margin-top: 10px;
     font-size: 0.9em;
     border-top: thin solid #e6e6e6;

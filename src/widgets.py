@@ -216,7 +216,7 @@ def party_bar_chart(df, theme):
 
     df = df.sort_values(by='rel_count').reset_index()
 
-    df['party_short_name'] = df['name'].str.slice_replace(9, repl='.. ')
+    df['party_short_name'] = df['name'].str.slice_replace(7, repl='.. ')
     df = df.iloc[-5:]
 
     x_max = df['rel_count'].max() + 0.01
@@ -361,7 +361,7 @@ def update_list_children(df, url):
     return [
         dcc.Link([
             html.Img(src=pol['picture'], className='pol-picture', style={'border': f'3px solid {pol["color"]}'}),
-            html.P('>>', className='more-information'),
+            html.P(u"►", className='more-information'),
             html.Table([
                 html.Tr([html.Th(str(index+1) + '.'), html.Th(pol['name'])]),
                 html.Tr([html.Td(), html.Td(str(pol['mentions']) + ' keer genoemd.', style={'font-size': '60%', 'margin-bottom': '0'})]),
@@ -393,7 +393,7 @@ def update_theme_list_children(df):
     return [
         dcc.Link([
             html.Div(className='pol-picture', style={'width': '7px', 'height': '7px', 'background-color': DEFAULT_PLOTLY_COLORS[i], 'margin-top': '14px'}),
-            html.P('>>', className='more-information'),
+            html.P(u"►", className='more-information'),
             html.Table([
                 html.Tr([html.Th(str(i + 1) + '.'), html.Th(theme)]),
                 html.Tr([html.Td(), html.Td(descriptions[i], style={'font-size': '60%', 'margin-bottom': '0'})]),
