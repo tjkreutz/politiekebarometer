@@ -62,7 +62,7 @@ def slug_to_name(slug):
     slug = slug.title()
     return slug
 
-def fill_missing_days(df, no_of_days=14):
+def fill_missing_days(df, no_of_days=30):
     start = (pd.to_datetime('today') - pd.Timedelta(days=no_of_days)).date()
     for date in pd.date_range(start, periods=no_of_days):
         if (df['date'] == date).any():

@@ -40,7 +40,7 @@ def get_layout(slug):
                         ])
                     ]),
                 ], style={'margin': '10px 0'}),
-                html.Div(html.H2([html.Span("Data samengevat "), html.Span("(laatste 14 dagen)", style={'font-size': '0.9em'})]), className='title-field2'),
+                html.Div(html.H2([html.Span("Data samengevat "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field2'),
                 html.Table([
                     html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),
                     html.Tr([html.Td('Aantal voorkomens op Twitter:'), html.Td(str(tweet_count))]),
@@ -63,7 +63,7 @@ def get_layout(slug):
                 widgets.theme_bar_chart(df),
             ], className='five columns'),
             html.Div([
-                html.Div(html.H2([html.Span("Opinie op Twitter "), html.Span("(laatste 14 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
+                html.Div(html.H2([html.Span("Opinie op Twitter "), html.Span("(laatste 30 dagen)", style={'font-size': '0.9em'})]), className='title-field'),
                 html.Div([
                     html.Div([
                         html.Center([html.B("Figuur 3: "), html.Span("Distributie opinie")], className='description'),

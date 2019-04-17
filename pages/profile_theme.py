@@ -37,7 +37,7 @@ def get_layout(slug):
                 widgets.party_bar_chart(news_party_df, theme_name),
             ], className = 'five columns'),
             html.Div([
-                html.H2([html.Span('Opinie op Twitter rond thema {} '.format(theme_name)), html.Span('(laatste 14 dagen)', style={'font-size': '0.9em'})], className='title-field'),
+                html.H2([html.Span('Opinie op Twitter rond thema {} '.format(theme_name)), html.Span('(laatste 30 dagen)', style={'font-size': '0.9em'})], className='title-field'),
                 html.Div([
                     html.Div([
                         html.Center([html.B("Figuur 2: "), html.Span("Distributie opinie")], className='description'),
