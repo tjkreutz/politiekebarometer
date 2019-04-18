@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app, server, party_data, politician_data
-from pages import home, overview_parties, overview_politicians, overview_themes, profile_party, profile_politician, profile_theme, hoe_werkt_het
+from pages import home, overview_parties, overview_politicians, overview_themes, overview_dossiers, profile_party, profile_politician, profile_theme, profile_dossier, hoe_werkt_het
 from src import util, widgets
 
 app.layout = html.Div([
@@ -18,7 +18,7 @@ app.layout = html.Div([
             dcc.Link(html.Div("Partijen", className='menu-item'), href='/partijen'),
             dcc.Link(html.Div("Politici", className='menu-item'), href='/politici'),
             dcc.Link(html.Div("Thema's", className='menu-item'), href='/themas'),
-            dcc.Link(html.Div("Dossiers", className='menu-item'), href='#'),
+            dcc.Link(html.Div("Dossiers", className='menu-item'), href='/dossiers'),
             dcc.Link(html.Div("Hoe werkt het?", className='menu-item'), href='/hoe-werkt-het'),
         ], className='menu'),
         html.Div(
@@ -61,6 +61,11 @@ def display_page(pathname):
         if len(parts) > 2:
             return profile_theme.get_layout(parts[-1])
         return overview_themes.get_layout()
+    elif '/dossiers' in pathname:
+        parts = pathname.split('/')
+        if len(parts) > 2:
+            return profile_dossier.get_layout(parts[-1])
+        return overview_dossiers.get_layout()
     elif pathname == '/hoe-werkt-het':
          return hoe_werkt_het.get_layout()
     else:
@@ -80,8 +85,6 @@ def update_search_bar(pathname):
         return [widgets.search_bar(politician_data, 'politici')]
     if '/themas' in pathname:
         return [widgets.search_bar(party_data, "thema's")]
-    if '/dossiers' in pathname:
-        return []
     return []
 
 @app.callback(Output('url', 'pathname'),
