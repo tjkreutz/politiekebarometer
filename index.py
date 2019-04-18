@@ -9,22 +9,25 @@ from src import util, widgets
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
-        dcc.Link(html.Img(src='/assets/barometer.png', className='logo'), href='/'),
-        html.H1('De Politieke Barometer'),
+        html.Center(
+            dcc.Link([
+                html.Img(src='/assets/barometer.png', className='logo'),
+                html.H1('De Politieke Barometer'),
+            ], href='/')
+        , className='clickable-container'),
         html.H2('Wat wordt er in online media geschreven over de politieke partijen?'),
     ], className='header'),
     html.Div([
         html.Div([
             dcc.Link(html.Div("Partijen", className='menu-item'), href='/partijen'),
             dcc.Link(html.Div("Politici", className='menu-item'), href='/politici'),
-            dcc.Link(html.Div("Thema's", className='menu-item'), href='/themas'),
             dcc.Link(html.Div("Dossiers", className='menu-item'), href='/dossiers'),
             dcc.Link(html.Div("Hoe werkt het?", className='menu-item'), href='/hoe-werkt-het'),
         ], className='menu'),
         html.Div(
             html.Div([
                 html.Div(widgets.breadcrumbs('breadcrumbs'), className='eight columns'),
-                html.Div(html.Div(dcc.Dropdown(id='search-bar', className='search-bar', placeholder='Zoek'), id='search-bar-holder'), className='four columns'),
+                html.Div(html.Div(id='search-bar-holder'), className='four columns'),
             ], className='row'),
             className='search-container'),
         html.Div(id='page-content'),
@@ -56,11 +59,6 @@ def display_page(pathname):
         if len(parts) > 2:
             return profile_politician.get_layout(parts[-1])
         return overview_politicians.get_layout()
-    elif '/themas' in pathname:
-        parts = pathname.split('/')
-        if len(parts) > 2:
-            return profile_theme.get_layout(parts[-1])
-        return overview_themes.get_layout()
     elif '/dossiers' in pathname:
         parts = pathname.split('/')
         if len(parts) > 2:
@@ -79,12 +77,10 @@ def update_breadcrumb(pathname):
 @app.callback(Output('search-bar-holder', 'children'),
               [Input('url', 'pathname')])
 def update_search_bar(pathname):
-    if not pathname or pathname=='/' or '/partijen' in pathname:
+    if '/partijen' in pathname:
         return [widgets.search_bar(party_data, 'partijen')]
     if '/politici' in pathname:
         return [widgets.search_bar(politician_data, 'politici')]
-    if '/themas' in pathname:
-        return [widgets.search_bar(party_data, "thema's")]
     return []
 
 @app.callback(Output('url', 'pathname'),
@@ -96,8 +92,6 @@ def search(value):
         return '/partijen/{}'.format(util.name_to_slug(value))
     if value in politician_data['name'].unique():
         return '/politici/{}'.format(util.name_to_slug(value))
-    if value in party_data['theme_name'].unique():
-        return '/themas/{}'.format(util.name_to_slug(value))
     return None
 
 if __name__ == '__main__':
