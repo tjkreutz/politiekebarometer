@@ -1,5 +1,6 @@
 import os
 import time
+import json
 import random
 import MySQLdb
 import datetime
@@ -7,7 +8,6 @@ from . import sql
 import pandas as pd
 from dotenv import load_dotenv
 from urllib.parse import urlparse
-from sshtunnel import SSHTunnelForwarder
 
 #todo: catch politician exceptions
 name_exceptions = {"Thema's": 'themas', 'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
@@ -16,33 +16,14 @@ slug_exceptions = {y:x for x,y in name_exceptions.items()}
 def get_db():
     load_dotenv()
 
-    ssh_url = os.getenv('SSH_URL')
-    ssh_parse = urlparse(ssh_url)
-    ssh_private_key = os.getenv('SSH_PRIVATE_KEY')
-    ssh_private_key_password = os.getenv('SSH_PRIVATE_KEY_PASSWORD')
-
     database_url = os.getenv('DATABASE_URL')
     database_parse = urlparse(database_url)
 
-    tunnel = SSHTunnelForwarder(
-            (ssh_parse.hostname, ssh_parse.port),
-            ssh_username=ssh_parse.username,
-            ssh_password=ssh_parse.password,
-            ssh_pkey=ssh_private_key,
-            ssh_private_key_password=ssh_private_key_password,
-            remote_bind_address=(database_parse.hostname, database_parse.port))
-    tunnel.start()
     db = MySQLdb.connect(
-        host='127.0.0.1',
+        host=database_parse.hostname,
         user=database_parse.username,
         password=database_parse.password,
         db=database_parse.path[1:],
-        port=tunnel.local_bind_port,
-        ssl={
-        'ca': 'assets/ca.pem',
-        'cert': 'assets/client-cert.pem',
-        'key': 'assets/client-key.pem',
-        }
     )
     return db
 
@@ -81,6 +62,7 @@ def load_party_data():
     df = pd.concat([party_df, party_pol_df])
     df['date'] = pd.to_datetime(df['date'].dt.date)
     df['theme_name'] = df['theme_name'].astype('category')
+    df['dossier_name'] = df['dossier_name'].astype('category')
     df['picture'].fillna('/assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
@@ -91,6 +73,7 @@ def load_politician_data():
     df = pd.read_sql(query, db)
     df['date'] = pd.to_datetime(df['date'].dt.date)
     df['theme_name'] = df['theme_name'].astype('category')
+    df['dossier_name'] = df['dossier_name'].astype('category')
     df['picture'].fillna('/assets/blank.png', inplace=True)
     df['color'].fillna('#abe2fb', inplace=True)
     return df
@@ -145,6 +128,11 @@ def select_data_sources(df, data_sources):
         return df.loc[df['tweet_id'].notnull()]
     return df.iloc[0:0]
 
+def select_last_n_days(df, no_of_days=7):
+    end = pd.to_datetime('today')
+    start = (end - pd.Timedelta(days=no_of_days)).date()
+    return select_date_range(df, (start, end))
+
 def select_date_range(df, date_range):
     return df.loc[(df['date'] >= date_range[0]) & (df['date'] <= date_range[1])]
 
@@ -157,3 +145,6 @@ def to_datetime(timestamp):
 
 def to_pretty_date(date):
     return date.strftime("%d-%m")
+
+def load_json(path):
+    return json.load(open(path))

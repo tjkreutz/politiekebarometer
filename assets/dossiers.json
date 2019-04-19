@@ -1,22 +1,22 @@
 {
   "Brexit": {
-    "info": "",
+    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.",
     "picture": "/assets/brexit.png"
   },
   "Marrakesh-pact": {
-    "info": "",
-    "picture": "/assets/brexit.png"
+    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.",
+    "picture": "/assets/marrakesh-pact.png"
   },
   "Klimaatprotest": {
-    "info": "",
-    "picture": "/assets/brexit.png"
+    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.",
+    "picture": "/assets/klimaatprotest.png"
   },
   "Salariswagen": {
-    "info": "",
-    "picture": "/assets/brexit.png"
+    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.",
+    "picture": "/assets/salariswagen.png"
   },
   "Kilometerheffing": {
-    "info": "",
-    "picture": "/assets/brexit.png"
+    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.",
+    "picture": "/assets/kilometerheffing.png"
   }
 }

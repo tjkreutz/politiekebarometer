@@ -213,6 +213,10 @@ p {
     background-color: #f2f2f2;
 }
 
+.dossier:hover > .bottom-content {
+    background-color: #fcfcfc;
+}
+
 .top-bar {
     background-color: #fcfcfc;
     border: thin solid #e6e6e6;
@@ -230,9 +234,10 @@ p {
 }
 
 .bottom-content img {
+    border: thin solid #e6e6e6;
     float: left;
     width: 100px;
-    padding: 10px;
+    margin: 10px;
 }
 
 .bottom-content p {

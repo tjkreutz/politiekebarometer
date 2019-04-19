@@ -282,6 +282,72 @@ def politician_bar_chart(df, theme):
         config=graph_config,
         figure={'data': [data], 'layout': layout})
 
+def dossier_list(df):
+    list_children = []
+    dossier_descriptions = util.load_json('assets/dossiers.json')
+
+    df = df.loc[df['dossier_name'].notnull()]
+    df = util.select_last_n_days(df, 7)
+    df = df.groupby(['date', 'dossier_name']).size().reset_index(name='mentions')
+    sorted_dossiers = df.groupby('dossier_name').sum().sort_values(by='mentions', ascending=False).reset_index()
+    sorted_dossiers['mentions'] = sorted_dossiers['mentions'].fillna(0)
+
+    for i, dossier in sorted_dossiers.iterrows():
+        dossier_name = dossier['dossier_name']
+        dossier_count = round(dossier['mentions'])
+
+        if dossier_count < 10:
+            continue
+
+        dossier_df = df.loc[df['dossier_name'] == dossier_name]
+        dossier_df = util.fill_missing_days(dossier_df, 7)
+
+        item = dcc.Link(
+            html.Div([
+                html.Div([
+                    html.H2('{}. {} ({} keer genoemd)'.format(str(i+1), dossier_name, str(dossier_count)))
+                ], className='top-bar'),
+                html.Div([
+                    html.Div([
+                        html.Div([
+                            html.Img(src=dossier_descriptions[dossier_name]['picture']),
+                            html.P(dossier_descriptions[dossier_name]['info']),
+                        ], className='eight columns'),
+                        html.Div(dossier_mention_graph(dossier_df), className='four columns'),
+                    ], className='row')
+                ], className='bottom-content'),
+            ], className='dossier')
+        , href='#')
+
+        list_children.append(item)
+
+    return html.Div(list_children)
+
+def dossier_mention_graph(df):
+    scatter = go.Scatter(
+        mode='lines',
+        x=df['date'],
+        y=df['mentions'],
+        line={'shape': 'spline', 'smoothing': 1, 'color': '#abe2fb'},
+        hoverinfo='y'
+    )
+
+    layout = go.Layout(
+        xaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'showticklabels': False, 'mirror': True},
+        yaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'showticklabels': False, 'mirror': True},
+        margin={'l': 10, 'r': 10, 'b': 10, 't': 10},
+        height=100,
+        autosize=True,
+        showlegend=False,
+    )
+
+    return dcc.Graph(
+        config=graph_config,
+        figure={
+            'data': [scatter],
+            'layout': layout}
+    )
+
 def update_breadcrumbs(pathname='/'):
     breadcrumbs = [dcc.Link('Politieke barometer', href='/')]
     if not pathname or pathname=='/':

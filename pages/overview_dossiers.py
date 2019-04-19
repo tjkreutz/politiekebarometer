@@ -1,5 +1,9 @@
+from src import widgets
+
 import dash_core_components as dcc
 import dash_html_components as html
+
+from app import party_data
 
 def get_layout():
     layout = html.Div([
@@ -9,30 +13,9 @@ def get_layout():
         html.Hr(),
         html.Center([
             html.B("Figuur 1: "),
-            html.Span("Welke dossiers werden de afgelopen 7 dagen vaakst genoemd op Twitter en in het online nieuws?")
+            html.Span("Welke dossiers werden de afgelopen 7 dagen het meest genoemd op Twitter en in het online nieuws?")
         ],className='description'),
-        dcc.Link(
-            html.Div([
-                html.Div([
-                    html.H2('1. Brexit (700)')
-                ], className='top-bar'),
-                html.Div([
-                    html.Div([
-                        html.Div([
-                            html.Img(src='/assets/brexit.jpg'),
-                            html.P("""
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel imperdiet metus, cursus 
-                            condimentum orci. Mauris aliquet metus elit... 
-                            """),
-                        ], className='eight columns'),
-                        html.P("""
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel imperdiet metus, cursus 
-                        condimentum orci.
-                        """, className='four columns'),
-                    ], className='row')
-                ], className='bottom-content'),
-            ], className='dossier')
-        , href='#'),
+        widgets.dossier_list(party_data),
     ])
 
     return layout
