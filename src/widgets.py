@@ -301,9 +301,9 @@ def dossier_mention_graph(df):
     )
 
     layout = go.Layout(
-        xaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'showticklabels': False, 'mirror': True},
+        xaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'mirror': True,  'tickfont': {'color': '#323232'}},
         yaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'showticklabels': False, 'mirror': True},
-        margin={'l': 10, 'r': 10, 'b': 10, 't': 10},
+        margin={'l': 10, 'r': 10, 'b': 20, 't': 10},
         height=100,
         autosize=True,
         showlegend=False,
