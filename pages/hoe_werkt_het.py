@@ -50,7 +50,8 @@ def get_layout():
             rond 90%. Dat betekent dat de trends correct gedetecteerd zullen zijn, maar individuele tweets en
              persberichten kunnen regelmatig fout geanalyseerd worden. Er is ook aangetoond in onderzoek dat sentiment 
              in specifieke media als Twitter op zich niet voldoende informatie biedt om bijvoorbeeld de uitslag van 
-             verkiezingen te voorspellen."""),
+             verkiezingen te voorspellen. Tenslotte houdt de barometer nog geen rekening met eventuele “bots” die 
+             automatisch berichten plaatsen op Twitter."""),
         html.Hr(id='bottom'),
         html.P([
             html.Span("Heeft u vragen of opmerking over de Politieke Barometer? Bezoek onze projectwebsite ("),
