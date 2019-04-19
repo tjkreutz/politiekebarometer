@@ -45,12 +45,12 @@ def get_layout(slug):
                 html.Div(html.H2('Partijen en politici'), className='title-field'),
                 html.P("""
                 Welke partijen en politici worden relatief het vaakst vermeld met dit dossier? We tellen welk percentage 
-                van de berichten over de partijen en politici gaan over het dossier "{}" en rangschikken ze aan de hand 
-                van de uitkomst.""".format(dossier_name), {'margin-top': '10px'}),
+                van de berichten die partijen en politici vernoemen, gaan over het dossier "{}" en rangschikken ze aan 
+                de hand van de uitkomst.""".format(dossier_name), {'margin-top': '10px'}),
                 html.Div([
                     html.Div(html.H2('Partijen'), className='title-field2'),
                     html.Center([
-                        html.B("Figuur 1: "),
+                        html.B("Figuur 2: "),
                         html.Span("Hoe vaak komen partijen voor met het dossier {}?".format(dossier_name))
                     ], className='description'),
                     widgets.pol_bar_chart(party_data, party_df),
@@ -58,7 +58,7 @@ def get_layout(slug):
                 html.Div([
                     html.Div(html.H2('Politici'), className='title-field2'),
                     html.Center([
-                        html.B("Figuur 2: "),
+                        html.B("Figuur 3: "),
                         html.Span("Hoe vaak komen politici voor met het dossier {}?".format(dossier_name))
                     ], className='description'),
                     widgets.pol_bar_chart(politician_data, politician_df),

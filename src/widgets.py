@@ -256,7 +256,6 @@ def dossier_list(df):
     dossier_descriptions = util.load_json('assets/dossiers.json')
 
     df = df.loc[df['dossier_name'].notnull()]
-    df = util.select_last_n_days(df, 7)
     df = df.groupby(['date', 'dossier_name']).size().reset_index(name='mentions')
     sorted_dossiers = df.groupby('dossier_name').sum().sort_values(by='mentions', ascending=False).reset_index()
     sorted_dossiers['mentions'] = sorted_dossiers['mentions'].fillna(0)
