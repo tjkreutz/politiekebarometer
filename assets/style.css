@@ -184,7 +184,8 @@ p {
 }
 
 .footer {
-    background-color: #ffffff;
+    background-color: #fff;
+    overflow: auto;
     margin-top: 10px;
     font-size: 0.9em;
     border-top: thin solid #e6e6e6;
@@ -192,10 +193,6 @@ p {
 
 .research-list {
     margin: 20px 0;
-}
-
-.research-list span {
-    margin: 10px;
 }
 
 .description {

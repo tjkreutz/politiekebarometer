@@ -24,7 +24,7 @@ def get_layout():
                 html.Div(html.H2('Meest genoemd'), className='title-field2'),
                 widgets.pol_list('politician-list', df, 'politici')
             ], className='four columns'),
-        ], className='row'),
+        ], className='row', style={'margin': '10px'}),
         html.Div([
             html.Div(html.H2("Opinie op Twitter"), className='title-field'),
             html.Center([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over politici op Twitter?")], className='description'),
