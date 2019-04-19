@@ -34,7 +34,7 @@ def get_layout(slug):
             html.Div([
                 html.H2('Partijen in het nieuws', className='title-field'),
                 html.Center([html.B("Figuur 1: "), html.Span("Partijen waarbij nieuws relatief vaak gaat over dit thema")], className='description'),
-                widgets.party_bar_chart(news_party_df, theme_name),
+                widgets.pol_bar_chart(news_party_df, theme_name),
             ], className='six columns'),
             html.Div([
                 html.H2('Opinie op Twitter over dit thema', className='title-field'),

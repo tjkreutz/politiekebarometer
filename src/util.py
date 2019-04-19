@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 #todo: catch politician exceptions
-name_exceptions = {"Thema's": 'themas', 'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
+name_exceptions = {'Marrakesh-pact': 'marrakesh_pact', 'CD&V': 'cdv', 'cdH': 'cdh', 'CSP': 'csp', 'DéFI': 'defi', 'FDF': 'fdf', 'MR': 'mr', 'N-VA': 'n_va', 'Open VLD': 'open-vld', 'PP': 'pp', 'PS': 'ps', 'PTB': 'ptb', 'PTB-GO!': 'ptb_go', 'PTB-PVDA-go!': 'ptb_pvda_go', 'PVDA': 'pvda', 'sp.a': 'spa', 'UF': 'uf', 'Vuye&Wouters': 'vuyewouters'}
 slug_exceptions = {y:x for x,y in name_exceptions.items()}
 
 def get_db():

@@ -96,6 +96,12 @@ def double_mention_graph(news_df, tweet_df):
         figure=update_double_mention_graph_figure(news_df, tweet_df)
     )
 
+def double_mention_graph_small(news_df, tweet_df):
+    return dcc.Graph(
+        config=graph_config,
+        figure=update_double_mention_graph_figure_small(news_df, tweet_df)
+    )
+
 def sentiment_donut(df):
     colors = ['#7eff7e', '#ff7e7e', '#fff3c8']
 
@@ -199,31 +205,33 @@ def multi_party_bar_chart(df):
     return html.Div([
         html.Div([
             html.Center(theme, className='description'),
-            party_bar_chart(df, theme)
+            pol_bar_chart(df, theme)
         ]
             , className='four columns') for i, theme in enumerate(df['theme_name'].unique())
     ])
 
-def party_bar_chart(df, theme):
-    tot_count_df = df.groupby('name').size().reset_index(name='tot_count')
+def pol_bar_chart(all_data, df):
+    tot_count_df = all_data.groupby('name').size().reset_index(name='tot_count')
 
-    df = util.select_by_theme(df, theme)
     df = df.groupby(['name', 'color']).size().reset_index(name='count')
-    df = df[df['count'] > 4]
+    df = df[df['count'] > 10]
+
+    if df.empty:
+        return html.P('Niet genoeg data beschikbaar.', className='word-cloud-placeholder')
 
     df = df.merge(tot_count_df, left_on='name', right_on='name')
     df['rel_count'] = df['count'] / df['tot_count']
 
     df = df.sort_values(by='rel_count').reset_index()
 
-    df['party_short_name'] = df['name'].str.slice_replace(7, repl='.. ')
+    df['short_name'] = df['name'].str.slice_replace(7, repl='.. ')
     df = df.iloc[-5:]
 
     x_max = df['rel_count'].max() + 0.01
 
     data = go.Bar(
         x=df['rel_count'],
-        y=df['party_short_name'],
+        y=df['short_name'],
         hovertext=df['name'],
         orientation='h',
         marker={'color': df['color']},
@@ -237,45 +245,6 @@ def party_bar_chart(df, theme):
         autosize=True,
         margin={'l': 70, 'r': 10, 'b': 30, 't': 0},
         height=150,
-    )
-
-    return dcc.Graph(
-        config=graph_config,
-        figure={'data': [data], 'layout': layout})
-
-def politician_bar_chart(df, theme):
-    tot_count_df = df.groupby('name').size().reset_index(name='tot_count')
-
-    df = util.select_by_theme(df, theme)
-    df = df.groupby(['name', 'color']).size().reset_index(name='count')
-    df = df[df['count'] > 4]
-
-    df = df.merge(tot_count_df, left_on='name', right_on='name')
-    df['rel_count'] = df['count'] / df['tot_count']
-
-    df = df.sort_values(by='rel_count').reset_index()
-
-    df['party_short_name'] = df['name'].str.slice_replace(9, repl='.. ')
-    df = df.iloc[-5:]
-
-    x_max = df['rel_count'].max() + 0.01
-
-    data = go.Bar(
-        x=df['rel_count'],
-        y=df['party_short_name'],
-        hovertext=df['name'],
-        orientation='h',
-        marker={'color': df['color']},
-        width=0.5,
-        hoverinfo='text+x',
-    )
-
-    layout = go.Layout(
-        xaxis={'range': (0, x_max), 'fixedrange': True, 'tickformat': '%', 'hoverformat': '%', 'automargin': True, 'zeroline': False},
-        yaxis={'fixedrange': True},
-        autosize=True,
-        margin={'l': 70, 'r': 10, 'b': 20, 't': 0},
-        height=160,
     )
 
     return dcc.Graph(
@@ -310,14 +279,14 @@ def dossier_list(df):
                 html.Div([
                     html.Div([
                         html.Div([
-                            html.Img(src=dossier_descriptions[dossier_name]['picture']),
+                            html.Img(src=dossier_descriptions[dossier_name]['picture'], className='dossier-picture'),
                             html.P(dossier_descriptions[dossier_name]['info']),
                         ], className='eight columns'),
                         html.Div(dossier_mention_graph(dossier_df), className='four columns'),
                     ], className='row')
                 ], className='bottom-content'),
             ], className='dossier')
-        , href='#')
+        , href='/dossiers/{}'.format(util.name_to_slug(dossier_name)))
 
         list_children.append(item)
 
@@ -562,5 +531,41 @@ def update_double_mention_graph_figure(news_df, tweet_df):
         margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
         autosize=True,
         height=320
+    )}
+
+def update_double_mention_graph_figure_small(news_df, tweet_df):
+    news_df = news_df.groupby('date').size().reset_index(name='mentions')
+    news_df = util.fill_missing_days(news_df)
+    tweet_df = tweet_df.groupby('date').size().reset_index(name='mentions')
+    tweet_df = util.fill_missing_days(tweet_df)
+
+    news_trace = go.Scatter(
+        mode='lines',
+        x=news_df['date'],
+        y=news_df['mentions'],
+        name='Nieuws',
+        showlegend=False,
+        line={'shape': 'spline', 'smoothing': 1, 'color': '#ff7e7e'}
+    )
+
+    tweet_trace = go.Scatter(
+        mode='lines',
+        x=tweet_df['date'],
+        y=tweet_df['mentions'],
+        name='Twitter',
+        showlegend=False,
+        yaxis='y2',
+        line={'shape': 'spline', 'smoothing': 1, 'color': '#85d0f2'},
+    )
+
+    return {
+    'data': [news_trace, tweet_trace],
+    'layout': go.Layout(
+        xaxis={'fixedrange': True, 'automargin': True, 'showgrid': False},
+        yaxis={'title': 'Aantal nieuwsartikelen', 'titlefont': {'color': '#ff7e7e'}, 'fixedrange': True, 'showgrid': False, 'automargin': True, 'rangemode': 'tozero'},
+        yaxis2={'title': 'Aantal tweets', 'titlefont': {'color': '#85d0f2'}, 'side': 'right', 'fixedrange': True, 'showgrid': False, 'automargin': True, 'overlaying':'y', 'rangemode': 'tozero'},
+        margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
+        autosize=True,
+        height=150
     )}
 
