@@ -16,7 +16,7 @@ def get_layout():
             diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices 
             hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.""")]
         , className='intro-text'),
-        html.Hr(),
+        html.Hr(style={'margin': '10px'}),
         html.Center([
             html.B("Figuur 1: "),
             html.Span("Welke dossiers werden de laatste 30 dagen het meest genoemd op Twitter en in het online nieuws?")
