@@ -207,23 +207,20 @@ def multi_party_bar_chart(df):
     return html.Div([
         html.Div([
             html.Center(theme, className='description'),
-            pol_bar_chart(df, theme)
+            pol_bar_chart(df)
         ]
             , className='four columns') for i, theme in enumerate(df['theme_name'].unique())
     ])
 
-def pol_bar_chart(all_data, df):
-    tot_count_df = all_data.groupby('name').size().reset_index(name='tot_count')
-
+def pol_bar_chart(df):
+    tot_count = len(df.index)
     df = df.groupby(['name', 'color']).size().reset_index(name='count')
-    df = df[df['count'] > 10]
+    df = df[df['count'] > 4]
 
     if df.empty:
         return html.P('Niet genoeg data beschikbaar.', className='word-cloud-placeholder')
 
-    df = df.merge(tot_count_df, left_on='name', right_on='name')
-    df['rel_count'] = df['count'] / df['tot_count']
-
+    df['rel_count'] = df['count'] / tot_count
     df = df.sort_values(by='rel_count').reset_index()
 
     df['short_name'] = df['name'].str.slice_replace(7, repl='.. ')
