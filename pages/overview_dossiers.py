@@ -10,11 +10,10 @@ def get_layout():
         html.Div(html.H2('Dossiers'), className='title-field'),
         html.Div([
             html.P("""
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam et tellus posuere fringilla ut et 
-            leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices hendrerit lectus. Pellentesque egestas elit 
-            lectus, vel dictum arcu ullamcorper quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in 
-            diam et tellus posuere fringilla ut et leo. Cras porta ullamcorper nulla at tincidunt. Sed ultrices 
-            hendrerit lectus. Pellentesque egestas elit lectus, vel dictum arcu ullamcorper quis.""")]
+            Met de nieuwsdossiers volgen we langlopende gebeurtenissen die invloed kunnen hebben op de politieke 
+            agenda. We laten onder andere zien welke dossiers momenteel het vaakst genoemd worden in het nieuws en op 
+            Twitter en welke partijen en politici vaak in dezelfde berichten voorkomen.""")
+        ]
         , className='intro-text'),
         html.Hr(style={'margin': '10px'}),
         html.Center([
