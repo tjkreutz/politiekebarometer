@@ -5,8 +5,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 def get_layout(slug):
-    dossier_descriptions = util.load_json('assets/dossiers.json')
     dossier_name = util.slug_to_name(slug)
+    dossier_descriptions = widgets.dossier_definitions()
 
     if not dossier_name in dossier_descriptions:
         return '404. Deze pagina bestaat niet.'
@@ -27,7 +27,7 @@ def get_layout(slug):
             html.Div([
                 html.Div(html.H2(dossier_name), className='title-field'),
                 html.Img(src=dossier_picture, className='dossier-picture'),
-                html.P(dossier_extended_info, style={'margin-top': '10px'}),
+                dossier_extended_info,
                 html.Div(html.H2("Data samengevat (laatste 30 dagen)"), className='title-field2'),
                 html.Table([
                     html.Tr([html.Td('Aantal voorkomens in online nieuws:'), html.Td(str(news_count))]),

@@ -253,7 +253,7 @@ def pol_bar_chart(all_data, df):
 
 def dossier_list(df):
     list_children = []
-    dossier_descriptions = util.load_json('assets/dossiers.json')
+    dossier_descriptions = dossier_definitions()
 
     df = df.loc[df['dossier_name'].notnull()]
     df = df.groupby(['date', 'dossier_name']).size().reset_index(name='mentions')
@@ -303,7 +303,7 @@ def dossier_mention_graph(df):
     layout = go.Layout(
         xaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'mirror': True,  'tickfont': {'color': '#323232'}},
         yaxis={'color': '#e6e6e6', 'fixedrange': True, 'showline':True, 'showticklabels': False, 'mirror': True},
-        margin={'l': 10, 'r': 10, 'b': 20, 't': 10},
+        margin={'l': 20, 'r': 20, 'b': 20, 't': 10},
         height=100,
         autosize=True,
         showlegend=False,
@@ -567,4 +567,112 @@ def update_double_mention_graph_figure_small(news_df, tweet_df):
         autosize=True,
         height=150
     )}
+
+def dossier_definitions():
+    definitions = {
+        "Brexit": {
+            "info": html.P([
+                html.B("Brexit "),
+                html.Span("""
+                verwijst naar het uittreden van het Verenigd Koninkrijk uit de Europese Unie, volgend op een op een 
+                referendum (juni 2016) waarbij een kleine meerderheid van de Britten koos voor vertrek. Een akkoord 
+                tussen de Britse (...)""")
+            ]),
+            "extended_info": html.P([
+                html.B("Brexit "),
+                html.Span("""
+                verwijst naar het uittreden van het Verenigd Koninkrijk uit de Europese Unie, volgend op een op een 
+                referendum (juni 2016) waarbij een kleine meerderheid van de Britten koos voor vertrek. Een akkoord 
+                tussen de Britse regering en de EU over het opstappen vond geen meerderheid in het Britse parlement. 
+                Het VK krijgt nu tot eind oktober 2019 de tijd om tot een akkoord te komen.""")
+            ]),
+            "picture": "/assets/brexit.png",
+        },
+        "Marrakesh-pact": {
+            "info": html.P([
+                html.Span("Het "),
+                html.B("Marrakesh-pact "),
+                html.Span("""of Het VN-Migratiepact is een verdrag, onderhandeld onder toezicht van de Verenigde Naties, 
+                dat alle aspecten van internationale migratie beoogt te omvatten. Aanvankelijk leek ook de Belgische 
+                regering (...)"""),
+            ]),
+            "extended_info": html.P([
+                html.Span("Het "),
+                html.B("Marrakesh-pact "),
+                html.Span("""of Het VN-Migratiepact is een verdrag, onderhandeld onder toezicht van de Verenigde Naties, 
+                dat alle aspecten van internationale migratie beoogt te omvatten. Aanvankelijk leek ook de Belgische 
+                regering het pact te willen ondertekenen, maar na het afhaken aantal andere landen, zegde de """),
+                dcc.Link("N-VA", href="/partijen/nva"),
+                html.Span(""" haar steun in het pact op. Dit leidde tot de val van de regering Michel I en een regering 
+                in lopende zaken zonder de steun van de """),
+                dcc.Link("N-VA", href="/partijen/nva"),
+                html.Span(".")
+            ]),
+            "picture": "/assets/marrakesh_pact.png"
+        },
+        "Klimaatprotest": {
+            "info": html.P([
+                html.Span("Het "),
+                html.B("klimaatprotest"),
+                html.Span(""" begon met de zestienjarige Greta Thunberg in Zweden. Zij werd een bron van inspiratie 
+                voor de Vlaamse Anuna De Wever (17) en Kyra Gantois (19) om ook in ons land jongeren massaal aan het 
+                klimaat spijbelen (...)"""),
+            ]),
+            "extended_info": html.P([
+                html.Span("Het "),
+                html.B("klimaatprotest"),
+                html.Span(""" begon met de zestienjarige Greta Thunberg in Zweden. Zij werd een bron van inspiratie 
+                voor de Vlaamse Anuna De Wever (17) en Kyra Gantois (19) om ook in ons land jongeren massaal aan het 
+                klimaat spijbelen en betogen te krijgen. Na een aantal succesvolle manifestaties in januari en februari 
+                is het protest de laatste weken wat gaan liggen. Het klimaatprotest bracht het klimaat thema hoog op de 
+                politieke agenda en leidde indirect ook tot het ontslag van Vlaams milieuminister """),
+                dcc.Link("Schauvliege", href="/politici/joke-schauvliege")
+            ]),
+            "picture": "/assets/klimaatprotest.png"
+        },
+        "Salariswagen": {
+            "info": html.P([
+                html.Span("De "),
+                html.B("salariswagen"),
+                html.Span(""" verwijst naar de wagen waarvan het gebruik vergoed wordt door de werkgever, maar die niet 
+                (altijd) nodig is voor de uitoefening van de functie. De salariswagen wordt beschouwd als een 
+                belangrijke aanvulling op (...)"""),
+            ]),
+            "extended_info": html.P([
+                html.Span("De "),
+                html.B("salariswagen"),
+                html.Span(""" verwijst naar de wagen waarvan het gebruik vergoed wordt door de werkgever, maar die niet 
+                (altijd) nodig is voor de uitoefening van de functie. De salariswagen wordt beschouwd als een 
+                belangrijke aanvulling op het salaris van de werknemer. Met name de partij """),
+                dcc.Link("Groen", href="/partijen/groen"),
+                html.Span(" wil het fiscaal voordeel op deze salariswagens geleidelijk afbouwen."),
+            ]),
+            "picture": "/assets/salariswagen.png"
+        },
+        "Kilometerheffing": {
+            "info": html.P([
+                html.Span("De "),
+                html.B("kilometerheffing"),
+                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
+                weg. Vlaams minister van mobiliteit """),
+                html.B("Ben Weyts"),
+                html.Span(" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende (...)"),
+            ]),
+            "extended_info": html.P([
+                html.Span("De "),
+                html.B("kilometerheffing"),
+                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
+                weg. Vlaams minister van mobiliteit """),
+                dcc.Link("Ben Weyts", href="/politici/ben-weyts"),
+                html.Span(""" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende kritiek (van 
+                met name het """),
+                dcc.Link("Vlaams Belang", href="/partijen/vlaams-belang"),
+                html.Span(" om de maatregel niet langer te steunen wegens te weinig ‘draagvlak’ bij het publiek."),
+            ]),
+            "picture": "/assets/kilometerheffing.png"
+        }
+    }
+
+    return definitions
+
 
