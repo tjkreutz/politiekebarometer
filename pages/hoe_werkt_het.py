@@ -66,7 +66,7 @@ def get_layout():
         West-Vlaanderen, De Zondag en tPallieterke. """, style={'font-size': '75%'}),
         html.P([
             html.Span("2. In 2014 werd al eens hetzelfde ondernomen op de oorspronkelijke "),
-            html.A('Politieke Barometer', href='http://politiekebarometer.be/', target='_blank'),
+            html.A('Politieke Barometer', href='https://www.clips.uantwerpen.be/politiekebarometer/2014/', target='_blank'),
             html.Span("."),
         ], style={'font-size': '75%'})
     ], className='page-text')
