@@ -133,6 +133,8 @@ def theme_bar_chart(df):
     df = df.groupby(['theme_name', 'color']).size().reset_index(name='counts').sort_values(by='counts').reset_index()
 
     total_counts = df['counts'].sum()
+    if total_counts < 10:
+        return html.P('Niet genoeg data beschikbaar.', className='word-cloud-placeholder')
 
     df['counts'] = df['counts']/total_counts
     df['theme_short_name'] = df['theme_name'].str.slice_replace(9, repl='.. ')
