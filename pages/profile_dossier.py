@@ -51,7 +51,7 @@ def get_layout(slug):
                     html.Div(html.H2('Partijen'), className='title-field2'),
                     html.Center([
                         html.B("Figuur 2: "),
-                        html.Span("Welke partijen komen het vaakst voor met {}?".format(dossier_name))
+                        html.Span("Welke partijen worden het vaakst genoemd in berichten over {}?".format(dossier_name))
                     ], className='description'),
                     widgets.pol_bar_chart(party_df),
                 ]),
@@ -59,7 +59,7 @@ def get_layout(slug):
                     html.Div(html.H2('Politici'), className='title-field2'),
                     html.Center([
                         html.B("Figuur 3: "),
-                        html.Span("Welke politici komen het vaakst voor met {}?".format(dossier_name))
+                        html.Span("Welke politici worden het vaakst genoemd in berichten over {}?".format(dossier_name))
                     ], className='description'),
                     widgets.pol_bar_chart(politician_df),
                 ]),
