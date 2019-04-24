@@ -79,6 +79,8 @@ def load_politician_data():
     return df
 
 def min_max_normalize(series):
+    if len(series.unique()) < 3:
+        return series / series.max()
     return (series - series.min()) / (series.max() - series.min())
 
 def sample_keyword_locations(n):
