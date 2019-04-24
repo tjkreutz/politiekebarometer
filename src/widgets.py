@@ -488,7 +488,7 @@ def update_sentiment_area_graph_figure(df, i=0):
     'layout': go.Layout(
         xaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': True},
         yaxis={'fixedrange': True, 'showgrid': False, 'showticklabels': i==0, 'ticksuffix': '%', 'hoverformat': '.0f'},
-        margin={'l': 30 if i==0 else 20, 'r': 20, 'b': 30, 't': 0},
+        margin={'l': 40 if i==0 else 25, 'r': 25, 'b': 30, 't': 0},
         height=150,
         autosize=True,
         hovermode='x',
