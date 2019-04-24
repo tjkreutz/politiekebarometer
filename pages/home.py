@@ -7,12 +7,14 @@ def get_layout():
     layout = html.Div([
         html.Div([
             html.Div(html.H2('Wat is de politieke barometer?'), className='title-field'),
-            html.P("De "),
-            html.B("politieke barometer"),
-            html.P(""" verwerkt ongeveer 1.000 nieuwsartikelen en meer dan 200.000 tweets over politici 
-            en politieke partijen per dag. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst 
-            taalkundig analyseert.
-            """),
+            html.P([
+                html.Span("De "),
+                html.B("politieke barometer"),
+                html.Span(""" verwerkt ongeveer 1.000 nieuwsartikelen en meer dan 200.000 tweets over politici 
+                en politieke partijen per dag. Dat gebeurt automatisch met behulp van een computerprogramma dat de tekst 
+                taalkundig analyseert.
+                """),
+            ]),
             html.P([
                 html.Span("De barometer laat toe om doorheen de tijd het aantal vermeldingen te traceren van "),
                 dcc.Link("partijen", href='/partijen'),
