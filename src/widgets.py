@@ -15,6 +15,7 @@ def breadcrumbs(id):
 def search_bar(df, domain):
     queries = {'partijen': 'name', 'politici': 'name', "thema's": 'theme_name', 'dossiers': 'dossier_name'}
     options = df.groupby(queries[domain]).size().reset_index(name='counts').sort_values(by='counts', ascending=False).reset_index()
+    options = options[options['counts'] > 20]
     options = [{'label': opt, 'value': opt} for opt in options[queries[domain]]]
     return dcc.Dropdown(
         id='search-bar',
