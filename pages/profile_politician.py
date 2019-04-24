@@ -63,7 +63,7 @@ def get_layout(slug):
             ], className='six columns'),
             html.Div([
                 html.Div(html.H2("Thema's in het nieuws"), className='title-field'),
-                html.Center([html.B("Figuur 3: "), html.Span("Welke thema's zien we het vaakst terug in berichten over {}".format(politician_name))], className='description'),
+                html.Center([html.B("Figuur 3: "), html.Span("Welke thema's zien we het vaakst terug in berichten over {}?".format(politician_name))], className='description'),
                 widgets.theme_bar_chart(news_df),
             ], className='six columns')
         ], className='row'),
