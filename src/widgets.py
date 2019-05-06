@@ -673,23 +673,18 @@ def dossier_definitions():
         },
         "Pensioenen": {
             "info": html.P([
-                html.Span("De "),
-                html.B("kilometerheffing"),
-                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
-            weg. Vlaams minister van mobiliteit """),
-                html.B("Ben Weyts"),
-                html.Span(" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende (...)"),
+                html.Span("Het dossier "),
+                html.B("pensioenen"),
+                html.Span(""" zal weer een rol gaan spelen in de verkiezingsstrijd. De vorige regering besliste om de 
+                pensioenleeftijd van 65 naar 67 op te trekken. Sommige partijen willen die maatregel terugdraaien 
+                (...)"""),
             ]),
             "extended_info": html.P([
-                html.Span("De "),
-                html.B("kilometerheffing"),
-                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
-            weg. Vlaams minister van mobiliteit """),
-                dcc.Link("Ben Weyts", href="/politici/ben-weyts"),
-                html.Span(""" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende kritiek (van 
-            met name het """),
-                dcc.Link("Vlaams Belang", href="/partijen/vlaams-belang"),
-                html.Span(" om de maatregel niet langer te steunen wegens te weinig ‘draagvlak’ bij het publiek."),
+                html.Span("Het dossier "),
+                html.B("pensioenen"),
+                html.Span(""" zal weer een rol gaan spelen op de politieke agenda van een aantal partijen. De vorige 
+                regering besliste om de pensioenleeftijd van 65 naar 67 op te trekken. Sommige partijen willen die 
+                maatregel terugdraaien. Verder zal er discussie zijn over het verhogen van het minimumpensioen."""),
             ]),
             "picture": "/assets/pensioenen.png"
         }
