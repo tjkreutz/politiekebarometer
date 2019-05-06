@@ -670,6 +670,28 @@ def dossier_definitions():
                 html.Span(" om de maatregel niet langer te steunen wegens te weinig ‘draagvlak’ bij het publiek."),
             ]),
             "picture": "/assets/kilometerheffing.png"
+        },
+        "Pensioenen": {
+            "info": html.P([
+                html.Span("De "),
+                html.B("kilometerheffing"),
+                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
+            weg. Vlaams minister van mobiliteit """),
+                html.B("Ben Weyts"),
+                html.Span(" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende (...)"),
+            ]),
+            "extended_info": html.P([
+                html.Span("De "),
+                html.B("kilometerheffing"),
+                html.Span(""" voor personenwagens is een voorgestelde maatregel om iets te doen aan de vele files op 
+            weg. Vlaams minister van mobiliteit """),
+                dcc.Link("Ben Weyts", href="/politici/ben-weyts"),
+                html.Span(""" was de maatregel lange tijd genegen, maar besliste op 9 april na aanhoudende kritiek (van 
+            met name het """),
+                dcc.Link("Vlaams Belang", href="/partijen/vlaams-belang"),
+                html.Span(" om de maatregel niet langer te steunen wegens te weinig ‘draagvlak’ bij het publiek."),
+            ]),
+            "picture": "/assets/pensioenen.png"
         }
     }
 

@@ -18,7 +18,7 @@ def get_layout():
         html.Hr(style={'margin': '10px'}),
         html.Center([
             html.B("Figuur 1: "),
-            html.Span("Welke dossiers werden de laatste 30 dagen het meest genoemd op Twitter en in het online nieuws?")
+            html.Span("Welke dossiers werden de laatste 14 dagen het meest genoemd op Twitter en in het online nieuws?")
         ],className='description'),
         widgets.dossier_list(party_data),
     ])
