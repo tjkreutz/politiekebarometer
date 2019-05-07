@@ -148,7 +148,7 @@ def theme_bar_chart(df):
         y=df['theme_short_name'],
         hovertext=df['theme_name'],
         orientation='h',
-        marker={'color': '#abe2fb'},
+        marker={'color': df['color']},
         width=0.6,
         hoverinfo='text+x',
     )
@@ -682,7 +682,7 @@ def dossier_definitions():
             "extended_info": html.P([
                 html.Span("Het dossier "),
                 html.B("pensioenen"),
-                html.Span(""" zal weer een rol gaan spelen op de politieke agenda van een aantal partijen. De vorige 
+                html.Span(""" zal weer een rol gaan spelen in de verkiezingsstrijd. De vorige 
                 regering besliste om de pensioenleeftijd van 65 naar 67 op te trekken. Sommige partijen willen die 
                 maatregel terugdraaien. Verder zal er discussie zijn over het verhogen van het minimumpensioen."""),
             ]),
