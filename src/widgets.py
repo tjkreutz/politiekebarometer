@@ -409,33 +409,17 @@ def update_list_children(df, url):
 
 def update_theme_list_children(df):
     sorted_themes = df['theme_name'].value_counts().head(5).index.tolist()
-    descriptions = []
-
-    for i, theme in enumerate(sorted_themes):
-        theme_df = df[df['theme_name'] == theme]
-        positive = len(theme_df.loc[theme_df['sentiment'] > 0])
-        negative = len(theme_df.loc[theme_df['sentiment'] < 0])
-        neutral = len(theme_df.loc[theme_df['sentiment'] == 0])
-
-        if (positive > negative) and (positive > neutral):
-            description = "Overwegend positieve opinies"
-        elif (negative >= positive) and (negative > neutral):
-            description = "Overwegend negatieve opinies"
-        else:
-            description = "Gebalanceerde opinies"
-        descriptions.append(description)
 
     return [
         html.Span([
             html.Div(className='pol-picture', style={'width': '7px', 'height': '7px', 'background-color': DEFAULT_PLOTLY_COLORS[i], 'margin-top': '14px'}),
             html.Table([
                 html.Tr([html.Th(str(i + 1) + '.'), html.Th(theme)]),
-                html.Tr([html.Td(), html.Td(descriptions[i], style={'font-size': '60%', 'margin-bottom': '0'})]),
             ], className='pol-table'),
         ],
             id='pol-item' + str(i + 1),
             className='pol-item',
-            style={'padding-top': '12px'}
+            style={'padding': '12px 0'}
         ) for i, theme in enumerate(sorted_themes)]
 
 def update_sentiment_area_graph_figure(df, i=0):
