@@ -387,6 +387,7 @@ def update_theme_mention_graph_figure(df):
         yaxis={'range': (0, df['mentions'].max()*1.1), 'fixedrange': True},
         margin={'l': 30, 'r': 30, 'b': 40, 't': 30},
         hovermode='closest',
+        height=260,
         autosize=True,
     )}
 
@@ -425,17 +426,16 @@ def update_theme_list_children(df):
         descriptions.append(description)
 
     return [
-        dcc.Link([
+        html.Span([
             html.Div(className='pol-picture', style={'width': '7px', 'height': '7px', 'background-color': DEFAULT_PLOTLY_COLORS[i], 'margin-top': '14px'}),
-            html.P(u"►", className='more-information'),
             html.Table([
                 html.Tr([html.Th(str(i + 1) + '.'), html.Th(theme)]),
                 html.Tr([html.Td(), html.Td(descriptions[i], style={'font-size': '60%', 'margin-bottom': '0'})]),
             ], className='pol-table'),
         ],
-            href='/themas/{}'.format(util.name_to_slug(theme)),
             id='pol-item' + str(i + 1),
             className='pol-item',
+            style={'padding-top': '12px'}
         ) for i, theme in enumerate(sorted_themes)]
 
 def update_sentiment_area_graph_figure(df, i=0):

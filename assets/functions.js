@@ -35,7 +35,7 @@ setInterval(function() {
     theme_list.onmouseout = function() {
         highlightAllTrace('theme-mention-graph');
     };
-    var theme_items = theme_list.getElementsByTagName("a");
+    var theme_items = theme_list.getElementsByTagName("span");
     for (i = 0; i < theme_items.length; i++) {
       theme_items[i].number = i;
       theme_items[i].onmouseover = function() {

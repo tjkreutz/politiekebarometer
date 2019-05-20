@@ -48,7 +48,7 @@ p {
 .container {
     border-radius: 3px;
     background-color: #ffffff;
-    padding: 0 20px 30px 20px;
+    padding: 0 20px 20px 20px;
     border-right: thin solid #e6e6e6;
     border-bottom: thin solid #e6e6e6;
     border-left: thin solid #e6e6e6;
@@ -147,6 +147,7 @@ p {
 
 .pol-item:hover {
     border-bottom: thick solid #abe2fb;
+    cursor: pointer;
 }
 
 .pol-picture {

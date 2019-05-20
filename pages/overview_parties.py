@@ -26,10 +26,21 @@ def get_layout():
             ], className='four columns'),
         ], className='row', style={'margin': '10px'}),
         html.Div([
-            html.Div(html.H2("Opinie op Twitter "), className='title-field'),
+            html.Div(html.H2("Opinie op Twitter"), className='title-field'),
             html.Center([html.B("Figuur 2: "), html.Span("Hoe evolueert de opinie over partijen op Twitter?")], className='description'),
             widgets.multi_sentiment_area_graph(df),
-        ], className='row')
+        ], className='row', style={'padding-bottom': '20px'}),
+        html.Div([
+            html.Div([
+                html.Div(html.H2("Thema's in het nieuws"), className='title-field'),
+                html.Center([html.B("Figuur 3: "), html.Span("Welke thema's komen het vaakst voor in de nieuwsberichten?")],className='description'),
+                widgets.theme_mention_graph('theme-mention-graph', party_data)
+            ], className='eight columns'),
+            html.Div([
+                html.Div(html.H2("Meest genoemd"), className='title-field'),
+                widgets.theme_list('theme-list', party_data)
+            ], className='four columns'),
+        ], className='row', style={'margin': '10px'})
     ])
 
     return layout
