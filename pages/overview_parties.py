@@ -9,6 +9,9 @@ from app import app, party_data
 def get_layout():
     df = util.select_most_mentioned(party_data, n=5)
 
+    theme_df = util.select_data_sources(party_data, ['news'])
+    theme_df = util.select_most_mentioned_theme(theme_df, n=5)
+
     layout = html.Div([
         html.Div([
             html.Div([
@@ -34,11 +37,11 @@ def get_layout():
             html.Div([
                 html.Div(html.H2("Thema's in het nieuws"), className='title-field'),
                 html.Center([html.B("Figuur 3: "), html.Span("Welke thema's komen het vaakst voor in de nieuwsberichten?")],className='description'),
-                widgets.theme_mention_graph('theme-mention-graph', party_data)
+                widgets.theme_mention_graph('theme-mention-graph', theme_df)
             ], className='eight columns'),
             html.Div([
                 html.Div(html.H2("Meest genoemd"), className='title-field'),
-                widgets.theme_list('theme-list', party_data)
+                widgets.theme_list('theme-list', theme_df)
             ], className='four columns'),
         ], className='row', style={'margin': '10px'})
     ])

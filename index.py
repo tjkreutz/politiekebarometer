@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app, server, party_data, politician_data
-from pages import home, overview_parties, overview_politicians, overview_themes, overview_dossiers, profile_party, profile_politician, profile_theme, profile_dossier, hoe_werkt_het
+from pages import home, overview_parties, overview_politicians, overview_dossiers, profile_party, profile_politician, profile_dossier, hoe_werkt_het
 from src import util, widgets
 
 app.layout = html.Div([
