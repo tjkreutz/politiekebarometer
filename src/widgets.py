@@ -554,6 +554,25 @@ def update_double_mention_graph_figure_small(news_df, tweet_df):
 
 def dossier_definitions():
     definitions = {
+        "Coronavirus": {
+            "info": html.P([
+                html.Span("Het"),
+                html.B(" Coronavirus "),
+                html.Span("""
+                dat leidt tot de COVID-19 ziekte, zorgt begin 2020 voor een wereldwijde pandemie. Overheden zoeken op
+                nationaal en internationaal niveau naar maatregelen die de besmettingsgraad en sterfte verminderen terwijl
+                vrijheden onder druk komen te staan.""")
+            ]),
+            "extended_info": html.P([
+                html.Span("Het"),
+                html.B(" Coronavirus "),
+                html.Span("""
+                dat leidt tot de COVID-19 ziekte, zorgt begin 2020 voor een wereldwijde pandemie. Overheden zoeken op
+                nationaal en internationaal niveau naar maatregelen die de besmettingsgraad en sterfte verminderen terwijl
+                vrijheden onder druk komen te staan.""")
+            ]),
+            "picture": "/assets/brexit.png",
+        },
         "Brexit": {
             "info": html.P([
                 html.B("Brexit "),
