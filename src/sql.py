@@ -23,7 +23,7 @@ FROM    mentions
             ON fragments.doc_id=doc_news.doc_id
         LEFT JOIN doc_tweets
             ON fragments.doc_id=doc_tweets.doc_id
-WHERE   doc_all.date < CURDATE() AND doc_all.date > (CURDATE() - INTERVAL 30 DAY);
+WHERE   doc_all.date < CURRENT_DATE AND doc_all.date > (CURRENT_DATE - INTERVAL '30 DAY');
 """
 
 PARTY_POLITICIAN_DATA = """
@@ -53,7 +53,7 @@ FROM    mentions
             ON fragments.doc_id=doc_news.doc_id
         LEFT JOIN doc_tweets
             ON fragments.doc_id=doc_tweets.doc_id
-WHERE   doc_all.date < CURDATE() AND doc_all.date > (CURDATE() - INTERVAL 30 DAY);
+WHERE   doc_all.date < CURRENT_DATE AND doc_all.date > (CURRENT_DATE - INTERVAL '30 DAY');
 """
 
 POLITICIAN_DATA = """
@@ -84,7 +84,7 @@ FROM    mentions
             ON fragments.doc_id=doc_news.doc_id
         LEFT JOIN doc_tweets
             ON fragments.doc_id=doc_tweets.doc_id
-WHERE   doc_all.date < CURDATE() AND doc_all.date > (CURDATE() - INTERVAL 30 DAY);
+WHERE   doc_all.date < CURRENT_DATE AND doc_all.date > (CURRENT_DATE - INTERVAL '30 DAY');
 """
 
 THEME_PROFILE = """

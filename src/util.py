@@ -2,7 +2,7 @@ import os
 import time
 import json
 import random
-import MySQLdb
+import psycopg2
 import datetime
 from . import sql
 import pandas as pd
@@ -19,13 +19,15 @@ def get_db():
     database_url = os.getenv('DATABASE_URL')
     database_parse = urlparse(database_url)
 
-    db = MySQLdb.connect(
+    conn = psycopg2.connect(
         host=database_parse.hostname,
         user=database_parse.username,
         password=database_parse.password,
-        db=database_parse.path[1:],
+        database=database_parse.path[1:],
+        port=database_parse.port
     )
-    return db
+    
+    return conn
 
 def name_to_slug(name):
     if name in name_exceptions:
